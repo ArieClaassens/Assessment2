@@ -36,6 +36,7 @@ public class JavaGIS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new JavaGIS();
     }
 
 }
