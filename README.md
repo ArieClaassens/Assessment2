@@ -15,11 +15,8 @@ The building is 75m high. If the particle is above the height of the building th
 Build a program to do the following...
 
     Pull in the data file and finds out the bombing point.
-
     Calculates where 5000 bacteria will end up.
-
     Draws a density map of where all the bacteria end up as an image and displays it on the screen.
-
     Saves the density map to a file as text.
 
 The basic algorithm is, for each particle, to move the particle up and along in a loop that picks randomly the way it will go. When it hits the ground, you make a note of where it hit by incrementing a 2D array by one, and start with the next particle.
@@ -28,10 +25,11 @@ Additional marks are awarded for the following.
 
 Allowing the user to set the number of particles and windspeed-based probabilities. Allowing a mouse click to determine the initial position on the map.
 
-Files for this project.
-
+Files for this project:
 1 (300 by 300) raster file representing the bombing point. The file is laid out at one line per image line, from the top left to bottom right of the raster file.
 
-    300 x 300 pixel raster file containing the location of the bomb: wind.raster (GIF version for comparison - this should not be used in the project). Each line in the file is a line in the raster image, starting at the top left corner. The point is marked by the number 255, with the background marked by the number zero.
+	300 x 300 pixel raster file containing the location of the bomb: wind.raster. 
+	Each line in the file is a line in the raster image, starting at the top left corner. 
+	The point is marked by the number 255, with the background marked by the number zero.
 
 Note that any buildings are considered not to effect the flow of this deadly agent, hence they don't appear on the raster. 
