@@ -199,6 +199,14 @@ public class Analyst extends Frame implements ActionListener {
                 dispose();
                 System.exit(0);
                 break;
+                
+            case "About":
+                System.out.println("ABOOT");
+                break;
+                
+            case "Overview":
+                System.out.println("OVERVIEW");
+                break;
 
             default:
                 System.out.println("You broke it.....");

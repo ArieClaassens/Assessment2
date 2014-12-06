@@ -24,14 +24,14 @@ package BacterialBomb;
  */
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Panel; 
-import java.awt.image.MemoryImageSource; 
+import java.awt.Panel;
+import java.awt.image.MemoryImageSource;
 
 /**
  * Class: Storage.java<br>
  * Version: 1.8 - Nov 2014<br>
- * Overview: The Storage class provides the storage object and its methods that
- * are required for a basic GIS application utilized in the GEOG5561M course
+ * Overview: The Storage class provides the storage object and its methods that are required for a basic GIS application
+ * utilized in the GEOG5561M course
  *
  * @author Student 200825599
  * <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
@@ -267,10 +267,9 @@ public class Storage {
 
     public Image getDataAsImage() {
         // Our Storage code this practical will go here.
-        
+
         //Convert 2D image data array to 1D, reranged array with values between
         //0 and 255
-        
         // Use the methods from this practical
         //http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part4/index.html
         //to get the data in a 1D double array
@@ -286,93 +285,142 @@ public class Storage {
         // end loop
         for (int i = 0; i < pixels.length; i++) {
             //Get value of 1D array and cast as int
-            int value = (int)data1Dreranged[i];
+            int value = (int) data1Dreranged[i];
             //generate grayscale cell (all 3 values the same)
-            Color pixel = new Color(value,value,value);
+            Color pixel = new Color(value, value, value);
             pixels[i] = pixel.getRGB();
             //System.out.println(i + " -> " + value + " ---> " + pixel);
         }
-        
+
         // Make a MemoryImageSource, remembering that data.length and
         // data[0].length give you the height and width of the data.
-        MemoryImageSource memImage = new MemoryImageSource(data.length,data[0].length,pixels,0,data.length);
+        MemoryImageSource memImage = new MemoryImageSource(data.length, data[0].length, pixels, 0, data.length);
         // Make an Image object.
         Panel panel = new Panel();
         Image image = panel.createImage(memImage);
         // Return the Image object. 
         return image;
     }
-    
+
     public String locateDetonationPoint(double srcArray[][]) {
         //label for our detonation point 
         String detonationPoint = null;
-         
-         //outer loop for rows
-        for (int i = 0; i <= srcArray.length-1; i++) {
+
+        //outer loop for rows
+        for (int i = 0; i <= srcArray.length - 1; i++) {
             //inner loop for columns
-            for (int j = 0; j <= srcArray[0].length-1; j++) {
+            for (int j = 0; j <= srcArray[0].length - 1; j++) {
                 //print the columnar data on one line
                 //System.out.print(srcArray[i][j] + " ");
                 if (srcArray[i][j] == 255) {
-                    detonationPoint = "{" + i + ","+ j +"}";
-                    System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " +j + " . Stop the clock!");
+                    detonationPoint = "{" + i + "," + j + "}";
+                    System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " + j + " . Stop the clock!");
                     //Stop processing here!!!!! No need to continue, unless we have more than 1 detonation point?
                     //break;
                 }
-                
+
             }
             //System.out.println(" ");
         }
         return detonationPoint;
     }
-    
-    //Calculate the dispersal of the 5000 bacteria
-    public double[][] calculateDispersal(double[][] srcArray) {
+
+    //Calculate the dispersal of the supplied number of bacteria
+    //Pass in the number of rows and columns in the source array so that we have dimensions
+    public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int[][] detonationPoint) {
+        
         //instantiate label for dispersal array, with size of the source array
-        double[][] dispersalArray = new double[srcArray.length][];
+        double[][] dispersalArray = new double[srcArrayRows][srcArrayCols];
+
+        //instantiate our method label for the detonation point and each bacterium's initial position
+        int[][] startPosition = detonationPoint;
+
+        //instantiate the final label for the starting height for each bacterium
+        final int startheight = 75;
+        
+        
+
         /**
-         * From a given location, there is a 5% chance that in any given minute, given the current wind, that a particle 
-         * will blow west, a 10% chance of blowing north or south, and a 75% chance of blowing east.  
-         * Calculate using Math.Random with 0.0 – 0.05 as W, 0.05 – 0.8 as E, 0.8 – 0.9 as N and 0.9 upwards as S? 
-         * One model iteration is one second, and each model iteration the longest potential movement is one pixel on screen, 
-         * which is 1 metre's length. (maybe track time with each particle, by assigning time taken to an additional array?)
-         * The building is 75m high. If the particle is above the height of the building there is a 20% chance each 
-         * second it will rise by a metre in turbulence, a 10% chance it will stay at the same level, and a 70% chance 
-         * it will fall. Below the height of the building the air is still, and the particles will drop by a metre a second.
-         * 
-         * Boundary issue: if particles make it to boundary and exceed it, cap to boundary value, e.g. (0,15) and move 
-         * 1 meter North will be kept at (0,15). Restrict iterations to 1,1 -> 298,298 so that last step will see them at boundary.
+         * From a given location, there is a 5% chance that in any given minute, given the current wind, that a particle
+         * will blow west, a 10% chance of blowing north or south, and a 75% chance of blowing east. Calculate using
+         * Math.Random with 0.0 – 0.05 as W, 0.05 – 0.8 as E, 0.8 – 0.9 as N and 0.9 upwards as S? One model iteration
+         * is one second, and each model iteration the longest potential movement is one pixel on screen, which is 1
+         * metre's length. (maybe track time with each particle, by assigning time taken to an additional array?) The
+         * building is 75m high. If the particle is above the height of the building there is a 20% chance each second
+         * it will rise by a metre in turbulence, a 10% chance it will stay at the same level, and a 70% chance it will
+         * fall. Below the height of the building the air is still, and the particles will drop by a metre a second.
+         *
+         * Boundary issue: if particles make it to boundary and exceed it, cap to boundary value, e.g. (0,15) and move 1
+         * meter North will be kept at (0,15). Restrict iterations to 1,1 -> 298,298 so that last step will see them at
+         * boundary.
          */
         
-          /*
-        
-        startpos = detonationpoint;
-        startheight = 75;
-        
-        if (height < 75) {
-            height--;
-        } else {
-         heightchange = Math.random();
-        //if less than 0.1, stays where it is, if > 0.1 and < 0.3, rise 1m, else fall 1m
-         if (heightchange <= 0.1) {
-            //nothing happens
-        } elseif ((heightchange < 0.1) & (heightchange <= 0.3)) {
-            height++;        
-        } else {
-            height--;
+        //Loop through 5000 bacteria - INITIALLY SET TO 5 FOR TESTING!!!!
+        //for (int b = 1; b <= bacteriaCount; b++) {
+                
+        for (int b = 1; b <= 5; b++) {
+            //Height component
+            double height = startheight; //initial height of bacterium
+            
+            //The loop ends when the bacterium lands on the ground (height == 0), or when it reaches the boundary.
+            //need to finetune the boundary check component
+            //while ((height > 0) || (location[i] > 0) || (location[i] < srcArrayCols -1)) {
+            while (height > 0) {
+            
+            //if bacterium is higher than 75m, it loses 1m in height
+            if (height < 75) {
+                height--;
+            } else {
+                //under 75m height, random chance to stay in place, move up or down
+                //Use Math.random() to decide what happens to bacterium
+                double heightChange = Math.random();
+                //if less than 0.1, stays where it is, if > 0.1 and < 0.3, rise 1m, else fall 1m
+                if (heightChange <= 0.1) {
+                    //nothing happens
+                    System.out.println("Matched: 10% chance of nothing happening");
+                } else if ((heightChange < 0.1) & (heightChange <= 0.3)) {
+                    System.out.println("Matched: 20% chance of height increase taking place");
+                    height++;
+                } else {
+                    System.out.println("Matched: 70% chance of height decrease taking place");
+                    height--;
+                }
+            }
+
+            //Directional component
+            double directionChange = Math.random();
+            
+            //Switch to CASE control loop? doesn't work with numbers like this really.
+            //See http://stackoverflow.com/questions/10873590/in-java-using-switch-statement-with-a-range-of-value-in-each-case
+            
+            
+             if (directionChange <= 0.05) {
+                    //Go West
+                    System.out.println("Matched: 5% chance of going WEST");
+                    //location i-1 one column left
+                } else if ((directionChange < 0.05) & (directionChange <= 0.15)) {
+                   //Go North
+                    System.out.println("Matched: 10% chance of going NORTH");
+                    //location j-1 one row up
+                } else if ((directionChange < 0.15) & (directionChange <= 0.25)) {
+                   //Go South
+                    System.out.println("Matched: 10% chance of going SOUTH");
+                   //location j+1 one row down 
+                } else {
+                   //Go East
+                    System.out.println("Matched: 75% chance of going EAST");
+                    //location i+1 one column right
+                }
+                 
+
+            
+            
+            }
+            
+        //END LOOP FOR 5000 BACTERIA    
         }
-        
-        
-        directional component
-        
-        
-        
-        
-        */
-        
-        
+        // return the density map array
         return dispersalArray;
     }
-    
 
 }
