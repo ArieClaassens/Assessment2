@@ -339,8 +339,36 @@ public class Storage {
          * The building is 75m high. If the particle is above the height of the building there is a 20% chance each 
          * second it will rise by a metre in turbulence, a 10% chance it will stay at the same level, and a 70% chance 
          * it will fall. Below the height of the building the air is still, and the particles will drop by a metre a second.
+         * 
+         * Boundary issue: if particles make it to boundary and exceed it, cap to boundary value, e.g. (0,15) and move 
+         * 1 meter North will be kept at (0,15). Restrict iterations to 1,1 -> 298,298 so that last step will see them at boundary.
          */
         
+          /*
+        
+        startpos = detonationpoint;
+        startheight = 75;
+        
+        if (height < 75) {
+            height--;
+        } else {
+         heightchange = Math.random();
+        //if less than 0.1, stays where it is, if > 0.1 and < 0.3, rise 1m, else fall 1m
+         if (heightchange <= 0.1) {
+            //nothing happens
+        } elseif ((heightchange < 0.1) & (heightchange <= 0.3)) {
+            height++;        
+        } else {
+            height--;
+        }
+        
+        
+        directional component
+        
+        
+        
+        
+        */
         
         
         return dispersalArray;
