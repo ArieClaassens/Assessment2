@@ -60,7 +60,6 @@ public class Analyst extends Frame implements ActionListener {
         ga.setPaint(Color.red);
         ga.drawLine(200, 100, 200, 300);
     }
-    /**/
 
     //put storage and io objects in here
     //Instantiate new Storage object
