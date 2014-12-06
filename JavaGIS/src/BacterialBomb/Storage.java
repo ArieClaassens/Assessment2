@@ -302,5 +302,49 @@ public class Storage {
         // Return the Image object. 
         return image;
     }
+    
+    public String locateDetonationPoint(double srcArray[][]) {
+        //label for our detonation point 
+        String detonationPoint = null;
+         
+         //outer loop for rows
+        for (int i = 0; i <= srcArray.length-1; i++) {
+            //inner loop for columns
+            for (int j = 0; j <= srcArray[0].length-1; j++) {
+                //print the columnar data on one line
+                //System.out.print(srcArray[i][j] + " ");
+                if (srcArray[i][j] == 255) {
+                    detonationPoint = "{" + i + ","+ j +"}";
+                    System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " +j + " . Stop the clock!");
+                    //Stop processing here!!!!! No need to continue, unless we have more than 1 detonation point?
+                    //break;
+                }
+                
+            }
+            //System.out.println(" ");
+        }
+        return detonationPoint;
+    }
+    
+    //Calculate the dispersal of the 5000 bacteria
+    public double[][] calculateDispersal(double[][] srcArray) {
+        //instantiate label for dispersal array, with size of the source array
+        double[][] dispersalArray = new double[srcArray.length][];
+        /**
+         * From a given location, there is a 5% chance that in any given minute, given the current wind, that a particle 
+         * will blow west, a 10% chance of blowing north or south, and a 75% chance of blowing east.  
+         * Calculate using Math.Random with 0.0 – 0.05 as W, 0.05 – 0.8 as E, 0.8 – 0.9 as N and 0.9 upwards as S? 
+         * One model iteration is one second, and each model iteration the longest potential movement is one pixel on screen, 
+         * which is 1 metre's length. (maybe track time with each particle, by assigning time taken to an additional array?)
+         * The building is 75m high. If the particle is above the height of the building there is a 20% chance each 
+         * second it will rise by a metre in turbulence, a 10% chance it will stay at the same level, and a 70% chance 
+         * it will fall. Below the height of the building the air is still, and the particles will drop by a metre a second.
+         */
+        
+        
+        
+        return dispersalArray;
+    }
+    
 
 }

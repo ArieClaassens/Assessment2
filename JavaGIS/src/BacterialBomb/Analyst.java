@@ -23,9 +23,12 @@ package BacterialBomb;
  import java.awt.event.*; 
  */
 
+import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -34,6 +37,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+
 
 
 /**
@@ -50,13 +54,13 @@ import java.io.File;
  */
 public class Analyst extends Frame implements ActionListener {
 
-    /*
+    /**/
     public void paint(Graphics g) {
         Graphics2D ga = (Graphics2D) g;
         ga.setPaint(Color.red);
         ga.drawLine(200, 100, 200, 300);
     }
-    */
+    /**/
 
     //put storage and io objects in here
     //Instantiate new Storage object
@@ -150,6 +154,8 @@ public class Analyst extends Frame implements ActionListener {
 
         switch (name) {
             case "Open...":
+                //Pull in the data file and find out the bombing point.
+
                 //Open the file with the input data
                 FileDialog fd = new FileDialog(this, "Open File", FileDialog.LOAD);
                 fd.setVisible(true);
@@ -158,10 +164,23 @@ public class Analyst extends Frame implements ActionListener {
                     f = new File(fd.getDirectory() + fd.getFile());
                     store.setData(io.readData(f));
                     repaint();
+
+                    //Find the detonation point
+                    String detonationPoint = store.locateDetonationPoint(store.data);
+                    System.out.println("detpoint is: " +detonationPoint);
+                    
+                    //Calculate where 5000 bacteria will end up.
+                    
+                    
+                    
+                    //Draws a density map of where all the bacteria end up as an image and displays it on the screen.
+                    
+                    
                     break;
                 }
 
             case "Save...":
+                //Save the density map to a file as text.
                 //Save the file with the input data
                 FileDialog fw = new FileDialog(this, "Save File", FileDialog.SAVE);
                 fw.setVisible(true);
