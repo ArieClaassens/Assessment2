@@ -27,6 +27,8 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.image.MemoryImageSource;
 
+
+
 /**
  * Class: Storage.java<br>
  * Version: 1.8 - Nov 2014<br>
@@ -327,16 +329,32 @@ public class Storage {
 
     //Calculate the dispersal of the supplied number of bacteria
     //Pass in the number of rows and columns in the source array so that we have dimensions
-    public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int[][] detonationPoint) {
+    public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, String detonationPoint) {
         
         //instantiate label for dispersal array, with size of the source array
         double[][] dispersalArray = new double[srcArrayRows][srcArrayCols];
 
         //instantiate our method label for the detonation point and each bacterium's initial position
-        int[][] startPosition = detonationPoint;
+        //final int[][] startPosition = detonationPoint;
+        
+        //get substring and convert to integer
+        String startPositionRowTxt = detonationPoint.substring(detonationPoint.indexOf( '{')+1,detonationPoint.indexOf( ','));
+        int bacteriumPosRow = Integer.parseInt(startPositionRowTxt);
+        
+        String startPositionColumnTxt = detonationPoint.substring(detonationPoint.indexOf( ',')+1,detonationPoint.indexOf( '}'));
+        int bacteriumPosCol = Integer.parseInt(startPositionColumnTxt);
+        
+        System.out.println("bacteriumPosRow: " + bacteriumPosRow);
+        System.out.println("bacteriumPosCol: " + bacteriumPosCol);
+        //Stop the bus here for now
+        //System.exit(0);
+       
 
         //instantiate the final label for the starting height for each bacterium
         final int startheight = 75;
+        //limit the extent of the looping
+        final int maxRows = srcArrayRows -1;
+        final int maxColums = srcArrayCols -1; 
         
         
 
@@ -359,19 +377,23 @@ public class Storage {
         //for (int b = 1; b <= bacteriaCount; b++) {
                 
         for (int b = 1; b <= 5; b++) {
-            //Height component
-            double height = startheight; //initial height of bacterium
+            //Local variables to use for processing
+            int height = startheight; //initial height of bacterium
+            //int[][] endPosition = startPosition;
+
             
             //The loop ends when the bacterium lands on the ground (height == 0), or when it reaches the boundary.
             //need to finetune the boundary check component
+            //Height component
             //while ((height > 0) || (location[i] > 0) || (location[i] < srcArrayCols -1)) {
             while (height > 0) {
             
             //if bacterium is higher than 75m, it loses 1m in height
             if (height < 75) {
+                System.out.println("Matched: Under 75m, decreasing by 1m");
                 height--;
             } else {
-                //under 75m height, random chance to stay in place, move up or down
+                //under or equal to 75m height, random chance to stay in place, move up or down
                 //Use Math.random() to decide what happens to bacterium
                 double heightChange = Math.random();
                 //if less than 0.1, stays where it is, if > 0.1 and < 0.3, rise 1m, else fall 1m
@@ -386,6 +408,7 @@ public class Storage {
                     height--;
                 }
             }
+                System.out.println("HEIGHT is now: " + height);
 
             //Directional component
             double directionChange = Math.random();
@@ -398,24 +421,30 @@ public class Storage {
                     //Go West
                     System.out.println("Matched: 5% chance of going WEST");
                     //location i-1 one column left
+                    bacteriumPosCol--;
                 } else if ((directionChange < 0.05) & (directionChange <= 0.15)) {
                    //Go North
                     System.out.println("Matched: 10% chance of going NORTH");
                     //location j-1 one row up
+                    bacteriumPosRow--;
                 } else if ((directionChange < 0.15) & (directionChange <= 0.25)) {
                    //Go South
                     System.out.println("Matched: 10% chance of going SOUTH");
                    //location j+1 one row down 
+                    bacteriumPosRow++;
                 } else {
                    //Go East
                     System.out.println("Matched: 75% chance of going EAST");
                     //location i+1 one column right
+                    bacteriumPosCol++;
                 }
                  
+             System.out.println("POSITION is now bacteriumPosRow -> " + bacteriumPosRow + ", bacteriumPosCol -> " + bacteriumPosCol);
 
             
-            
+            //Height is now 0.0
             }
+            
             
         //END LOOP FOR 5000 BACTERIA    
         }

@@ -166,9 +166,12 @@ public class Analyst extends Frame implements ActionListener {
 
                     //Find the detonation point
                     String detonationPoint = store.locateDetonationPoint(store.data);
-                    System.out.println("detpoint is: " +detonationPoint);
+                    System.out.println("detpoint is: " + detonationPoint + " and this is a string, BTW!!!");
                     
                     //Calculate where 5000 bacteria will end up.
+                    store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
+                    
+                   
                     
                     
                     
