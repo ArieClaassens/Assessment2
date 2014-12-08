@@ -22,7 +22,6 @@ package BacterialBomb;
  import java.awt.*;
  import java.awt.event.*; 
  */
-
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
@@ -38,14 +37,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-
-
 /**
  * Class: Analyst.java <br>
  * Version: 1.8 <br>
  * Date: 29 Nov 2014<br>
  * Overview:The Analyst class provides the framework for a basic GIS application utilized in the GEOG5561M course<br>
- * The application loads a dataset containing a bacterial bomb detonation point and calculates the dispersal of 5000 bacteria.
+ * The application loads a dataset containing a bacterial bomb detonation point and calculates the dispersal of 5000
+ * bacteria.
  *
  * @author Student 200825599
  * <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
@@ -118,7 +116,7 @@ public class Analyst extends Frame implements ActionListener {
         processMenu.add(randomDataMenuItem);
         //Add Listener
         randomDataMenuItem.addActionListener(this);
-        
+
         //Process menu list
         Menu helpMenu = new Menu("Help");
         menuBar.add(helpMenu);
@@ -167,17 +165,20 @@ public class Analyst extends Frame implements ActionListener {
                     //Find the detonation point
                     String detonationPoint = store.locateDetonationPoint(store.data);
                     System.out.println("detpoint is: " + detonationPoint + " and this is a string, BTW!!!");
-                    
+
                     //Calculate where 5000 bacteria will end up.
-                    store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
-                    
-                   
-                    
-                    
-                    
+                    int[][] dispersalArray = store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
+
+                    for (int i = 0; i < dispersalArray.length; i++) {
+                        //inner loop for columns
+                        for (int j = 0; j < dispersalArray[i].length; j++) {
+                            //print the columnar data on one line
+                            System.out.print(dispersalArray[i][j] + " ");
+                        }
+                        System.out.println(" ");
+                    }
+
                     //Draws a density map of where all the bacteria end up as an image and displays it on the screen.
-                    
-                    
                     break;
                 }
 
@@ -201,11 +202,11 @@ public class Analyst extends Frame implements ActionListener {
                 dispose();
                 System.exit(0);
                 break;
-                
+
             case "About":
                 System.out.println("ABOOT");
                 break;
-                
+
             case "Overview":
                 System.out.println("OVERVIEW");
                 break;
@@ -218,19 +219,17 @@ public class Analyst extends Frame implements ActionListener {
         //repaint();
     }
 
-    
     /*
-    public void paint(Graphics g) {
+     public void paint(Graphics g) {
 
-        g.drawString("Hello World", 100, 100);
-        Image image = store.getDataAsImage(); // or equivalent
-        g.drawImage(image, getInsets().left, getInsets().top, this);
-        g.setColor(Color.red);
-        g.drawLine(10, 10, 300, 200); 	// x1, y1, x2, y2
-        g.drawString("hello World", 50, 50);
-    }
-    */
-    
+     g.drawString("Hello World", 100, 100);
+     Image image = store.getDataAsImage(); // or equivalent
+     g.drawImage(image, getInsets().left, getInsets().top, this);
+     g.setColor(Color.red);
+     g.drawLine(10, 10, 300, 200); 	// x1, y1, x2, y2
+     g.drawString("hello World", 50, 50);
+     }
+     */
     public static void main(String args[]) {
         new Analyst();
     }
