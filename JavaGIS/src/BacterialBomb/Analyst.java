@@ -167,18 +167,30 @@ public class Analyst extends Frame implements ActionListener {
                     System.out.println("detpoint is: " + detonationPoint + " and this is a string, BTW!!!");
 
                     //Calculate where 5000 bacteria will end up.
-                    int[][] dispersalArray = store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
+                    double[][] dispersalArray = store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
 
+                    //Error checking
+                    /*
+                    double totalb = 0.0;
                     for (int i = 0; i < dispersalArray.length; i++) {
                         //inner loop for columns
                         for (int j = 0; j < dispersalArray[i].length; j++) {
                             //print the columnar data on one line
                             System.out.print(dispersalArray[i][j] + " ");
+                            totalb = totalb + dispersalArray[i][j];
                         }
                         System.out.println(" ");
                     }
+                    System.out.println("TOTAL bacteria mapped on grid : " + totalb);
+                    */
 
+                    //Save the data to the store.data object
+                    store.data = dispersalArray;
+                    
                     //Draws a density map of where all the bacteria end up as an image and displays it on the screen.
+                    
+                    
+                    
                     break;
                 }
 
