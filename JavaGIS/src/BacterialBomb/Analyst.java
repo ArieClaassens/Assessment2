@@ -27,7 +27,6 @@ import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -52,13 +51,28 @@ import java.io.File;
  */
 public class Analyst extends Frame implements ActionListener {
 
-    /**/
+    /*
+    @Override
     public void paint(Graphics g) {
         Graphics2D ga = (Graphics2D) g;
+        ga.setColor(Color.green);
         ga.setPaint(Color.red);
         ga.drawLine(200, 100, 200, 300);
     }
+*/
+    /**/
+    @Override
+     public void paint(Graphics g) {
 
+     g.drawString("Hello World", 100, 100);
+     //Image image = store.getDataAsImage(); // or equivalent
+     //g.drawImage(image, getInsets().left, getInsets().top, this);
+     g.setColor(Color.red);
+     g.drawLine(10, 10, 300, 200); 	// x1, y1, x2, y2
+     g.drawString("hello World", 50, 50);
+     }
+     /**/
+    
     //put storage and io objects in here
     //Instantiate new Storage object
     Storage store = new Storage();
@@ -78,12 +92,6 @@ public class Analyst extends Frame implements ActionListener {
                     }
                 }
         );
-
-        frame.setSize(400, 300);
-        frame.setLayout(new FlowLayout());
-        //frame.setBackground(Color.BLUE);
-        //frame.setBackground(Color.white);
-        //frame.setForeground(Color.white);
 
         //Add new menubar
         MenuBar menuBar = new MenuBar();
@@ -134,6 +142,14 @@ public class Analyst extends Frame implements ActionListener {
         //Set the menu bar
         frame.setMenuBar(menuBar);
 
+        frame.setSize(400, 400);
+        frame.setLayout(new FlowLayout());
+        frame.setBackground(Color.BLUE);
+        
+        //frame.addNotify();
+        //frame.setBackground(Color.white);
+        //frame.setForeground(Color.white);
+
         //Set frame to middle of screen
         frame.setLocationRelativeTo(null);
 
@@ -171,26 +187,22 @@ public class Analyst extends Frame implements ActionListener {
 
                     //Error checking
                     /*
-                    double totalb = 0.0;
-                    for (int i = 0; i < dispersalArray.length; i++) {
-                        //inner loop for columns
-                        for (int j = 0; j < dispersalArray[i].length; j++) {
-                            //print the columnar data on one line
-                            System.out.print(dispersalArray[i][j] + " ");
-                            totalb = totalb + dispersalArray[i][j];
-                        }
-                        System.out.println(" ");
-                    }
-                    System.out.println("TOTAL bacteria mapped on grid : " + totalb);
-                    */
-
+                     double totalb = 0.0;
+                     for (int i = 0; i < dispersalArray.length; i++) {
+                     //inner loop for columns
+                     for (int j = 0; j < dispersalArray[i].length; j++) {
+                     //print the columnar data on one line
+                     System.out.print(dispersalArray[i][j] + " ");
+                     totalb = totalb + dispersalArray[i][j];
+                     }
+                     System.out.println(" ");
+                     }
+                     System.out.println("TOTAL bacteria mapped on grid : " + totalb);
+                     */
                     //Save the data to the store.data object
                     store.data = dispersalArray;
-                    
+
                     //Draws a density map of where all the bacteria end up as an image and displays it on the screen.
-                    
-                    
-                    
                     break;
                 }
 
@@ -230,18 +242,7 @@ public class Analyst extends Frame implements ActionListener {
 
         //repaint();
     }
-
-    /*
-     public void paint(Graphics g) {
-
-     g.drawString("Hello World", 100, 100);
-     Image image = store.getDataAsImage(); // or equivalent
-     g.drawImage(image, getInsets().left, getInsets().top, this);
-     g.setColor(Color.red);
-     g.drawLine(10, 10, 300, 200); 	// x1, y1, x2, y2
-     g.drawString("hello World", 50, 50);
-     }
-     */
+    
     public static void main(String args[]) {
         new Analyst();
     }
