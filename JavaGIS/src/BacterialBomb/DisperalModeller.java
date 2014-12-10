@@ -18,6 +18,11 @@
  */
 package BacterialBomb;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
@@ -41,6 +46,8 @@ public class DisperalModeller extends javax.swing.JFrame {
 
         aboutDialog = new javax.swing.JDialog();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jFileChooser = new javax.swing.JFileChooser();
+        jFileSaver = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jLabelXPos = new javax.swing.JLabel();
         jTextFieldXPos = new javax.swing.JTextField();
@@ -87,6 +94,22 @@ public class DisperalModeller extends javax.swing.JFrame {
         );
 
         jMenuItem5.setText("jMenuItem5");
+
+        jFileChooser.setApproveButtonText("Open Input");
+        jFileChooser.setApproveButtonToolTipText("");
+        jFileChooser.setCurrentDirectory(new java.io.File("C:\\Git\\Assessment2\\JavaGIS\\src\\BacterialBomb"));
+        jFileChooser.setDialogTitle("Choose a file to load for processing");
+
+        jFileSaver.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileSaver.setApproveButtonText("Save output");
+        jFileSaver.setApproveButtonToolTipText("");
+        jFileSaver.setCurrentDirectory(new java.io.File("C:\\Git\\Assessment2\\JavaGIS\\src\\BacterialBomb"));
+        jFileSaver.setDialogTitle("Save modeller output");
+        jFileSaver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileSaverActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biological Agent Dispersal Modeller");
@@ -351,11 +374,42 @@ public class DisperalModeller extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenFileActionPerformed
-        // TODO add your handling code here:
+        int returnVal = jFileChooser.showOpenDialog(this);
+        if (returnVal == jFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser.getSelectedFile();
+            try {
+                // What to do with the file, e.g. display it in a TextArea
+                //textarea.read( new FileReader( file.getAbsolutePath() ), null );
+                FileReader inputFile = new FileReader(file.getAbsolutePath());
+                System.out.println("File opened fine");
+            } catch (IOException ex) {
+                System.out.println("Problem accessing file" + file.getAbsolutePath());
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
     }//GEN-LAST:event_jMenuOpenFileActionPerformed
 
     private void jMenuSaveFileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveFileAsActionPerformed
-        // TODO add your handling code here:
+        int returnVal = jFileSaver.showSaveDialog(this);
+        if (returnVal == jFileSaver.APPROVE_OPTION) {
+            File file2 = jFileSaver.getSelectedFile();
+            try {
+          // What to do with the file, e.g. display it in a TextArea
+                //textarea.read( new FileReader( file.getAbsolutePath() ), null );
+                //Overwrite the chosen file, no appending.
+                FileWriter writer = new FileWriter(file2,false);
+                writer.append("Data inside the file");
+                //writer.append(inputFile);
+                writer.flush();
+                writer.close();
+                System.out.println("File saving worked");
+            } catch (IOException ex) {
+                System.out.println("problem accessing file" + file2.getAbsolutePath());
+            }
+        } else {
+            System.out.println("File save cancelled by user.");
+        }
     }//GEN-LAST:event_jMenuSaveFileAsActionPerformed
 
     private void jMenuRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRunModellerActionPerformed
@@ -375,7 +429,8 @@ public class DisperalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
 
     private void jMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExitActionPerformed
-        // TODO add your handling code here:
+        //Close app and exit without any errors
+        System.exit(0);
     }//GEN-LAST:event_jMenuExitActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
@@ -394,6 +449,10 @@ public class DisperalModeller extends javax.swing.JFrame {
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
+
+    private void jFileSaverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileSaverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileSaverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -433,6 +492,8 @@ public class DisperalModeller extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog aboutDialog;
     private javax.swing.JButton jButtonRunModeller;
+    private javax.swing.JFileChooser jFileChooser;
+    private javax.swing.JFileChooser jFileSaver;
     private javax.swing.JLabel jLabelEastProbability;
     private javax.swing.JLabel jLabelNorthProbability;
     private javax.swing.JLabel jLabelParticleCount;
