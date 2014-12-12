@@ -27,12 +27,12 @@ import java.io.IOException;
  *
  * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  */
-public class DisperalModeller extends javax.swing.JFrame {
+public class DispersalModeller extends javax.swing.JFrame {
 
     /**
-     * Creates new form DisperalModeller
+     * Creates new form DispersalModeller
      */
-    public DisperalModeller() {
+    public DispersalModeller() {
         initComponents();
     }
 
@@ -66,6 +66,8 @@ public class DisperalModeller extends javax.swing.JFrame {
         jLabelParticleCount = new javax.swing.JLabel();
         jSliderTotalProbability = new javax.swing.JSlider();
         jLabelWestProbability1 = new javax.swing.JLabel();
+        jLabelHeightStart = new javax.swing.JLabel();
+        jTextFieldStartHeight = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuOpenFile = new javax.swing.JMenuItem();
@@ -187,8 +189,10 @@ public class DisperalModeller extends javax.swing.JFrame {
         jSliderEastProbability1.setToolTipText("Probability of particle moving in an EASTERN direction");
         jSliderEastProbability1.setValue(10);
 
+        jButtonRunModeller.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRunModeller.setText("Run Modeller");
         jButtonRunModeller.setToolTipText("Click this button to run the modeller after setting all your parameters");
+        jButtonRunModeller.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButtonRunModeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRunModellerActionPerformed(evt);
@@ -206,6 +210,17 @@ public class DisperalModeller extends javax.swing.JFrame {
         jSliderTotalProbability.setPaintTicks(true);
 
         jLabelWestProbability1.setText("TOTAL:");
+
+        jLabelHeightStart.setText("Start height (m):");
+        jLabelHeightStart.setToolTipText("");
+
+        jTextFieldStartHeight.setText("75");
+        jTextFieldStartHeight.setToolTipText("The height in metres at which the detonation takes place");
+        jTextFieldStartHeight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldStartHeightActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -288,29 +303,36 @@ public class DisperalModeller extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelNorthProbability)
-                            .addComponent(jLabelEastProbability)
-                            .addComponent(jLabelSouthProbability)
-                            .addComponent(jLabelWestProbability)
-                            .addComponent(jLabelWestProbability1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelXPos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelYPos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jLabelParticleCount)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelNorthProbability)
+                                    .addComponent(jLabelEastProbability)
+                                    .addComponent(jLabelSouthProbability)
+                                    .addComponent(jLabelWestProbability)
+                                    .addComponent(jLabelWestProbability1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelXPos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelYPos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabelParticleCount)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelHeightStart)
+                        .addGap(2, 2, 2)
+                        .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonRunModeller)
@@ -361,12 +383,19 @@ public class DisperalModeller extends javax.swing.JFrame {
                             .addComponent(jLabelYPos)
                             .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelParticleCount)))
+                            .addComponent(jLabelParticleCount))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelHeightStart)
+                            .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jButtonRunModeller)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
+
+        jLabelHeightStart.getAccessibleContext().setAccessibleDescription("");
+        jTextFieldStartHeight.getAccessibleContext().setAccessibleName("Start height");
 
         getAccessibleContext().setAccessibleDescription("");
 
@@ -381,7 +410,7 @@ public class DisperalModeller extends javax.swing.JFrame {
                 // What to do with the file, e.g. display it in a TextArea
                 //textarea.read( new FileReader( file.getAbsolutePath() ), null );
                 FileReader inputFile = new FileReader(file.getAbsolutePath());
-                System.out.println("File opened fine");
+                System.out.println("File opened fine -> " + inputFile);
             } catch (IOException ex) {
                 System.out.println("Problem accessing file" + file.getAbsolutePath());
             }
@@ -403,7 +432,7 @@ public class DisperalModeller extends javax.swing.JFrame {
                 //writer.append(inputFile);
                 writer.flush();
                 writer.close();
-                System.out.println("File saving worked");
+                System.out.println("File saving worked, but did we save the dispersal map contents?");
             } catch (IOException ex) {
                 System.out.println("problem accessing file" + file2.getAbsolutePath());
             }
@@ -454,6 +483,10 @@ public class DisperalModeller extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFileSaverActionPerformed
 
+    private void jTextFieldStartHeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStartHeightActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldStartHeightActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -471,20 +504,20 @@ public class DisperalModeller extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DisperalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DispersalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DisperalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DispersalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DisperalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DispersalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DisperalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DispersalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DisperalModeller().setVisible(true);
+                new DispersalModeller().setVisible(true);
             }
         });
     }
@@ -495,6 +528,7 @@ public class DisperalModeller extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JFileChooser jFileSaver;
     private javax.swing.JLabel jLabelEastProbability;
+    private javax.swing.JLabel jLabelHeightStart;
     private javax.swing.JLabel jLabelNorthProbability;
     private javax.swing.JLabel jLabelParticleCount;
     private javax.swing.JLabel jLabelSouthProbability;
@@ -521,6 +555,7 @@ public class DisperalModeller extends javax.swing.JFrame {
     private javax.swing.JSlider jSliderWestProbability;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldParticleCount;
+    private javax.swing.JTextField jTextFieldStartHeight;
     private javax.swing.JTextField jTextFieldXPos;
     private javax.swing.JTextField jTextFieldYPos;
     // End of variables declaration//GEN-END:variables
