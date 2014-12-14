@@ -18,16 +18,53 @@
  */
 package BacterialBomb;
 
+import java.awt.FileDialog;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
  * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  */
 public class DispersalModeller extends javax.swing.JFrame {
+
+    //Instantiate new storage object to hold detonation map
+    Storage storeDetonation = new Storage();
+    //Instantiate new storage object to hold dispersal map
+    Storage storeDispersal = new Storage();
+
+    //Instantiate new IO object
+    IO io = new IO();
+
+    //Method to create buffered image from Toolkit image
+    //http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage
+    public static BufferedImage convertToBufferedImage(Image image) {
+        BufferedImage newImage = new BufferedImage(
+                image.getWidth(null), image.getHeight(null),
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return newImage;
+    }
+
+    //Method to create PNG or JPG from BufferedImage
+    //Sourced from http://www.rgagnon.com/javadetails/java-0601.html
+    public static void writeImageToPNG(File file, BufferedImage bufferedImage)
+            throws IOException {
+        ImageIO.write(bufferedImage, "png", file);
+    }
+
+    public static void writeImageToJPG(File file, BufferedImage bufferedImage)
+            throws IOException {
+        ImageIO.write(bufferedImage, "jpg", file);
+    }
 
     /**
      * Creates new form DispersalModeller
@@ -119,8 +156,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         setName("frameMain"); // NOI18N
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.setToolTipText("");
         jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
-        jTabbedPane1.setMaximumSize(new java.awt.Dimension(300, 300));
+        jTabbedPane1.setMaximumSize(new java.awt.Dimension(350, 350));
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(300, 300));
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(300, 300));
@@ -255,7 +294,8 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu1.add(jMenuOpenFile);
 
         jMenuSaveFileAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuSaveFileAs.setText("Save File As");
+        jMenuSaveFileAs.setText("Save Raster File");
+        jMenuSaveFileAs.setToolTipText("");
         jMenuSaveFileAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuSaveFileAsActionPerformed(evt);
@@ -324,33 +364,30 @@ public class DispersalModeller extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelNorthProbability)
-                                    .addComponent(jLabelEastProbability)
-                                    .addComponent(jLabelSouthProbability)
-                                    .addComponent(jLabelWestProbability)
-                                    .addComponent(jLabelWestProbability1)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelXPos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelYPos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabelParticleCount)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabelNorthProbability)
+                            .addComponent(jLabelEastProbability)
+                            .addComponent(jLabelSouthProbability)
+                            .addComponent(jLabelWestProbability)
+                            .addComponent(jLabelWestProbability1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jLabelXPos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelYPos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabelParticleCount)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelHeightStart)
                         .addGap(2, 2, 2)
                         .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -367,10 +404,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,14 +425,17 @@ public class DispersalModeller extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelWestProbability)
                             .addComponent(jSliderWestProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelWestProbability1)
-                            .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonRunModeller)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelXPos)
                             .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -409,11 +446,8 @@ public class DispersalModeller extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelHeightStart)
-                            .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jButtonRunModeller)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                            .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jTextFieldStartHeight.getAccessibleContext().setAccessibleName("Start height");
@@ -421,61 +455,132 @@ public class DispersalModeller extends javax.swing.JFrame {
         getAccessibleContext().setAccessibleDescription("");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenFileActionPerformed
-        int returnVal = jFileChooser.showOpenDialog(this);
-        if (returnVal == jFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser.getSelectedFile();
+        /* Original code - switched to using code rolled on my own
+         int returnVal = jFileChooser.showOpenDialog(this);
+         if (returnVal == jFileChooser.APPROVE_OPTION) {
+         File file = jFileChooser.getSelectedFile();
+         try {
+         // What to do with the file, e.g. display it in a TextArea
+         //textarea.read( new FileReader( file.getAbsolutePath() ), null );
+         //FileReader inputFile = new FileReader(file.getAbsolutePath());
+         //System.out.println("File opened fine -> " + inputFile);
+         store.setData(io.readData(inputFile));
+                
+         } catch (IOException ex) {
+         System.out.println("Problem accessing file" + file.getAbsolutePath());
+         }
+         } else {
+         System.out.println("File access cancelled by user.");
+         }
+         */
+
+        FileDialog fd = new FileDialog(this, "Open File", FileDialog.LOAD);
+        //http://stackoverflow.com/questions/1241984/need-filedialog-with-a-file-type-filter-in-java
+        fd.setFile("*.raster");
+        fd.setVisible(true);
+        File f = null;
+        if ((fd.getDirectory() != null) || (fd.getFile() != null)) {
+            //Labels to use in saving the detonation map
+            String filedir = fd.getDirectory();
+            String filename = fd.getFile();
+            
+            f = new File(fd.getDirectory() + fd.getFile());
+            storeDetonation.setData(io.readData(f));
+            repaint();
+
+            //Find the detonation point
+            String detonationPoint = storeDetonation.locateDetonationPoint(storeDetonation.data);
+            System.out.println("detpoint is: " + detonationPoint + " and this is a string, BTW!!!");
+
+            //Draw the detonation map in the tabbed pane
+            Image imageDetonationMap = storeDetonation.getDataAsImage(); // or equivalent
+            //g.drawImage(image, getInsets().left, getInsets().top, this);
+            //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
+            BufferedImage bufferedImageDetonationMap = convertToBufferedImage(imageDetonationMap);
+            //Stitch together filename for detonation map
+            String filenameDetMap = filedir + filename + ".png";
+            File fileDetMap = new File(filenameDetMap);
+
             try {
-                // What to do with the file, e.g. display it in a TextArea
-                //textarea.read( new FileReader( file.getAbsolutePath() ), null );
-                FileReader inputFile = new FileReader(file.getAbsolutePath());
-                System.out.println("File opened fine -> " + inputFile);
+                writeImageToPNG(fileDetMap, bufferedImageDetonationMap);
             } catch (IOException ex) {
-                System.out.println("Problem accessing file" + file.getAbsolutePath());
+                //handle the IOException
+                System.out.println("The detonation map automated file save did not work");
             }
-        } else {
-            System.out.println("File access cancelled by user.");
+            //jTabbedPane1.addTab("Clicky map", new JLabel(bufferedImageDetonationMap));
+            System.out.println("The fing name is " + filenameDetMap);
+            //jTabbedPane1.addTab("Clicky map", new JLabel(DispersalModeller.class.getResource(f+".png")), rootPane);
+            //jTabbedPane1.addTab("Clicky map", new ImageIcon(DispersalModeller.class.getResource(filename + ".png")), rootPane);
+            jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
+
         }
+
+
     }//GEN-LAST:event_jMenuOpenFileActionPerformed
 
     private void jMenuSaveFileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveFileAsActionPerformed
-        int returnVal = jFileSaver.showSaveDialog(this);
-        if (returnVal == jFileSaver.APPROVE_OPTION) {
-            File file2 = jFileSaver.getSelectedFile();
-            try {
-          // What to do with the file, e.g. display it in a TextArea
-                //textarea.read( new FileReader( file.getAbsolutePath() ), null );
-                //Overwrite the chosen file, no appending.
-                FileWriter writer = new FileWriter(file2,false);
-                writer.append("Data inside the file");
-                //writer.append(inputFile);
-                writer.flush();
-                writer.close();
-                System.out.println("File saving worked, but did we save the dispersal map contents?");
-            } catch (IOException ex) {
-                System.out.println("problem accessing file" + file2.getAbsolutePath());
-            }
-        } else {
-            System.out.println("File save cancelled by user.");
+        /* original code
+         int returnVal = jFileSaver.showSaveDialog(this);
+         if (returnVal == jFileSaver.APPROVE_OPTION) {
+         File file2 = jFileSaver.getSelectedFile();
+         try {
+         // What to do with the file, e.g. display it in a TextArea
+         //textarea.read( new FileReader( file.getAbsolutePath() ), null );
+         //Overwrite the chosen file, no appending.
+         FileWriter writer = new FileWriter(file2, false);
+         writer.append("Data inside the file");
+         //writer.append(inputFile);
+         writer.flush();
+         writer.close();
+         System.out.println("File saving worked, but did we save the dispersal map contents?");
+         } catch (IOException ex) {
+         System.out.println("problem accessing file" + file2.getAbsolutePath());
+         }
+         } else {
+         System.out.println("File save cancelled by user.");
+         }
+         */
+
+        FileDialog fw = new FileDialog(this, "Save File", FileDialog.SAVE);
+        //Windows only?
+        //http://www.rgagnon.com/javadetails/java-0247.html
+
+        fw.setFile("*.raster");
+        fw.setVisible(true);
+        File f2 = null;
+        if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
+            f2 = new File(fw.getDirectory() + fw.getFile());
+            //Need to check the content of the dispersal map first!!!
+            io.writeData(storeDispersal.data, f2);
+            System.out.println("File saving worked, but did we save the dispersal map contents?");
         }
     }//GEN-LAST:event_jMenuSaveFileAsActionPerformed
 
     private void jMenuRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRunModellerActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jMenuRunModellerActionPerformed");
     }//GEN-LAST:event_jMenuRunModellerActionPerformed
 
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jMenuHelpAboutActionPerformed");
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
+        storeDispersal.setRandomData();
+
+
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
 
     private void jMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExitActionPerformed
@@ -485,50 +590,87 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         // TODO add your handling code here:
+        jTextFieldXPos.setText(" ");
+        jTextFieldYPos.setText(" ");
+        System.out.println("TRIGGERED -----> jTabbedPane1MouseClicked");
         //Capture Mouse position relative to tabbed pane and display in a text box
+        System.out.println("Coordinates: " + this.getX() + "," + this.getY() + " logged");
+        //WAIT - WE'RE APPENDING TEXT TO TURN INTEGER VALUES INTO STRINGS!!! FIX IT FIX IT FIX IT
+        //Only updates on the first click
+        jTextFieldXPos.setText(this.getX() + "");
+        jTextFieldYPos.setText(this.getY() + "");
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jTextFieldXPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldXPosActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jTextFieldXPosActionPerformed");
     }//GEN-LAST:event_jTextFieldXPosActionPerformed
 
     private void jTextFieldYPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYPosActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jTextFieldYPosActionPerformed");
     }//GEN-LAST:event_jTextFieldYPosActionPerformed
 
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
+        //Run the Modeller
+        //Using hardwired values for now
+        //Calculate where 5000 bacteria will end up.
+        //double[][] dispersalArray = store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
+
+        //Error checking
+                    /*
+         double totalb = 0.0;
+         for (int i = 0; i < dispersalArray.length; i++) {
+         //inner loop for columns
+         for (int j = 0; j < dispersalArray[i].length; j++) {
+         //print the columnar data on one line
+         System.out.print(dispersalArray[i][j] + " ");
+         totalb = totalb + dispersalArray[i][j];
+         }
+         System.out.println(" ");
+         }
+         System.out.println("TOTAL bacteria mapped on grid : " + totalb);
+         */
+        //Save the data to the store.data object
+        //store.data = dispersalArray;
+        //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
+
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
 
     private void jFileSaverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileSaverActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jFileSaverActionPerformed");
     }//GEN-LAST:event_jFileSaverActionPerformed
 
     private void jTextFieldStartHeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStartHeightActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jTextFieldStartHeightActionPerformed");
     }//GEN-LAST:event_jTextFieldStartHeightActionPerformed
 
     private void jTextFieldTotalProbabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTotalProbabilityActionPerformed
         // TODO add your handling code here:
+        System.out.println("TRIGGERED -----> jTextFieldTotalProbabilityActionPerformed");
     }//GEN-LAST:event_jTextFieldTotalProbabilityActionPerformed
 
     private void jSliderNorthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderNorthProbabilityMouseReleased
-        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue()+jSliderNorthProbability.getValue()+jSliderWestProbability.getValue()+jSliderSouthProbability.getValue() + "%");
+        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
     }//GEN-LAST:event_jSliderNorthProbabilityMouseReleased
 
     private void jSliderEastProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderEastProbabilityMouseReleased
-        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue()+jSliderNorthProbability.getValue()+jSliderWestProbability.getValue()+jSliderSouthProbability.getValue() + "%");
+        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
     }//GEN-LAST:event_jSliderEastProbabilityMouseReleased
 
     private void jSliderSouthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderSouthProbabilityMouseReleased
-        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue()+jSliderNorthProbability.getValue()+jSliderWestProbability.getValue()+jSliderSouthProbability.getValue() + "%");
+        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
     }//GEN-LAST:event_jSliderSouthProbabilityMouseReleased
 
     private void jSliderWestProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderWestProbabilityMouseReleased
-        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue()+jSliderNorthProbability.getValue()+jSliderWestProbability.getValue()+jSliderSouthProbability.getValue() + "%");
+        jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
     }//GEN-LAST:event_jSliderWestProbabilityMouseReleased
 
@@ -569,7 +711,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog aboutDialog;
-    private javax.swing.JButton jButtonRunModeller;
+    public javax.swing.JButton jButtonRunModeller;
     private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JFileChooser jFileSaver;
     private javax.swing.JLabel jLabelEastProbability;
@@ -590,18 +732,18 @@ public class DispersalModeller extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuHelpAbout;
     private javax.swing.JMenuItem jMenuHelpModeller;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuOpenFile;
+    public javax.swing.JMenuItem jMenuOpenFile;
     private javax.swing.JMenuItem jMenuRunModeller;
     private javax.swing.JMenuItem jMenuSaveFileAs;
-    private javax.swing.JSlider jSliderEastProbability;
-    private javax.swing.JSlider jSliderNorthProbability;
-    private javax.swing.JSlider jSliderSouthProbability;
-    private javax.swing.JSlider jSliderWestProbability;
+    public javax.swing.JSlider jSliderEastProbability;
+    public javax.swing.JSlider jSliderNorthProbability;
+    public javax.swing.JSlider jSliderSouthProbability;
+    public javax.swing.JSlider jSliderWestProbability;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextFieldParticleCount;
-    private javax.swing.JTextField jTextFieldStartHeight;
-    private javax.swing.JTextField jTextFieldTotalProbability;
-    private javax.swing.JTextField jTextFieldXPos;
-    private javax.swing.JTextField jTextFieldYPos;
+    public javax.swing.JTextField jTextFieldParticleCount;
+    public javax.swing.JTextField jTextFieldStartHeight;
+    public javax.swing.JTextField jTextFieldTotalProbability;
+    public javax.swing.JTextField jTextFieldXPos;
+    public javax.swing.JTextField jTextFieldYPos;
     // End of variables declaration//GEN-END:variables
 }
