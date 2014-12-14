@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -40,10 +41,9 @@ public class DispersalModeller extends javax.swing.JFrame {
     Storage storeDispersal = new Storage();
     //Instantiate new storage object to hold random dispersal map
     Storage storeRandomDispersal = new Storage();
-    
+
     //Instantiate new IO object
     IO io = new IO();
-
 
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
@@ -51,7 +51,16 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     //label to hold detonationPoint value
     String detonationPoint = null;
-    
+
+    //Method to limit file extensions to .raster on all platforms except Windows
+    //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
+    public class rasterFilter implements FilenameFilter {
+
+        public boolean accept(File dir, String name) {
+            return (name.endsWith(".raster"));
+        }
+    }
+
     //Method to create buffered image from Toolkit image
     //http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage
     public static BufferedImage convertToBufferedImage(Image image) {
@@ -489,8 +498,15 @@ public class DispersalModeller extends javax.swing.JFrame {
          */
 
         FileDialog fd = new FileDialog(this, "Open File", FileDialog.LOAD);
+        //Implement filtering for all platforms but Windows
+        rasterFilter filter = new rasterFilter();
+        fd.setFilenameFilter(filter);
+        //Add filtering for Windows platform
         //http://stackoverflow.com/questions/1241984/need-filedialog-with-a-file-type-filter-in-java
+        //http://www.rgagnon.com/javadetails/java-0247.html
         fd.setFile("*.raster");
+        //Disable multiple file selection
+        fd.setMultipleMode(false);
         fd.setVisible(true);
         File f = null;
         if ((fd.getDirectory() != null) || (fd.getFile() != null)) {
@@ -561,10 +577,14 @@ public class DispersalModeller extends javax.swing.JFrame {
          */
 
         FileDialog fw = new FileDialog(this, "Save File", FileDialog.SAVE);
-        //Windows only?
+        //Implement filtering for all platforms but Windows
+        rasterFilter filter = new rasterFilter();
+        fw.setFilenameFilter(filter);
+        //Add filtering for Windows platform
+        //http://stackoverflow.com/questions/1241984/need-filedialog-with-a-file-type-filter-in-java
         //http://www.rgagnon.com/javadetails/java-0247.html
-
         fw.setFile("*.raster");
+        
         fw.setVisible(true);
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
@@ -654,35 +674,18 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Using hardwired values for now
         //Calculate where 5000 bacteria will end up.
         double[][] dispersalArray = storeDispersal.calculateDispersal(5000, storeDispersal.data.length, storeDispersal.data.length, detonationPoint);
+        //double[][] dispersalArray = storeDispersal.calculateDispersal(jTextFieldParticleCount.getText(), storeDispersal.data.length, storeDispersal.data.length, detonationPoint);
 
-        //Error checking
-                    /*
-         double totalb = 0.0;
-         for (int i = 0; i < dispersalArray.length; i++) {
-         //inner loop for columns
-         for (int j = 0; j < dispersalArray[i].length; j++) {
-         //print the columnar data on one line
-         System.out.print(dispersalArray[i][j] + " ");
-         totalb = totalb + dispersalArray[i][j];
-         }
-         System.out.println(" ");
-         }
-         System.out.println("TOTAL bacteria mapped on grid : " + totalb);
-         */
-        
         //Save the data to the store.data object
         storeDispersal.data = dispersalArray;
         //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
-        
 
         //Generate and display the random dispersal map
-        
-        
         //Draw the random dispersal map in the tabbed pane
-        Image imageDispersalnMap = storeDispersal.getDataAsImage(); // or equivalent
+        Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
         //g.drawImage(image, getInsets().left, getInsets().top, this);
         //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
-        BufferedImage bufferedImageDispersalMap = convertToBufferedImage(imageDispersalnMap);
+        BufferedImage bufferedImageDispersalMap = convertToBufferedImage(imageDispersalMap);
         //Stitch together filename for detonation map
         String filenameDisMap = filedir + "Dispersal_map.png";
         File fileDisMap = new File(filenameDisMap);

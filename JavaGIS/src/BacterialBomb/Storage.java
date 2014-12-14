@@ -40,7 +40,7 @@ import java.util.Random;
  */
 public class Storage {
 
-    //define a 300 x 300 array of type double (300 rows by 300 columns)
+    //define a 300 x 300 array of type int (300 rows by 300 columns)
     double data[][] = new double[300][300];
 
     /*
@@ -157,7 +157,7 @@ public class Storage {
         //calculate the maximum value contained by the array
         //Set the maximum to a negative value in order to ensure that it does 
         //not exceed the potentially largest positive value produced by Math.random()
-        double maximum = -1.0;
+        double maximum = -1;
         //outer loop for rows
         for (int i = 0; i < data.length; i++) {
             //inner loop for columns
@@ -269,11 +269,12 @@ public class Storage {
 
     }
 
-    public Image getDataAsImage() {
+   public Image getDataAsImage() {
         // Our Storage code this practical will go here.
-
+        
         //Convert 2D image data array to 1D, reranged array with values between
         //0 and 255
+        
         // Use the methods from this practical
         //http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part4/index.html
         //to get the data in a 1D double array
@@ -289,16 +290,16 @@ public class Storage {
         // end loop
         for (int i = 0; i < pixels.length; i++) {
             //Get value of 1D array and cast as int
-            int value = (int) data1Dreranged[i];
+            int value = (int)data1Dreranged[i];
             //generate grayscale cell (all 3 values the same)
-            Color pixel = new Color(value, value, value);
+            Color pixel = new Color(value,value,value);
             pixels[i] = pixel.getRGB();
             //System.out.println(i + " -> " + value + " ---> " + pixel);
         }
-
+        
         // Make a MemoryImageSource, remembering that data.length and
         // data[0].length give you the height and width of the data.
-        MemoryImageSource memImage = new MemoryImageSource(data.length, data[0].length, pixels, 0, data.length);
+        MemoryImageSource memImage = new MemoryImageSource(data.length,data[0].length,pixels,0,data.length);
         // Make an Image object.
         Panel panel = new Panel();
         Image image = panel.createImage(memImage);
@@ -351,6 +352,7 @@ public class Storage {
         //System.exit(0);
 
         //instantiate the final label for the starting height for each bacterium
+        //Update this to allow setting the height via the GUI
         final int startheight = 75;
         //limit the extent of the looping
         final int maxRows = srcArrayRows - 1;
@@ -394,7 +396,9 @@ public class Storage {
                 //under or equal to 75m height, random chance to stay in place, move up or down
                     //Use Math.random() to decide what happens to bacterium
                     //double heightChange = Math.random();
+                    //Instantiate new random generator
                     Random rd = new Random();
+                    //use nextDouble for a more random distribution???
                     double heightChange = rd.nextDouble();
 
                     //if less than 0.1, stays where it is, if > 0.1 and < 0.3, rise 1m, else fall 1m
@@ -413,7 +417,9 @@ public class Storage {
 
             //Directional component
                 //double directionChange = Math.random();
+                //Instantiate new random generator
                 Random rd2 = new Random();
+                //use nextDouble for a more random distribution???
                 double directionChange = rd2.nextDouble();
 
             //Switch to CASE control loop? doesn't work with numbers like this really.

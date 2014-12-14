@@ -117,6 +117,7 @@ public class IO {
             int j = 0;
             while (st.hasMoreTokens()) {
                 data[i][j] = Double.parseDouble(st.nextToken());
+                //data[i][j] = Integer.parseInt(st.nextToken());
                 j++;
             }
         }
