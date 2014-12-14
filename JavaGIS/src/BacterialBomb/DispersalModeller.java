@@ -38,10 +38,20 @@ public class DispersalModeller extends javax.swing.JFrame {
     Storage storeDetonation = new Storage();
     //Instantiate new storage object to hold dispersal map
     Storage storeDispersal = new Storage();
-
+    //Instantiate new storage object to hold random dispersal map
+    Storage storeRandomDispersal = new Storage();
+    
     //Instantiate new IO object
     IO io = new IO();
 
+
+    //Label to store last used directory, to keep saved files in same place as source files
+    //Not smooth, need to get a better option, like a temp directory to use, if possible
+    String filedir = null;
+
+    //label to hold detonationPoint value
+    String detonationPoint = null;
+    
     //Method to create buffered image from Toolkit image
     //http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage
     public static BufferedImage convertToBufferedImage(Image image) {
@@ -485,15 +495,15 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f = null;
         if ((fd.getDirectory() != null) || (fd.getFile() != null)) {
             //Labels to use in saving the detonation map
-            String filedir = fd.getDirectory();
+            filedir = fd.getDirectory();
             String filename = fd.getFile();
-            
+
             f = new File(fd.getDirectory() + fd.getFile());
             storeDetonation.setData(io.readData(f));
             repaint();
 
             //Find the detonation point
-            String detonationPoint = storeDetonation.locateDetonationPoint(storeDetonation.data);
+            detonationPoint = storeDetonation.locateDetonationPoint(storeDetonation.data);
             System.out.println("detpoint is: " + detonationPoint + " and this is a string, BTW!!!");
 
             //Draw the detonation map in the tabbed pane
@@ -502,7 +512,7 @@ public class DispersalModeller extends javax.swing.JFrame {
             //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
             BufferedImage bufferedImageDetonationMap = convertToBufferedImage(imageDetonationMap);
             //Stitch together filename for detonation map
-            String filenameDetMap = filedir + filename + ".png";
+            String filenameDetMap = filedir + "Detonation_map.png";
             File fileDetMap = new File(filenameDetMap);
 
             try {
@@ -515,7 +525,12 @@ public class DispersalModeller extends javax.swing.JFrame {
             System.out.println("The fing name is " + filenameDetMap);
             //jTabbedPane1.addTab("Clicky map", new JLabel(DispersalModeller.class.getResource(f+".png")), rootPane);
             //jTabbedPane1.addTab("Clicky map", new ImageIcon(DispersalModeller.class.getResource(filename + ".png")), rootPane);
-            jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
+
+            //If the tab exists, remove it and the corresponding component. Speficfied using the index
+            if (jTabbedPane1.indexOfTab("Detonation Map") >= 0) {
+                jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Detonation Map"));
+            }
+            jTabbedPane1.addTab("Detonation Map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
 
         }
 
@@ -578,8 +593,29 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
-        storeDispersal.setRandomData();
+        storeRandomDispersal.setRandomData();
+        //Generate and display the random dispersal map
 
+        //Draw the random dispersal map in the tabbed pane
+        Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
+        BufferedImage bufferedImageDispersalMap = convertToBufferedImage(imageRandomDispersalMap);
+        //Stitch together filename for detonation map
+        String filenameRandomDisMap = filedir + "Random_Dispersal_map.png";
+        File fileRandomDisMap = new File(filenameRandomDisMap);
+
+        try {
+            writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
+        } catch (IOException ex) {
+            //handle the IOException
+            System.out.println("The dispersal map automated file save did not work");
+        }
+        System.out.println("The Random Dispersal map's name is " + filenameRandomDisMap);
+        //If the tab exists, remove it and the corresponding component. Speficfied using the index
+        if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
+        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
 
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
 
@@ -617,7 +653,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Run the Modeller
         //Using hardwired values for now
         //Calculate where 5000 bacteria will end up.
-        //double[][] dispersalArray = store.calculateDispersal(5000, store.data.length, store.data.length, detonationPoint);
+        double[][] dispersalArray = storeDispersal.calculateDispersal(5000, storeDispersal.data.length, storeDispersal.data.length, detonationPoint);
 
         //Error checking
                     /*
@@ -633,9 +669,38 @@ public class DispersalModeller extends javax.swing.JFrame {
          }
          System.out.println("TOTAL bacteria mapped on grid : " + totalb);
          */
+        
         //Save the data to the store.data object
-        //store.data = dispersalArray;
+        storeDispersal.data = dispersalArray;
         //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
+        
+
+        //Generate and display the random dispersal map
+        
+        
+        //Draw the random dispersal map in the tabbed pane
+        Image imageDispersalnMap = storeDispersal.getDataAsImage(); // or equivalent
+        //g.drawImage(image, getInsets().left, getInsets().top, this);
+        //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
+        BufferedImage bufferedImageDispersalMap = convertToBufferedImage(imageDispersalnMap);
+        //Stitch together filename for detonation map
+        String filenameDisMap = filedir + "Dispersal_map.png";
+        File fileDisMap = new File(filenameDisMap);
+
+        try {
+            writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
+        } catch (IOException ex) {
+            //handle the IOException
+            System.out.println("The dispersal map automated file save did not work");
+        }
+        System.out.println("The Dispersal map's name is " + filenameDisMap);
+        //If the tab exists, remove it and the corresponding component. Speficfied using the index
+        if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
+        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+
 
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
 
@@ -657,6 +722,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jSliderNorthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderNorthProbabilityMouseReleased
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
+
     }//GEN-LAST:event_jSliderNorthProbabilityMouseReleased
 
     private void jSliderEastProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderEastProbabilityMouseReleased
