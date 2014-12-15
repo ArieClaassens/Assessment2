@@ -225,6 +225,7 @@
                   <Component id="jSliderSouthProbability" min="-2" pref="143" max="-2" attributes="0"/>
                   <Component id="jSliderWestProbability" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
                   <Component id="jTextFieldTotalProbability" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
+                  <Component id="jSliderTotalProbability" min="-2" pref="143" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
@@ -265,6 +266,8 @@
                           <Component id="jLabelWestProbability1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldTotalProbability" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="jSliderTotalProbability" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -290,7 +293,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -511,6 +514,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTotalProbabilityActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JSlider" name="jSliderTotalProbability">
+      <Properties>
+        <Property name="majorTickSpacing" type="int" value="20"/>
+        <Property name="minorTickSpacing" type="int" value="10"/>
+        <Property name="paintLabels" type="boolean" value="true"/>
+        <Property name="paintTicks" type="boolean" value="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Probability of particle moving in a WESTERN direction"/>
+        <Property name="value" type="int" value="5"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jSliderTotalProbabilityMouseReleased"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

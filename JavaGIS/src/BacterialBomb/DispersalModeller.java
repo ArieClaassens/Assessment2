@@ -18,7 +18,9 @@
  */
 package BacterialBomb;
 
+import java.awt.Color;
 import java.awt.FileDialog;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -44,6 +46,12 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     //Instantiate new IO object
     IO io = new IO();
+    
+    //Font to use for warnings
+    //From http://stackoverflow.com/questions/10630738/how-to-set-strings-font-size-style-in-java-using-font-class
+    // and http://www.java2s.com/Tutorial/Java/0261__2D-Graphics/javaawtFont.htm
+    Font fontWarning = new Font("Serif", Font.BOLD | Font.ITALIC, 12);
+    Font fontReady = new Font("Serif", Font.PLAIN, 12);
 
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
@@ -124,6 +132,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jLabelHeightStart = new javax.swing.JLabel();
         jTextFieldStartHeight = new javax.swing.JTextField();
         jTextFieldTotalProbability = new javax.swing.JTextField();
+        jSliderTotalProbability = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuOpenFile = new javax.swing.JMenuItem();
@@ -301,6 +310,18 @@ public class DispersalModeller extends javax.swing.JFrame {
             }
         });
 
+        jSliderTotalProbability.setMajorTickSpacing(20);
+        jSliderTotalProbability.setMinorTickSpacing(10);
+        jSliderTotalProbability.setPaintLabels(true);
+        jSliderTotalProbability.setPaintTicks(true);
+        jSliderTotalProbability.setToolTipText("Probability of particle moving in a WESTERN direction");
+        jSliderTotalProbability.setValue(5);
+        jSliderTotalProbability.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSliderTotalProbabilityMouseReleased(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -417,7 +438,8 @@ public class DispersalModeller extends javax.swing.JFrame {
                     .addComponent(jSliderEastProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSliderSouthProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSliderWestProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSliderTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -447,7 +469,9 @@ public class DispersalModeller extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelWestProbability1)
-                            .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
+                        .addComponent(jSliderTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -466,7 +490,7 @@ public class DispersalModeller extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelHeightStart)
                             .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jTextFieldStartHeight.getAccessibleContext().setAccessibleName("Start height");
@@ -724,24 +748,58 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     private void jSliderNorthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderNorthProbabilityMouseReleased
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
+        jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
+        System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
+        if (jSliderTotalProbability.getValue() > 100) {
+            jSliderTotalProbability.setForeground(Color.red);
+            jTextFieldTotalProbability.setForeground(Color.red);
+            jTextFieldTotalProbability.setFont(fontWarning);
+            //jButtonRunModeller.setFont(fontWarning);
+            jButtonRunModeller.setEnabled(false);
+            jButtonRunModeller.setVisible(false);
+        } else {
+            //jButtonRunModeller.setFont(fontReady);
+            jButtonRunModeller.setEnabled(true);
+            jButtonRunModeller.setVisible(true);
+        }
 
     }//GEN-LAST:event_jSliderNorthProbabilityMouseReleased
 
     private void jSliderEastProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderEastProbabilityMouseReleased
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
+        jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
+        System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
+        if (jSliderTotalProbability.getValue() > 100) {
+            jSliderTotalProbability.setForeground(Color.red);
+            jTextFieldTotalProbability.setForeground(Color.red);
+            jTextFieldTotalProbability.setFont(fontWarning);
+        }
     }//GEN-LAST:event_jSliderEastProbabilityMouseReleased
 
     private void jSliderSouthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderSouthProbabilityMouseReleased
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
+        jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
+        System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
+        if (jSliderTotalProbability.getValue() > 100) {
+            jSliderTotalProbability.setForeground(Color.red);
+            jTextFieldTotalProbability.setForeground(Color.red);
+            jTextFieldTotalProbability.setFont(fontWarning);
+        }
     }//GEN-LAST:event_jSliderSouthProbabilityMouseReleased
 
     private void jSliderWestProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderWestProbabilityMouseReleased
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
+        jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         System.out.println("jTextFieldTotalProbability value is now: " + jTextFieldTotalProbability.getText());
+        System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
     }//GEN-LAST:event_jSliderWestProbabilityMouseReleased
+
+    private void jSliderTotalProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderTotalProbabilityMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSliderTotalProbabilityMouseReleased
 
     /**
      * @param args the command line arguments
@@ -807,6 +865,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     public javax.swing.JSlider jSliderEastProbability;
     public javax.swing.JSlider jSliderNorthProbability;
     public javax.swing.JSlider jSliderSouthProbability;
+    public javax.swing.JSlider jSliderTotalProbability;
     public javax.swing.JSlider jSliderWestProbability;
     private javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTextField jTextFieldParticleCount;
