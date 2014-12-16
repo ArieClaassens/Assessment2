@@ -128,7 +128,7 @@ public class Storage {
                 //generate random integer values.
                 //Stoage object in this app uses double, but we're working with INT values and can reduce output
                 //from 1.64MB to 606KB by casting to INT
-                data[i][j] = (int)(Math.random() * 1000);
+                data[i][j] = (int) (Math.random() * 1000);
             }
         }
     }
@@ -269,12 +269,11 @@ public class Storage {
 
     }
 
-   public Image getDataAsImage() {
+    public Image getDataAsImage() {
         // Our Storage code this practical will go here.
-        
+
         //Convert 2D image data array to 1D, reranged array with values between
         //0 and 255
-        
         // Use the methods from this practical
         //http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part4/index.html
         //to get the data in a 1D double array
@@ -290,16 +289,16 @@ public class Storage {
         // end loop
         for (int i = 0; i < pixels.length; i++) {
             //Get value of 1D array and cast as int
-            int value = (int)data1Dreranged[i];
+            int value = (int) data1Dreranged[i];
             //generate grayscale cell (all 3 values the same)
-            Color pixel = new Color(value,value,value);
+            Color pixel = new Color(value, value, value);
             pixels[i] = pixel.getRGB();
             //System.out.println(i + " -> " + value + " ---> " + pixel);
         }
-        
+
         // Make a MemoryImageSource, remembering that data.length and
         // data[0].length give you the height and width of the data.
-        MemoryImageSource memImage = new MemoryImageSource(data.length,data[0].length,pixels,0,data.length);
+        MemoryImageSource memImage = new MemoryImageSource(data.length, data[0].length, pixels, 0, data.length);
         // Make an Image object.
         Panel panel = new Panel();
         Image image = panel.createImage(memImage);
@@ -332,7 +331,8 @@ public class Storage {
 
     //Calculate the dispersal of the supplied number of bacteria
     //Pass in the number of rows and columns in the source array so that we have dimensions
-    public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, String detonationPoint) {
+    public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
+            int changeNorthProbability, int changeEastProbability, int changeSouthProbability, int changeWestProbability) {
 
         //instantiate label for dispersal array, with size of the source array; initialised with all cell values at 0.0
         double[][] dispersalArray = new double[srcArrayRows][srcArrayCols];
@@ -340,12 +340,14 @@ public class Storage {
         //instantiate our method label for the detonation point and each bacterium's initial position
         //final int[][] startPosition = detonationPoint;
         //get substring and convert to integer
-        String startPositionRowTxt = detonationPoint.substring(detonationPoint.indexOf('{') + 1, detonationPoint.indexOf(','));
-        int startbacteriumPosRow = Integer.parseInt(startPositionRowTxt);
+        //String startPositionRowTxt = detonationPoint.substring(detonationPoint.indexOf('{') + 1, detonationPoint.indexOf(','));
+        int startbacteriumPosRow = xPos;
 
-        String startPositionColumnTxt = detonationPoint.substring(detonationPoint.indexOf(',') + 1, detonationPoint.indexOf('}'));
-        int startbacteriumPosCol = Integer.parseInt(startPositionColumnTxt);
+        //String startPositionColumnTxt = detonationPoint.substring(detonationPoint.indexOf(',') + 1, detonationPoint.indexOf('}'));
+        int startbacteriumPosCol = yPos;
 
+        //Instantiate method variable to store particle count
+        //int bacteriaCount = Integer.parseInt(strBacteriaCount);
         System.out.println("startbacteriumPosRow: " + startbacteriumPosRow);
         System.out.println("startbacteriumPosCol: " + startbacteriumPosCol);
         //Stop the bus here for now
@@ -373,8 +375,8 @@ public class Storage {
          * boundary.
          */
         //Loop through 5000 bacteria - INITIALLY SET TO 5 FOR TESTING!!!!
-        for (int b = 1; b <= bacteriaCount; b++) {        
-        //for (int b = 1; b <= 15; b++) {
+        for (int b = 1; b <= bacteriaCount; b++) {
+            //for (int b = 1; b <= 15; b++) {
             //Local variables to use for processing. Reinitialise on each run, otherwise we drift off the map!!!
             int height = startheight; //initial height of bacterium
             //int[][] endPosition = startPosition;
@@ -393,7 +395,7 @@ public class Storage {
                     //System.out.println("Matched: Under 75m, decreasing by 1m");
                     height--;
                 } else {
-                //under or equal to 75m height, random chance to stay in place, move up or down
+                    //under or equal to 75m height, random chance to stay in place, move up or down
                     //Use Math.random() to decide what happens to bacterium
                     //double heightChange = Math.random();
                     //Instantiate new random generator
@@ -403,7 +405,7 @@ public class Storage {
 
                     //if less than 0.1, stays where it is, if > 0.1 and < 0.3, rise 1m, else fall 1m
                     if (heightChange <= 0.1) {
-                    //nothing happens
+                        //nothing happens
                         //System.out.println("Matched: 10% chance of nothing happening");
                     } else if ((heightChange < 0.1) & (heightChange <= 0.3)) {
                         //System.out.println("Matched: 20% chance of height increase taking place");
@@ -415,38 +417,60 @@ public class Storage {
                 }
                 //System.out.println("HEIGHT is now: " + height);
 
-            //Directional component
+                //Directional component
                 //double directionChange = Math.random();
                 //Instantiate new random generator
                 Random rd2 = new Random();
                 //use nextDouble for a more random distribution???
-                double directionChange = rd2.nextDouble();
+                //double directionChange = rd2.nextDouble();
+                //Multiply by 100 and cast to integer in order to fall in same order of magnitude and primitive type as probability values
+                int directionChange = (int)(rd2.nextDouble()*100);
+                //int directionChange = (int)(Math.random()*100);
+                System.out.println("Dir change is: " + directionChange);
 
-            //Switch to CASE control loop? doesn't work with numbers like this really.
+                //Switch to CASE control loop? doesn't work with numbers like this really.
                 //See http://stackoverflow.com/questions/10873590/in-java-using-switch-statement-with-a-range-of-value-in-each-case
-                if (directionChange <= 0.05) {
-                    //Go West
-                    //System.out.println("Matched: 5% chance of going WEST");
-                    //location i-1 one column left
-                    bacteriumPosCol--;
-                } else if ((directionChange < 0.05) & (directionChange <= 0.15)) {
+                //changeNorthProbability, changeEastProbability, changeSouthProbability, changeWestProbability
+                //Build up the break points to use for the direction change by cumulatively adding the probabilities 
+                //for the different directions, i.e 
+                //0 - changeNorthProbability => go North 
+                //changeNorthProbability < directionChange <= (changeNorthProbability + changeEastProbability) => go East
+                //(changeNorthProbability + changeEastProbability) < directionChange <= (changeNorthProbability + changeEastProbability + changeSouthProbability) => go South
+                //(changeNorthProbability + changeEastProbability + changeSouthProbability) < directionChange <= (changeNorthProbability + changeEastProbability + changeSouthProbability + changeWestProbability) => go West
+                // e.g for changeNorthProbability 10%, changeEastProbability 65%, changeSouthProbability 20%, changeWestProbability 5%
+                //0 - 10 => North
+                //10 < directionChange <= (10 + 65) => go East
+                //(10 + 65) < directionChange <= (10 + 65 + 20) => go South
+                //(10 + 65 + 20) < directionChange <= (10 + 65 + 20 + 5) => go West
+                //Error checking on the total probability before submission to this method ensures that we do not exceed 100%
+                if ((directionChange >= 0) && (directionChange <= changeNorthProbability)) {
                     //Go North
-                    //System.out.println("Matched: 10% chance of going NORTH");
+                    //System.out.println("Matched: probability of going NORTH");
                     //location j-1 one row up
                     bacteriumPosRow--;
-                } else if ((directionChange < 0.15) & (directionChange <= 0.25)) {
-                   //Go South
-                    //System.out.println("Matched: 10% chance of going SOUTH");
-                    //location j+1 one row down 
-                    bacteriumPosRow++;
-                } else {
+                } else if ((directionChange > changeNorthProbability) & (directionChange <= (changeNorthProbability + changeEastProbability))) {
                     //Go East
-                    //System.out.println("Matched: 75% chance of going EAST");
+                    //System.out.println("Matched: probability of going EAST");
                     //location i+1 one column right
                     bacteriumPosCol++;
+                } else if ((directionChange > (changeNorthProbability + changeEastProbability))
+                        & (directionChange <= (changeNorthProbability + changeEastProbability + changeSouthProbability))) {
+                    //Go South
+                    //System.out.println("Matched: probability of going SOUTH");
+                    //location j+1 one row down 
+                    bacteriumPosRow++;
+                } else if ((directionChange > (changeNorthProbability + changeEastProbability + changeSouthProbability))
+                        & (directionChange <= (changeNorthProbability + changeEastProbability + changeSouthProbability + changeWestProbability))) {
+                    //Go West
+                    //System.out.println("Matched: probability of going WEST");
+                    //location i-1 one column left
+                    bacteriumPosCol--;
+                } else {
+                    System.out.println("This is messed up, we couln't find a real direction to change to. Fix it, Felix!");
+
                 }
 
-             //System.out.println("POSITION is now bacteriumPosRow -> " + bacteriumPosRow + ", bacteriumPosCol -> " + bacteriumPosCol);
+                //System.out.println("POSITION is now bacteriumPosRow -> " + bacteriumPosRow + ", bacteriumPosCol -> " + bacteriumPosCol);
                 //Height is now 0.0
             }
             //Assign position to density map, with constraints to keep inside source array surface area. CHECK NOTES!!

@@ -157,7 +157,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Biological Agent Dispersal Modeller"/>
+    <Property name="title" type="java.lang.String" value="Biological Agent Detonation Dispersal Modeller"/>
     <Property name="locationByPlatform" type="boolean" value="true"/>
     <Property name="name" type="java.lang.String" value="frameMain" noResource="true"/>
   </Properties>
@@ -187,7 +187,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jTabbedPane1" min="-2" pref="316" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -197,46 +197,81 @@
                           <Component id="jLabelWestProbability" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelWestProbability1" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jButtonRunModeller" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jSliderNorthProbability" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jSliderEastProbability" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jSliderSouthProbability" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jSliderWestProbability" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jSliderTotalProbability" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldTotalProbability" alignment="0" min="-2" pref="44" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" pref="190" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabelXPos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldXPos" min="-2" pref="30" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jLabelYPos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldYPos" min="-2" pref="30" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="jLabelParticleCount" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldParticleCount" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabelHeightStart" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldStartHeight" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabelXPos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextFieldXPos" min="-2" pref="38" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jLabelYPos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextFieldYPos" min="-2" pref="38" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabelHeightStart" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                              <Component id="jTextFieldStartHeight" min="-2" pref="37" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabelParticleCount" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jTextFieldParticleCount" min="-2" pref="44" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="249" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButtonRunModeller" min="-2" max="-2" attributes="0"/>
-                  <Component id="jSliderNorthProbability" min="-2" pref="143" max="-2" attributes="0"/>
-                  <Component id="jSliderEastProbability" min="-2" pref="143" max="-2" attributes="0"/>
-                  <Component id="jSliderSouthProbability" min="-2" pref="143" max="-2" attributes="0"/>
-                  <Component id="jSliderWestProbability" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
-                  <Component id="jTextFieldTotalProbability" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
-                  <Component id="jSliderTotalProbability" min="-2" pref="143" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jTabbedPane1" min="-2" pref="351" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelXPos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldXPos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelYPos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldYPos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelHeightStart" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldStartHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jSliderNorthProbability" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelNorthProbability" min="-2" max="-2" attributes="0"/>
@@ -247,53 +282,34 @@
                               <Component id="jLabelEastProbability" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jSliderEastProbability" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabelSouthProbability" min="-2" max="-2" attributes="0"/>
                           <Component id="jSliderSouthProbability" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabelWestProbability" min="-2" max="-2" attributes="0"/>
                           <Component id="jSliderWestProbability" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelWestProbability1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldTotalProbability" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                      <Component id="jSliderTotalProbability" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" min="-2" pref="351" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButtonRunModeller" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelXPos" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldXPos" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelYPos" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldYPos" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelWestProbability1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSliderTotalProbability" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelHeightStart" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldStartHeight" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jTextFieldTotalProbability" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Component id="jButtonRunModeller" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -335,8 +351,12 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldXPos">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="00"/>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="toolTipText" type="java.lang.String" value="X position of the detonation point"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[20, 20]"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldXPosActionPerformed"/>
@@ -352,8 +372,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldYPos">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="00"/>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="toolTipText" type="java.lang.String" value="Y position of the detonation point"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[20, 20]"/>
         </Property>
@@ -377,6 +398,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jSliderEastProbabilityMouseReleased"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSliderEastProbabilityKeyReleased"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -393,6 +415,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jSliderSouthProbabilityMouseReleased"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSliderSouthProbabilityKeyReleased"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -409,6 +432,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jSliderWestProbabilityMouseReleased"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSliderWestProbabilityKeyReleased"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -416,22 +440,22 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelNorthProbability">
       <Properties>
-        <Property name="text" type="java.lang.String" value="North:"/>
+        <Property name="text" type="java.lang.String" value="% North:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelEastProbability">
       <Properties>
-        <Property name="text" type="java.lang.String" value="East:"/>
+        <Property name="text" type="java.lang.String" value="% East:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelSouthProbability">
       <Properties>
-        <Property name="text" type="java.lang.String" value="South:"/>
+        <Property name="text" type="java.lang.String" value="% South:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelWestProbability">
       <Properties>
-        <Property name="text" type="java.lang.String" value="West:"/>
+        <Property name="text" type="java.lang.String" value="% West:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSlider" name="jSliderNorthProbability">
@@ -445,6 +469,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jSliderNorthProbabilityMouseReleased"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSliderNorthProbabilityKeyReleased"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -471,7 +496,7 @@
     <Component class="javax.swing.JTextField" name="jTextFieldParticleCount">
       <Properties>
         <Property name="text" type="java.lang.String" value="5000"/>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="toolTipText" type="java.lang.String" value="Number of particles to use in the model calculations"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -484,7 +509,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelWestProbability1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="TOTAL:"/>
+        <Property name="text" type="java.lang.String" value="TOTAL %:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelHeightStart">
@@ -497,6 +522,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="75"/>
         <Property name="toolTipText" type="java.lang.String" value="The height in metres at which the detonation takes place"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[20, 20]"/>
+        </Property>
       </Properties>
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Start height"/>
@@ -508,32 +536,50 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldTotalProbability">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="100"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTotalProbabilityActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JSlider" name="jSliderTotalProbability">
       <Properties>
         <Property name="majorTickSpacing" type="int" value="20"/>
+        <Property name="maximum" type="int" value="120"/>
         <Property name="minorTickSpacing" type="int" value="10"/>
         <Property name="paintLabels" type="boolean" value="true"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="toolTipText" type="java.lang.String" value="Probability of particle moving in a WESTERN direction"/>
-        <Property name="value" type="int" value="5"/>
+        <Property name="value" type="int" value="100"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jSliderTotalProbabilityMouseReleased"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Direction change probabilities"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextPane" name="jTextPaneMessages">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="Check this box for warnings or messages"/>
+            <Property name="toolTipText" type="java.lang.String" value="This area is used to display application messages"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JTextField" name="jTextFieldTotalProbability">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="toolTipText" type="java.lang.String" value="The total probability value for all the wind-speed change factors"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
