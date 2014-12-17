@@ -426,7 +426,7 @@ public class Storage {
                 //Multiply by 100 and cast to integer in order to fall in same order of magnitude and primitive type as probability values
                 int directionChange = (int)(rd2.nextDouble()*100);
                 //int directionChange = (int)(Math.random()*100);
-                System.out.println("Dir change is: " + directionChange);
+                //System.out.println("Dir change is: " + directionChange);
 
                 //Switch to CASE control loop? doesn't work with numbers like this really.
                 //See http://stackoverflow.com/questions/10873590/in-java-using-switch-statement-with-a-range-of-value-in-each-case

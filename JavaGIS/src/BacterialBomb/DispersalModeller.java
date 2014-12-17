@@ -37,6 +37,10 @@ import javax.swing.JLabel;
  */
 public class DispersalModeller extends javax.swing.JFrame {
 
+    
+    
+    
+    
     //Instantiate new storage object to hold detonation map
     Storage storeDetonation = new Storage();
     //Instantiate new storage object to hold dispersal map
@@ -224,7 +228,6 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jLabelXPos.setText("X Position:");
 
-        jTextFieldXPos.setEditable(false);
         jTextFieldXPos.setText("00");
         jTextFieldXPos.setToolTipText("X position of the detonation point");
         jTextFieldXPos.setMaximumSize(new java.awt.Dimension(20, 20));
@@ -236,7 +239,6 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jLabelYPos.setText("Y Position:");
 
-        jTextFieldYPos.setEditable(false);
         jTextFieldYPos.setText("00");
         jTextFieldYPos.setToolTipText("Y position of the detonation point");
         jTextFieldYPos.setMaximumSize(new java.awt.Dimension(20, 20));
@@ -773,6 +775,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         int bacteriaCount = Integer.parseInt(jTextFieldParticleCount.getText());
 
         //The detonation point X and Y values to determine where to start the calculations
+        //The coordinates cannot fall outside the target area, so check for that too, assuming we're using a square image
         int xPos = Integer.parseInt(jTextFieldXPos.getText());
         int yPos = Integer.parseInt(jTextFieldYPos.getText());
 
@@ -794,7 +797,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         
 
         //Use shorthand to ensure that code cathes the error as soon as a non-compliant parameter is detected
-        if ((bacteriaCount > 0) && (xPos > 0) && (yPos > 0) && (detonationHeight >= 0) && (jSliderTotalProbability.getValue() == 100)) {
+        if ((bacteriaCount > 0) && (xPos > 0) && (xPos < storeDispersal.data.length) && (yPos > 0) && (yPos < storeDispersal.data.length) && (detonationHeight >= 0) && (jSliderTotalProbability.getValue() == 100)) {
             System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
             jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue() 
                     + ": North: " + changeNorthProbability + ", East: " + changeEastProbability 
