@@ -30,6 +30,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,10 +38,6 @@ import javax.swing.JLabel;
  */
 public class DispersalModeller extends javax.swing.JFrame {
 
-    
-    
-    
-    
     //Instantiate new storage object to hold detonation map
     Storage storeDetonation = new Storage();
     //Instantiate new storage object to hold dispersal map
@@ -96,13 +93,13 @@ public class DispersalModeller extends javax.swing.JFrame {
             throws IOException {
         ImageIO.write(bufferedImage, "jpg", file);
     }
-    
+
     /**
-     * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with   
-     * an error message to display when total probability does not equal 100% and an info message to display when 
-     * the total probability does equal 100%
-     **/
-     
+     * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with an
+     * error message to display when total probability does not equal 100% and an info message to display when the total
+     * probability does equal 100%
+     *
+     */
     public void setSliderValues() {
         jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
@@ -615,7 +612,7 @@ public class DispersalModeller extends javax.swing.JFrame {
             jTextFieldXPos.setText(detonationPoint.substring(detonationPoint.indexOf('{') + 1, detonationPoint.indexOf(',')));
             //Populate the Y Position text field
             jTextFieldYPos.setText(detonationPoint.substring(detonationPoint.indexOf(',') + 1, detonationPoint.indexOf('}')));
-            
+
             //Populate the Total Probability text field
             jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
 
@@ -700,11 +697,19 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuHelpAboutActionPerformed");
+        //Display an application-modal Dialog window to the user, using the default dialog type icon
+        //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+        JOptionPane.showMessageDialog(this,
+                "Eggs are not supposed to be green.\n\r" + "And neither are toes...", "About BADdm",
+                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
+        //Load an HTML file to display app help
+        new HtmlEditorKitTest();
+        
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
@@ -790,27 +795,24 @@ public class DispersalModeller extends javax.swing.JFrame {
         int changeEastProbability = jSliderEastProbability.getValue();
         int changeSouthProbability = jSliderSouthProbability.getValue();
         int changeWestProbability = jSliderWestProbability.getValue();
-        
-        
+
         //Data source to work from is optional. User may choose to work directly from a user-selected start point, without
         //having to open a source file first every time.        
-        
-
         //Use shorthand to ensure that code cathes the error as soon as a non-compliant parameter is detected
         if ((bacteriaCount > 0) && (xPos > 0) && (xPos < storeDispersal.data.length) && (yPos > 0) && (yPos < storeDispersal.data.length) && (detonationHeight >= 0) && (jSliderTotalProbability.getValue() == 100)) {
             System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
-            jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue() 
-                    + ": North: " + changeNorthProbability + ", East: " + changeEastProbability 
+            jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue()
+                    + ": North: " + changeNorthProbability + ", East: " + changeEastProbability
                     + ", South: " + changeSouthProbability + ", West: " + changeWestProbability);
             //Run the Modeller
-            double[][] dispersalArray = storeDispersal.calculateDispersal(bacteriaCount, storeDispersal.data.length, 
+            double[][] dispersalArray = storeDispersal.calculateDispersal(bacteriaCount, storeDispersal.data.length,
                     storeDispersal.data.length, xPos, yPos, changeNorthProbability, changeEastProbability, changeSouthProbability, changeWestProbability);
 
             //Save the data to the store.data object
             storeDispersal.data = dispersalArray;
         //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
 
-        //Generate and display the random dispersal map
+            //Generate and display the random dispersal map
             //Draw the random dispersal map in the tabbed pane
             Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
             //g.drawImage(image, getInsets().left, getInsets().top, this);
@@ -839,7 +841,7 @@ public class DispersalModeller extends javax.swing.JFrame {
             jTextPaneMessages.setText("Hey buddy! Check your parameter values!!! This ain't gonna work...");
         }
 
-       //End Modeller Button
+        //End Modeller Button
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
 
     private void jFileSaverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileSaverActionPerformed
