@@ -163,6 +163,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuOpenFile = new javax.swing.JMenuItem();
         jMenuSaveFileAs = new javax.swing.JMenuItem();
+        jMenuSaveRandomFile = new javax.swing.JMenuItem();
         jMenuRunModeller = new javax.swing.JMenuItem();
         jMenuExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -384,13 +385,25 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jMenuSaveFileAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuSaveFileAs.setText("Save Raster File");
-        jMenuSaveFileAs.setToolTipText("");
+        jMenuSaveFileAs.setToolTipText("Run the Modeller before you can save the output");
+        jMenuSaveFileAs.setEnabled(false);
         jMenuSaveFileAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuSaveFileAsActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuSaveFileAs);
+
+        jMenuSaveRandomFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuSaveRandomFile.setText("Save Random Raster File");
+        jMenuSaveRandomFile.setToolTipText("Generate Random Dispersal before you can save the output");
+        jMenuSaveRandomFile.setEnabled(false);
+        jMenuSaveRandomFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSaveRandomFileActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuSaveRandomFile);
 
         jMenuRunModeller.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuRunModeller.setText("Run Modeller");
@@ -641,6 +654,8 @@ public class DispersalModeller extends javax.swing.JFrame {
                 jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Detonation Map"));
             }
             jTabbedPane1.addTab("Detonation Map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
+            
+            
 
         }
 
@@ -684,8 +699,9 @@ public class DispersalModeller extends javax.swing.JFrame {
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
             //Need to check the content of the dispersal map first!!!
+            //Need to check which map we're trying to save - processed one or the random dispersal one
             io.writeData(storeDispersal.data, f2);
-            System.out.println("File saving worked, but did we save the dispersal map contents?");
+            System.out.println("File save completed");
         }
     }//GEN-LAST:event_jMenuSaveFileAsActionPerformed
 
@@ -709,7 +725,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
         //Load an HTML file to display app help
         new HtmlEditorKitTest();
-        
+
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
@@ -738,6 +754,14 @@ public class DispersalModeller extends javax.swing.JFrame {
         }
         jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
         System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+        
+        //Activate the Save Random File Menu Item
+        jMenuSaveRandomFile.setEnabled(true);
+        jMenuSaveRandomFile.setToolTipText("Save the random dispersal raster output");
+            
+        //Add a help text message to say that output can now be saved
+        jTextPaneMessages.setText("You can now save the Random Dispersal output. Check the File menu or just press Ctl+T");
+        
 
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
 
@@ -799,7 +823,9 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Data source to work from is optional. User may choose to work directly from a user-selected start point, without
         //having to open a source file first every time.        
         //Use shorthand to ensure that code cathes the error as soon as a non-compliant parameter is detected
-        if ((bacteriaCount > 0) && (xPos > 0) && (xPos < storeDispersal.data.length) && (yPos > 0) && (yPos < storeDispersal.data.length) && (detonationHeight >= 0) && (jSliderTotalProbability.getValue() == 100)) {
+        if ((bacteriaCount > 0) && (xPos > 0) && (xPos < storeDispersal.data.length) && (yPos > 0)
+                && (yPos < storeDispersal.data.length) && (detonationHeight >= 0)
+                && (jSliderTotalProbability.getValue() == 100)) {
             System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
             jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue()
                     + ": North: " + changeNorthProbability + ", East: " + changeEastProbability
@@ -810,7 +836,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
             //Save the data to the store.data object
             storeDispersal.data = dispersalArray;
-        //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
+            //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
 
             //Generate and display the random dispersal map
             //Draw the random dispersal map in the tabbed pane
@@ -840,7 +866,13 @@ public class DispersalModeller extends javax.swing.JFrame {
             System.out.println("FAILED -----> Model will not run; incorrect parameters");
             jTextPaneMessages.setText("Hey buddy! Check your parameter values!!! This ain't gonna work...");
         }
-
+        
+        //Activate the Save File Menu Item
+        jMenuSaveFileAs.setEnabled(true);
+        jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
+            
+        //Add a help text message to say that output can now be saved
+        jTextPaneMessages.setText("You can now save the Dispersal output. Check the File menu or just press Ctl+S");
         //End Modeller Button
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
 
@@ -885,6 +917,29 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jSliderWestProbabilityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSliderWestProbabilityKeyReleased
         setSliderValues();
     }//GEN-LAST:event_jSliderWestProbabilityKeyReleased
+
+    private void jMenuSaveRandomFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveRandomFileActionPerformed
+        // TODO add your handling code here:
+        //Add code here to save random dispersal map as image
+        FileDialog fw = new FileDialog(this, "Save Random Dispersal Raster File", FileDialog.SAVE);
+        //Implement filtering for all platforms but Windows
+        rasterFilter filter = new rasterFilter();
+        fw.setFilenameFilter(filter);
+        //Add filtering for Windows platform
+        //http://stackoverflow.com/questions/1241984/need-filedialog-with-a-file-type-filter-in-java
+        //http://www.rgagnon.com/javadetails/java-0247.html
+        fw.setFile("*.raster");
+
+        fw.setVisible(true);
+        File f2 = null;
+        if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
+            f2 = new File(fw.getDirectory() + fw.getFile());
+            //Need to check the content of the dispersal map first!!!
+            //Need to check which map we're trying to save - processed one or the random dispersal one
+            io.writeData(storeRandomDispersal.data, f2);
+            System.out.println("File save completed");
+        }
+    }//GEN-LAST:event_jMenuSaveRandomFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -948,6 +1003,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     public javax.swing.JMenuItem jMenuOpenFile;
     private javax.swing.JMenuItem jMenuRunModeller;
     private javax.swing.JMenuItem jMenuSaveFileAs;
+    private javax.swing.JMenuItem jMenuSaveRandomFile;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JSlider jSliderEastProbability;
     public javax.swing.JSlider jSliderNorthProbability;

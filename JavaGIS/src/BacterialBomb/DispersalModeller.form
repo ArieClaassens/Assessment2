@@ -78,10 +78,24 @@
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save Raster File"/>
-                <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value="Run the Modeller before you can save the output"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuSaveFileAsActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuSaveRandomFile">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+T"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Save Random Raster File"/>
+                <Property name="toolTipText" type="java.lang.String" value="Generate Random Dispersal before you can save the output"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuSaveRandomFileActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuRunModeller">
