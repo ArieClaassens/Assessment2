@@ -94,6 +94,11 @@ public class DispersalModeller extends javax.swing.JFrame {
         ImageIO.write(bufferedImage, "jpg", file);
     }
 
+    //Method to centralise actions for buttons and menuitems
+    //From http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
+    //Generate Random Data first
+   
+    
     /**
      * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with an
      * error message to display when total probability does not equal 100% and an info message to display when the total
@@ -767,7 +772,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
         //Load an HTML file to display app help
-        new HtmlEditorKitTest();
+        new HTMLHelp();
 
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 

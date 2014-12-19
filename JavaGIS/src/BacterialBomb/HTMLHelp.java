@@ -17,7 +17,7 @@ import javax.swing.text.html.StyleSheet;
  * @author alvin alexander, devdaily.com.
  * http://alvinalexander.com/blog/post/jfc-swing/how-create-simple-swing-html-viewer-browser-java
  */
-public class HtmlEditorKitTest {
+public class HTMLHelp {
 
     /*
      public static void main(String[] args)
@@ -25,7 +25,7 @@ public class HtmlEditorKitTest {
      new HtmlEditorKitTest();
      }
      */
-    public HtmlEditorKitTest() {
+    public HTMLHelp() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // create jeditorpane
@@ -63,7 +63,7 @@ public class HtmlEditorKitTest {
                 jEditorPane.setText(htmlString);
 
                 // now add it all to a frame
-                JFrame j = new JFrame("HtmlEditorKit Test");
+                JFrame j = new JFrame("BADdm Help File");
                 j.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
                 // make it easy to close the application
