@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
+University of Leeds, Leeds, West Yorkshire, UK.
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <meta name="keywords" content="BADdm, Bacterial, Agent, Dispersal, Modeller" />
+        <meta name="description" content="BADdm - Bacterial Agent Dispersal Modeller" />
+        <meta charset="UTF-8">
+        <style>
+            /* Created at http://csslayoutgenerator.com/ */
+            /* Eric Meyer's CSS Reset */
+            html, body, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, 
+            big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center,
+            dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, 
+            canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, 
+            mark, audio, video {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                font: inherit;
+                vertical-align: baseline;
+            }
+            /* HTML5 display-role reset for older browsers */
+            article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+                display: block;
+            }
+            body {
+                line-height: 1;
+            }
+            ol, ul {
+                list-style: none;
+            }
+            blockquote, q {
+                quotes: none;
+            }
+            blockquote:before, blockquote:after, q:before, q:after {
+                content: '';
+                content: none;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            /* End of Eric Meyer's CSS Reset */
+
+            body {
+                font: 10px Verdana, sans-serif;
+            }
+
+            h1 {
+                font: 16px Verdana, sans-serif;
+            }
+
+            h2 {
+                font: 14px Verdana, sans-serif;
+            }
+
+            h3 {
+                font: 12px Verdana, sans-serif;
+            }
+
+
+            .wrapper {
+                width: 100%;
+                min-width: 600px;
+            }
+            /* Header
+            -----------------------------------------------------------------------------*/
+            .header {
+                height: 50px;
+                font: 14px Verdana, sans-serif;
+                background: #848DAB;
+            }
+
+            /* Middle
+            -----------------------------------------------------------------------------*/
+            .content {
+
+            }
+
+            /* Footer
+            -----------------------------------------------------------------------------*/
+            .footer {
+                height: 20px;
+                font: 10px Verdana, sans-serif;
+                background: #ABA284;
+            } 
+        </style>
+        <title>BADdm Help File</title>
+    </head>
+    <body>
+        <div class="wrapper">
+
+            <div class="header">
+                <strong>Bacterial Agent Detonation Dispersal Modeller (BADdm) Help File</strong> 
+            </div><!-- .header-->
+
+            <div class="content">
+                <h2>Introduction</h2>
+                <p>The BADdm application is used to create a raster data file of the fallout from a biological weapon
+                    detonated in the middle of a town on top of a building. BADdm models the fallout of the bacterial agents 
+                    using two calculations to determine the change in height and direction for each particle every second.</p>
+                <p>&nbsp;</p>
+                <p>The height calculation decrements the height of the particle by 1 meter for every second if the particle 
+                    is equal to or below the original detonation point's height.</p>
+                <p>&nbsp;</p>
+                <p>The directional change is calculated using a random number generator, with the resulting number assigned to 
+                    one of four predefined direction brackets, with the range of the brackets correlating to the proportional 
+                    probability for change. The change probabilities are defined at 5% West, 10% North, 10% South and 75% West, 
+                    but may be modified via the Direction change probabilities sliders provided on the right-hand of the application interface.</p>
+                <p>&nbsp;</p>
+                <h2>Processing a raster file</h2>               
+                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>&nbsp;</p>
+                <h3>1. Load the raster data file</h3>
+                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>&nbsp;</p>
+                <h3>2. Process the raster data file</h3>
+                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>&nbsp;</p>
+                <h3>3. Save the results raster data file</h3>
+                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>&nbsp;</p>
+
+                <h2>Generating random data</h2>
+                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+                <p>&nbsp;</p>
+                <h3>1. Generate the random dispersal data</h3>
+                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+                <p>&nbsp;</p>
+                <h3>2. Save the random results raster data file</h3>
+                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+                <p>&nbsp;</p>
+                <h2>Changing Model parameters</h2>
+                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
+                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+
+                <p>&nbsp;</p>
+            </div><!-- .content-->
+
+            <div class="footer">
+                Copyright &copy 2014 Student 200825599: gy13awc@leeds.ac.uk. University of Leeds, Leeds, West Yorkshire, UK.
+                All rights reserved.
+            </div><!-- .footer -->
+
+        </div><!-- .wrapper -->
+
+    </body>
+</html>
