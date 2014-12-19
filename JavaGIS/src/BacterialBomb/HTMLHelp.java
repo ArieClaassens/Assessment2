@@ -72,9 +72,9 @@ public class HTMLHelp {
 			String result = sb.toString();
                         htmlString = result;
 
-			System.out.println("*** BEGIN ***");
-			System.out.println(result);
-			System.out.println("*** END ***");
+			//System.out.println("*** BEGIN ***");
+			//System.out.println(result);
+			//System.out.println("*** END ***");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
