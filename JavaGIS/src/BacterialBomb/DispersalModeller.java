@@ -21,13 +21,11 @@ package BacterialBomb;
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -70,29 +68,9 @@ public class DispersalModeller extends javax.swing.JFrame {
         }
     }
 
-    //Method to create buffered image from Toolkit image
-    //http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage
-    public static BufferedImage convertToBufferedImage(Image image) {
-        BufferedImage newImage = new BufferedImage(
-                image.getWidth(null), image.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = newImage.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return newImage;
-    }
+   
 
-    //Method to create PNG or JPG from BufferedImage
-    //Sourced from http://www.rgagnon.com/javadetails/java-0601.html
-    public static void writeImageToPNG(File file, BufferedImage bufferedImage)
-            throws IOException {
-        ImageIO.write(bufferedImage, "png", file);
-    }
-
-    public static void writeImageToJPG(File file, BufferedImage bufferedImage)
-            throws IOException {
-        ImageIO.write(bufferedImage, "jpg", file);
-    }
+    
 
     //Method to centralise actions for buttons and menuitems
     //From http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
@@ -682,13 +660,13 @@ public class DispersalModeller extends javax.swing.JFrame {
             Image imageDetonationMap = storeDetonation.getDataAsImage(); // or equivalent
             //g.drawImage(image, getInsets().left, getInsets().top, this);
             //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
-            BufferedImage bufferedImageDetonationMap = convertToBufferedImage(imageDetonationMap);
+            BufferedImage bufferedImageDetonationMap = ImageUtils.convertToBufferedImage(imageDetonationMap);
             //Stitch together filename for detonation map
             String filenameDetMap = filedir + "Detonation_map.png";
             File fileDetMap = new File(filenameDetMap);
 
             try {
-                writeImageToPNG(fileDetMap, bufferedImageDetonationMap);
+                ImageUtils.writeImageToPNG(fileDetMap, bufferedImageDetonationMap);
             } catch (IOException ex) {
                 //handle the IOException
                 System.out.println("The detonation map automated file save did not work");
@@ -783,13 +761,13 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //Draw the random dispersal map in the tabbed pane
         Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
-        BufferedImage bufferedImageDispersalMap = convertToBufferedImage(imageRandomDispersalMap);
+        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
         //Stitch together filename for detonation map
         String filenameRandomDisMap = filedir + "Random_Dispersal_map.png";
         File fileRandomDisMap = new File(filenameRandomDisMap);
 
         try {
-            writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
+            ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
         } catch (IOException ex) {
             //handle the IOException
             System.out.println("The dispersal map automated file save did not work");
@@ -893,13 +871,13 @@ public class DispersalModeller extends javax.swing.JFrame {
             Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
             //g.drawImage(image, getInsets().left, getInsets().top, this);
             //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
-            BufferedImage bufferedImageDispersalMap = convertToBufferedImage(imageDispersalMap);
+            BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
             //Stitch together filename for detonation map
             String filenameDisMap = filedir + "Dispersal_map.png";
             File fileDisMap = new File(filenameDisMap);
 
             try {
-                writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
+                ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
             } catch (IOException ex) {
                 //handle the IOException
                 System.out.println("The dispersal map automated file save did not work");
