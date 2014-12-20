@@ -118,25 +118,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     detonated in the middle of a town on top of a building. BADdm models the fallout of the bacterial agents 
                     using two calculations to determine the change in height and direction for each particle every second.</p>
                 <p>&nbsp;</p>
-                <p>The height calculation decrements the height of the particle by 1 meter for every second if the particle 
-                    is equal to or below the original detonation point's height.</p>
+                <p>The height calculation decrements the height of the particle by 1 meter for every second if the 
+                    particle is equal to or below the original detonation point's height.</p>
                 <p>&nbsp;</p>
                 <p>The directional change is calculated using a random number generator, with the resulting number assigned to 
                     one of four predefined direction brackets, with the range of the brackets correlating to the proportional 
                     probability for change. The change probabilities are defined at 5% West, 10% North, 10% South and 75% West, 
-                    but may be modified via the Direction change probabilities sliders provided on the right-hand of the application interface.</p>
+                    but may be modified via the Direction change probabilities sliders provided on the right-hand of 
+                    the application interface.</p>
                 <p>&nbsp;</p>
                 <h2>Processing a raster file</h2>               
-                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>This is the primary function of the application. The process consists of loading the raster data 
+                    source file, modying the modeller parameters if required, running the model and then saving the 
+                    calculated dispersal pattern in a new raster output file. The steps are covered in greater detail below.</p>
                 <p>&nbsp;</p>
                 <h3>1. Load the raster data file</h3>
-                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>Click on the menu bar, select the File menu item and then click on the Open File menu sub-item. Select 
+                    your raster data source file using the file dialog window that is now open. Click on the Open button 
+                    to load the data source file into the BADdm application. To return to the main application window 
+                    without selecting a file, click on the Cancel button.</p>
+                <p>&nbsp;</p>
+                <p>You will notice that the application disables the Save Raster File and Save Random Raster File menu sub-items 
+                until the application has generated the output raster data files.</p>
                 <p>&nbsp;</p>
                 <h3>2. Process the raster data file</h3>
-                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>BADdm loads a set of default parameters for the model execution, i.e. the directional change probabilities, 
+                detonation height, detonation point and number of particles. You may change these parameters using the 
+                Direction change probabilities sliders on the right-hand side of the application interface, the 
+                detonation point coordinate value text fields at the bottom of the application interface and the detonation 
+                height (Start height), along with the number of bacterial particles to include in your calculation.</p>
+                <p>&nbsp;</p>
+                <p>The direction change probabilities sliders can be moved by mouse or keyboard and must provide a cumulative 
+                total of 100%, as shown in the bottom slider titled TOTAL %, before the application will allow the model 
+                to be run.</p>
+                <p>&nbsp;</p>
+                <p>The detonation point coodinates, start height and particle count values can be set by typing the 
+                    required values directly into the respective text field, or in the case of the X Position and Y 
+                Position fields, by clicking on the required location in the window pane directly above these text fields. 
+                As the mouse moves around in the window pane, the cursor changes to a cross-hair, while the Mouse X Pos 
+                and Y Pos values update in real-time to indicate the relative position of the mouse cursor, in order to 
+                provide greater accuracy in selecting the new detonation point.</p>
+                <p>&nbsp;</p>
+                <p>Once you are happy with the values of the parameters, click on the Run modeller button located underneath 
+                the Direction change probabilities sliders. If the application detects incorrect parameters, it will 
+                display a warning message in the message box located underneath of the Run Modeller button. Correct the 
+                error and then click the Run Modeller button again to launch the model execution. The File menu contains 
+                a Run Modeller menu item, which can also be used to launch the modeller execution, either by clicking on 
+                the File menu and then clicking on the Run Modeller sub-menu item, or by using the keyboard shortcut Ctl+R.</p>
                 <p>&nbsp;</p>
                 <h3>3. Save the results raster data file</h3>
                 <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 

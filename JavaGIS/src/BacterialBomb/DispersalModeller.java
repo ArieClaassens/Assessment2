@@ -352,6 +352,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jLabelMouseY.setText("Mouse Y Pos:");
 
+        jTextFieldMouseX.setEditable(false);
         jTextFieldMouseX.setText("00");
         jTextFieldMouseX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,12 +360,15 @@ public class DispersalModeller extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldMouseY.setEditable(false);
         jTextFieldMouseY.setText("00");
 
         jMenu1.setText("File");
 
         jMenuOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/folder.png"))); // NOI18N
         jMenuOpenFile.setText("Open File");
+        jMenuOpenFile.setNextFocusableComponent(jMenuSaveFileAs);
         jMenuOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuOpenFileActionPerformed(evt);
@@ -373,8 +377,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu1.add(jMenuOpenFile);
 
         jMenuSaveFileAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuSaveFileAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/disk.png"))); // NOI18N
         jMenuSaveFileAs.setText("Save Raster File");
         jMenuSaveFileAs.setToolTipText("Run the Modeller before you can save the output");
+        jMenuSaveFileAs.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/error.png"))); // NOI18N
         jMenuSaveFileAs.setEnabled(false);
         jMenuSaveFileAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -384,8 +390,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu1.add(jMenuSaveFileAs);
 
         jMenuSaveRandomFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuSaveRandomFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/disk.png"))); // NOI18N
         jMenuSaveRandomFile.setText("Save Random Raster File");
         jMenuSaveRandomFile.setToolTipText("Generate Random Dispersal before you can save the output");
+        jMenuSaveRandomFile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/error.png"))); // NOI18N
         jMenuSaveRandomFile.setEnabled(false);
         jMenuSaveRandomFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -395,6 +403,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu1.add(jMenuSaveRandomFile);
 
         jMenuRunModeller.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuRunModeller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/bomb.png"))); // NOI18N
         jMenuRunModeller.setText("Run Modeller");
         jMenuRunModeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,6 +413,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu1.add(jMenuRunModeller);
 
         jMenuExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/door_in.png"))); // NOI18N
         jMenuExit.setText("Exit");
         jMenuExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,6 +427,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu2.setText("Edit");
 
         jMenuEditGenerateRandomData.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuEditGenerateRandomData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/shading.png"))); // NOI18N
         jMenuEditGenerateRandomData.setText("Generate Random Data");
         jMenuEditGenerateRandomData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,6 +441,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu3.setText("Help");
 
         jMenuHelpModeller.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuHelpModeller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/help.png"))); // NOI18N
         jMenuHelpModeller.setText("Modeller Help");
         jMenuHelpModeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,6 +450,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuHelpModeller);
 
+        jMenuHelpAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/information.png"))); // NOI18N
         jMenuHelpAbout.setText("About");
         jMenuHelpAbout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -670,13 +683,16 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuRunModellerActionPerformed
 
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jMenuHelpAboutActionPerformed");
-        //Display an application-modal Dialog window to the user, using the default dialog type icon
+         //Display an application-modal Dialog window to the user, using the default dialog type icon
         //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
         JOptionPane.showMessageDialog(this,
-                "Eggs are not supposed to be green.\n\r" + "And neither are toes...", "About BADdm",
-                JOptionPane.INFORMATION_MESSAGE);
+            "Bacterial Agent Detonation Dispersal Modeller v1.0.\n\n\r" + 
+            "Built in December 2015 by \n\rStudent 200825599 (gy13awc@leeds.ac.uk)\n\r" +
+            "University of Leeds, Leeds, West Yorkshire, UK.\n\n\r" +
+            "Built in Java using NetBeans IDE 8.0.2, \n\r" +
+            "GitHub, MantisBT and www.agilezen.com.", 
+            "About BADdm",
+            JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed

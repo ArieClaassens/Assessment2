@@ -63,7 +63,13 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/folder.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Open File"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="jMenuSaveFileAs"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuOpenFileActionPerformed"/>
@@ -77,8 +83,14 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/disk.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Save Raster File"/>
                 <Property name="toolTipText" type="java.lang.String" value="Run the Modeller before you can save the output"/>
+                <Property name="disabledIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/error.png"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -90,8 +102,14 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+T"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/disk.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Save Random Raster File"/>
                 <Property name="toolTipText" type="java.lang.String" value="Generate Random Dispersal before you can save the output"/>
+                <Property name="disabledIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/error.png"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -103,6 +121,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+R"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/bomb.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Run Modeller"/>
               </Properties>
               <Events>
@@ -113,6 +134,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+X"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/door_in.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
@@ -132,6 +156,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+D"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/shading.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Generate Random Data"/>
               </Properties>
               <Events>
@@ -150,6 +177,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F1"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/help.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Modeller Help"/>
               </Properties>
               <Events>
@@ -158,6 +188,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuHelpAbout">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/BacterialBomb/information.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="About"/>
               </Properties>
               <Events>
@@ -633,6 +666,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldMouseX">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="00"/>
       </Properties>
       <Events>
@@ -641,6 +675,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldMouseY">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="00"/>
       </Properties>
     </Component>
