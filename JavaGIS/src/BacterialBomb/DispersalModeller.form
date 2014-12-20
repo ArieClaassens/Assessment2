@@ -321,8 +321,7 @@
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="jButtonRunModeller" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="94" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="77" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jTabbedPane1" min="-2" pref="351" max="-2" attributes="0"/>
@@ -333,7 +332,7 @@
                           <Component id="jTextFieldMouseX" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldMouseY" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelXPos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldXPos" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -347,9 +346,9 @@
                           <Component id="jLabelParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
