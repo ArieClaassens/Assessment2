@@ -20,11 +20,9 @@ package BacterialBomb;
 
 import java.awt.Color;
 import java.awt.FileDialog;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -46,37 +44,17 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Instantiate new IO object
     IO io = new IO();
 
-    //Font to use for warnings
-    //From http://stackoverflow.com/questions/10630738/how-to-set-strings-font-size-style-in-java-using-font-class
-    // and http://www.java2s.com/Tutorial/Java/0261__2D-Graphics/javaawtFont.htm
-    Font fontWarning = new Font("Serif", Font.BOLD | Font.ITALIC, 12);
-    Font fontReady = new Font("Serif", Font.PLAIN, 12);
 
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
-    String filedir = null;
+    private String filedir = null;
 
     //label to hold detonationPoint value
-    String detonationPoint = null;
-
-    //Method to limit file extensions to .raster on all platforms except Windows
-    //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
-    public class rasterFilter implements FilenameFilter {
-
-        public boolean accept(File dir, String name) {
-            return (name.endsWith(".raster"));
-        }
-    }
-
-   
-
-    
+    private String detonationPoint = null;
 
     //Method to centralise actions for buttons and menuitems
     //From http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
     //Generate Random Data first
-   
-    
     /**
      * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with an
      * error message to display when total probability does not equal 100% and an info message to display when the total
@@ -637,7 +615,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f = null;
         if ((fd.getDirectory() != null) || (fd.getFile() != null)) {
             //Labels to use in saving the detonation map
-            filedir = fd.getDirectory();
+            setFiledir(fd.getDirectory());
             String filename = fd.getFile();
 
             f = new File(fd.getDirectory() + fd.getFile());
@@ -645,24 +623,22 @@ public class DispersalModeller extends javax.swing.JFrame {
             //repaint();
 
             //Find the detonation point
-            detonationPoint = storeDetonation.locateDetonationPoint(storeDetonation.data);
-            System.out.println("detpoint is: " + detonationPoint + " and this is a string, BTW!!!");
+            setDetonationPoint(storeDetonation.locateDetonationPoint(storeDetonation.data));
+            System.out.println("detpoint is: " + getDetonationPoint() + " and this is a string, BTW!!!");
 
             //Populate the X Position text field
-            jTextFieldXPos.setText(detonationPoint.substring(detonationPoint.indexOf('{') + 1, detonationPoint.indexOf(',')));
+            jTextFieldXPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf('{') + 1, getDetonationPoint().indexOf(',')));
             //Populate the Y Position text field
-            jTextFieldYPos.setText(detonationPoint.substring(detonationPoint.indexOf(',') + 1, detonationPoint.indexOf('}')));
+            jTextFieldYPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf(',') + 1, getDetonationPoint().indexOf('}')));
 
             //Populate the Total Probability text field
             jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
 
             //Draw the detonation map in the tabbed pane
-            Image imageDetonationMap = storeDetonation.getDataAsImage(); // or equivalent
-            //g.drawImage(image, getInsets().left, getInsets().top, this);
-            //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
+            Image imageDetonationMap = storeDetonation.getDataAsImage();
             BufferedImage bufferedImageDetonationMap = ImageUtils.convertToBufferedImage(imageDetonationMap);
             //Stitch together filename for detonation map
-            String filenameDetMap = filedir + "Detonation_map.png";
+            String filenameDetMap = getFiledir() + "Detonation_map.png";
             File fileDetMap = new File(filenameDetMap);
 
             try {
@@ -671,20 +647,14 @@ public class DispersalModeller extends javax.swing.JFrame {
                 //handle the IOException
                 System.out.println("The detonation map automated file save did not work");
             }
-            //jTabbedPane1.addTab("Clicky map", new JLabel(bufferedImageDetonationMap));
-            System.out.println("The fing name is " + filenameDetMap);
-            //jTabbedPane1.addTab("Clicky map", new JLabel(DispersalModeller.class.getResource(f+".png")), rootPane);
-            //jTabbedPane1.addTab("Clicky map", new ImageIcon(DispersalModeller.class.getResource(filename + ".png")), rootPane);
+            System.out.println("The file name is " + filenameDetMap);
 
             //If the tab exists, remove it and the corresponding component. Speficfied using the index
             if (jTabbedPane1.indexOfTab("Detonation Map") >= 0) {
                 jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Detonation Map"));
             }
             jTabbedPane1.addTab("Detonation Map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
-
         }
-
-
     }//GEN-LAST:event_jMenuOpenFileActionPerformed
 
     private void jMenuSaveFileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveFileAsActionPerformed
@@ -763,7 +733,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
         BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
         //Stitch together filename for detonation map
-        String filenameRandomDisMap = filedir + "Random_Dispersal_map.png";
+        String filenameRandomDisMap = getFiledir() + "Random_Dispersal_map.png";
         File fileRandomDisMap = new File(filenameRandomDisMap);
 
         try {
@@ -805,10 +775,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         //WAIT - WE'RE APPENDING TEXT TO TURN INTEGER VALUES INTO STRINGS!!! FIX IT FIX IT FIX IT
         //Only updates on the first click
         System.out.println("Coordinates: " + this.getMousePosition());
-        jTextFieldXPos.setText((int)this.getMousePosition().getX() + "");
-        jTextFieldYPos.setText((int)this.getMousePosition().getY() + "");
-        jTextFieldMouseX.setText((int)this.getMousePosition().getX() + "");
-        jTextFieldMouseY.setText((int)this.getMousePosition().getY() + "");
+        jTextFieldXPos.setText((int) this.getMousePosition().getX() + "");
+        jTextFieldYPos.setText((int) this.getMousePosition().getY() + "");
+        jTextFieldMouseX.setText((int) this.getMousePosition().getX() + "");
+        jTextFieldMouseY.setText((int) this.getMousePosition().getY() + "");
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jTextFieldXPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldXPosActionPerformed
@@ -873,7 +843,7 @@ public class DispersalModeller extends javax.swing.JFrame {
             //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
             BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
             //Stitch together filename for detonation map
-            String filenameDisMap = filedir + "Dispersal_map.png";
+            String filenameDisMap = getFiledir() + "Dispersal_map.png";
             File fileDisMap = new File(filenameDisMap);
 
             try {
@@ -975,8 +945,8 @@ public class DispersalModeller extends javax.swing.JFrame {
         //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
 
         System.out.println("Coordinates: " + this.getMousePosition());
-        jTextFieldXPos.setText((int)this.getMousePosition().getX() + "");
-        jTextFieldYPos.setText((int)this.getMousePosition().getY() + "");
+        jTextFieldXPos.setText((int) this.getMousePosition().getX() + "");
+        jTextFieldYPos.setText((int) this.getMousePosition().getY() + "");
 
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
@@ -986,9 +956,9 @@ public class DispersalModeller extends javax.swing.JFrame {
         //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
 
         System.out.println("Coordinates: " + this.getMousePosition());
-        jTabbedPane1.setToolTipText("Current mouse location: X:" + (int)this.getMousePosition().getX() + ", Y: " + (int)this.getMousePosition().getY());
-        jTextFieldMouseX.setText((int)this.getMousePosition().getX() + "");
-        jTextFieldMouseY.setText((int)this.getMousePosition().getY() + "");
+        jTabbedPane1.setToolTipText("Current mouse location: X:" + (int) this.getMousePosition().getX() + ", Y: " + (int) this.getMousePosition().getY());
+        jTextFieldMouseX.setText((int) this.getMousePosition().getX() + "");
+        jTextFieldMouseY.setText((int) this.getMousePosition().getY() + "");
     }//GEN-LAST:event_jTabbedPane1MouseMoved
 
     private void jTextFieldMouseXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMouseXActionPerformed
@@ -1076,4 +1046,32 @@ public class DispersalModeller extends javax.swing.JFrame {
     public javax.swing.JTextField jTextFieldYPos;
     private javax.swing.JTextPane jTextPaneMessages;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the detonationPoint
+     */
+    public String getDetonationPoint() {
+        return detonationPoint;
+    }
+
+    /**
+     * @param detonationPoint the detonationPoint to set
+     */
+    public void setDetonationPoint(String detonationPoint) {
+        this.detonationPoint = detonationPoint;
+    }
+
+    /**
+     * @return the filedir
+     */
+    public String getFiledir() {
+        return filedir;
+    }
+
+    /**
+     * @param filedir the filedir to set
+     */
+    public void setFiledir(String filedir) {
+        this.filedir = filedir;
+    }
 }
