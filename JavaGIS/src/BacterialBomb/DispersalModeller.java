@@ -55,6 +55,8 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Method to centralise actions for buttons and menuitems
     //From http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
     //Generate Random Data first
+    
+    
     /**
      * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with an
      * error message to display when total probability does not equal 100% and an info message to display when the total
@@ -582,24 +584,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenFileActionPerformed
-        /* Original code - switched to using code rolled on my own
-         int returnVal = jFileChooser.showOpenDialog(this);
-         if (returnVal == jFileChooser.APPROVE_OPTION) {
-         File file = jFileChooser.getSelectedFile();
-         try {
-         // What to do with the file, e.g. display it in a TextArea
-         //textarea.read( new FileReader( file.getAbsolutePath() ), null );
-         //FileReader inputFile = new FileReader(file.getAbsolutePath());
-         //System.out.println("File opened fine -> " + inputFile);
-         store.setData(io.readData(inputFile));
-                
-         } catch (IOException ex) {
-         System.out.println("Problem accessing file" + file.getAbsolutePath());
-         }
-         } else {
-         System.out.println("File access cancelled by user.");
-         }
-         */
+        
 
         FileDialog fd = new FileDialog(this, "Open Raster File", FileDialog.LOAD);
         //Implement filtering for all platforms but Windows
@@ -658,27 +643,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuOpenFileActionPerformed
 
     private void jMenuSaveFileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveFileAsActionPerformed
-        /* original code
-         int returnVal = jFileSaver.showSaveDialog(this);
-         if (returnVal == jFileSaver.APPROVE_OPTION) {
-         File file2 = jFileSaver.getSelectedFile();
-         try {
-         // What to do with the file, e.g. display it in a TextArea
-         //textarea.read( new FileReader( file.getAbsolutePath() ), null );
-         //Overwrite the chosen file, no appending.
-         FileWriter writer = new FileWriter(file2, false);
-         writer.append("Data inside the file");
-         //writer.append(inputFile);
-         writer.flush();
-         writer.close();
-         System.out.println("File saving worked, but did we save the dispersal map contents?");
-         } catch (IOException ex) {
-         System.out.println("problem accessing file" + file2.getAbsolutePath());
-         }
-         } else {
-         System.out.println("File save cancelled by user.");
-         }
-         */
 
         FileDialog fw = new FileDialog(this, "Save Raster File", FileDialog.SAVE);
         //Implement filtering for all platforms but Windows
