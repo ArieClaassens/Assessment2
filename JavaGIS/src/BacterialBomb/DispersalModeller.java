@@ -45,6 +45,12 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Instantiate new IO object
     IO io = new IO();
 
+    //Mouse coordinates offset to incorporate when using the tabbed pane area for accepting mouse clicks to determine
+    //a new detonation point. These offset values need to be deducted from the real mouse coordinate values in order 
+    //to provide the relative coordinate values in reference to the dispersal maps displayed in the tabbed pane.
+    int mouseOffsetX = 20;
+    int mouseOffsetY = 120;
+
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
     //Log the working directory so that we can use it for the automated map image generation, see 
@@ -63,8 +69,8 @@ public class DispersalModeller extends javax.swing.JFrame {
     public void setSliderValues() {
         jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
-        //System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
-        //Notify the user if the probability parameters are invalid
+
+        //Inform the user of the validity of the direction change probability parameters
         if (jSliderTotalProbability.getValue() != 100) {
             jSliderTotalProbability.setForeground(Color.red);
             jTextFieldTotalProbability.setForeground(Color.red);
@@ -76,7 +82,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         }
     }
 
-    //Run the Modeller on the supplied data set
+    //Method to run the Modeller on the supplied data set
     public void RunModeller(Storage srcArray) {
         //Check whether we have the data and parameters required for the job and that they contain sensible values
         //We need:
@@ -101,18 +107,18 @@ public class DispersalModeller extends javax.swing.JFrame {
         int changeSouthProbability = jSliderSouthProbability.getValue();
         int changeWestProbability = jSliderWestProbability.getValue();
 
-        //Data source to work from is optional. User may choose to work directly from a user-selected start point, without
+        //Data source to process is optional. User may choose to work directly from a user-selected start point, without
         //having to open a source file first every time.       
-        
         //Use shorthand to ensure that code stops as soon as a non-compliant parameter is detected
         if ((bacteriaCount > 0) && (xPos > 0) && (xPos < srcArray.data.length) && (yPos > 0)
                 && (yPos < srcArray.data.length) && (detonationHeight >= 0)
                 && (jSliderTotalProbability.getValue() == 100)) {
-            //System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
+
+            //Parameters are all valid, proceed with the modelling process
             jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue()
                     + ": North: " + changeNorthProbability + ", East: " + changeEastProbability
                     + ", South: " + changeSouthProbability + ", West: " + changeWestProbability);
-            
+
             //Run the Modeller using the supplied parameters after passing the paramter validity tests
             double[][] dispersalArray = srcArray.calculateDispersal(bacteriaCount, srcArray.data.length,
                     srcArray.data.length, xPos, yPos, changeNorthProbability, changeEastProbability,
@@ -123,12 +129,25 @@ public class DispersalModeller extends javax.swing.JFrame {
             //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
 
         } else {
-            //Display an error message to the user. Maybe utilise a popup window to make it more obvious?
-            
-            //System.out.println("FAILED -----> Model will not run; incorrect parameters");
-            jTextPaneMessages.setText("Hey buddy! Check your parameter values!!! This ain't gonna work...");
-        }
+            //Parameter validity tests failed. Display an error message to the user. 
+            //Utilise a popup window to call attention to the problem
+            jTextPaneMessages.setText("Invalid parameters detected. Please fix your model parameter values. "
+                    + "Press the F1 key to view the help file.");
 
+            //Display an application-modal Dialog window to the user, using the default dialog type icon
+            //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+            JOptionPane.showMessageDialog(this,
+                    "Please check your model parameters!\n\n\r"
+                    + "If you are not running the Random Dispersal function,\n\r"
+                    + "you must load a raster data source file first.\n\n\r"
+                    + "Check that the directional change probability equals 100%.\n\r"
+                    + "Check that you have a valid detonation point.\n\r"
+                    + "Check that you have a valid detonation height.\n\r"
+                    + "Check that you have a valid particle count.\n\n\r"
+                    + "To access the help file, close this window and press F1.",
+                    "Invalid Parameters",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -221,11 +240,6 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldXPos.setText("00");
         jTextFieldXPos.setToolTipText("X position of the detonation point");
         jTextFieldXPos.setMaximumSize(new java.awt.Dimension(20, 20));
-        jTextFieldXPos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldXPosActionPerformed(evt);
-            }
-        });
 
         jLabelYPos.setText("Y Position:");
 
@@ -233,11 +247,6 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldYPos.setToolTipText("Y position of the detonation point");
         jTextFieldYPos.setMaximumSize(new java.awt.Dimension(20, 20));
         jTextFieldYPos.setName(""); // NOI18N
-        jTextFieldYPos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldYPosActionPerformed(evt);
-            }
-        });
 
         jSliderEastProbability.setMajorTickSpacing(20);
         jSliderEastProbability.setMinorTickSpacing(10);
@@ -356,7 +365,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextPaneMessages);
 
         jTextFieldTotalProbability.setEditable(false);
-        jTextFieldTotalProbability.setText("0");
+        jTextFieldTotalProbability.setText("100");
         jTextFieldTotalProbability.setToolTipText("The total probability value for all the wind-speed change factors");
 
         jLabelMouseX.setText("Mouse X Pos:");
@@ -365,11 +374,6 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jTextFieldMouseX.setEditable(false);
         jTextFieldMouseX.setText("00");
-        jTextFieldMouseX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMouseXActionPerformed(evt);
-            }
-        });
 
         jTextFieldMouseY.setEditable(false);
         jTextFieldMouseY.setText("00");
@@ -587,7 +591,7 @@ public class DispersalModeller extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelMouseX)
@@ -618,6 +622,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Besig hierso
     private void jMenuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenFileActionPerformed
 
         FileDialog fd = new FileDialog(this, "Open Raster File", FileDialog.LOAD);
@@ -691,10 +696,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
-            
+
             //Convert the object from double data type to integer data type
             int[][] intDispersalArray = storeDispersal.castDoubleToInt(storeDispersal.data);
-            
+
             //Save the dispersal map generated from the source data set
             //io.writeData(storeDispersal.data, f2);
             io.writeIntData(intDispersalArray, f2);
@@ -703,10 +708,43 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuSaveFileAsActionPerformed
 
     private void jMenuRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRunModellerActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jMenuRunModellerActionPerformed");
+
         //Run the modeller using the raster data source object.
         RunModeller(storeDispersal);
+
+        //Generate and display the random dispersal map
+        //Draw the random dispersal map in the tabbed pane
+        Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
+        //Create a buffered image from the dispersal map image 
+        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
+
+        //Construct the full filename for the dispersal map
+        String filenameDisMap = getFiledir() + "Dispersal_map.png";
+        File fileDisMap = new File(filenameDisMap);
+
+        try {
+            ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
+        } catch (IOException ex) {
+            //handle the IOException
+            System.out.println("The dispersal map automated file save did not work");
+        }
+        //System.out.println("The Dispersal map's name is " + filenameDisMap);
+        //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
+        //the previously generated map
+        if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
+        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+
+        //Activate the Save File Menu Item since we now have output data that can be saved
+        jMenuSaveFileAs.setEnabled(true);
+        jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
+
+        //Display a text message to say that the output can now be saved
+        jTextPaneMessages.setText("You can now save the Dispersal output. Check the File menu or just press Ctl+S");
+        //End Modeller Menu Item processes
+
     }//GEN-LAST:event_jMenuRunModellerActionPerformed
 
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
@@ -723,18 +761,20 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
-        System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
+
+        //System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
         //Load an HTML file to display the application help
         //Use a parameter to select the file to load, with a switch in the HTMLHelp class
         new HTMLHelp();
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
-        System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
+
+        //System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
         //Generate a random detonation point and then run the modeller
         //create a random det point and set the XPos and YPos values
         String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
-        System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
+        //System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
 
         //Populate the X Position text field
         jTextFieldXPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf('{') + 1, randomDetonationPoint.indexOf(',')));
@@ -761,22 +801,23 @@ public class DispersalModeller extends javax.swing.JFrame {
             ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
         } catch (IOException ex) {
             //handle the IOException
-            System.out.println("The dispersal map automated file save did not work");
+            jTextPaneMessages.setText("Warning: the dispersal map automated file save did not work");
         }
-        System.out.println("The Random Dispersal map's name is " + filenameRandomDisMap);
+
+        //System.out.println("The Random Dispersal map's name is " + filenameRandomDisMap);
         //If the tab exists, remove it and the corresponding component. Speficfied using the index
         if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
             jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
         }
         jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
-        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
 
         //Activate the Save Random File Menu Item
         jMenuSaveRandomFile.setEnabled(true);
         jMenuSaveRandomFile.setToolTipText("Save the random dispersal raster output");
 
         //Add a help text message to say that output can now be saved
-        jTextPaneMessages.setText("You can now save the Random Dispersal output. Check the File menu or just press Ctl+T");
+        jTextPaneMessages.setText("You can now save the Random Dispersal output. Use the File menu or just press Ctl+T");
 
 
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
@@ -787,35 +828,23 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuExitActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        // TODO add your handling code here:
-        //jTextFieldXPos.setText(" ");
-        //jTextFieldYPos.setText(" ");
-        System.out.println("TRIGGERED -----> jTabbedPane1MouseClicked");
+
+        //System.out.println("TRIGGERED -----> jTabbedPane1MouseClicked");
         //Capture Mouse position relative to tabbed pane and display in a text box
         //System.out.println("Coordinates: " + this.getX() + "," + this.getY() + " logged");
         //WAIT - WE'RE APPENDING TEXT TO TURN INTEGER VALUES INTO STRINGS!!! FIX IT FIX IT FIX IT
         //Only updates on the first click
-        System.out.println("Coordinates: " + this.getMousePosition());
-        jTextFieldXPos.setText((int) this.getMousePosition().getX() + "");
-        jTextFieldYPos.setText((int) this.getMousePosition().getY() + "");
-        jTextFieldMouseX.setText((int) this.getMousePosition().getX() + "");
-        jTextFieldMouseY.setText((int) this.getMousePosition().getY() + "");
+        //System.out.println("Coordinates: " + this.getMousePosition());
+        jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
     }//GEN-LAST:event_jTabbedPane1MouseClicked
-
-    private void jTextFieldXPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldXPosActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jTextFieldXPosActionPerformed");
-    }//GEN-LAST:event_jTextFieldXPosActionPerformed
-
-    private void jTextFieldYPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYPosActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jTextFieldYPosActionPerformed");
-    }//GEN-LAST:event_jTextFieldYPosActionPerformed
 
 
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
+
+        //System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
         //Run the modeller on the non-random data set object
         RunModeller(storeDispersal);
 
@@ -903,7 +932,7 @@ public class DispersalModeller extends javax.swing.JFrame {
             f2 = new File(fw.getDirectory() + fw.getFile());
             //Convert the object from double data type to integer data type
             int[][] intRandomDispersalArray = storeRandomDispersal.castDoubleToInt(storeRandomDispersal.data);
-            
+
             //io.writeData(storeRandomDispersal.data, f2);
             io.writeIntData(intRandomDispersalArray, f2);
             System.out.println("File save completed");
@@ -911,13 +940,12 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuSaveRandomFileActionPerformed
 
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jTabbedPane1MousePressed");
-        //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
 
-        System.out.println("Coordinates: " + this.getMousePosition());
-        jTextFieldXPos.setText((int) this.getMousePosition().getX() + "");
-        jTextFieldYPos.setText((int) this.getMousePosition().getY() + "");
+        //System.out.println("TRIGGERED -----> jTabbedPane1MousePressed");
+        //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
+        //System.out.println("Coordinates: " + this.getMousePosition());
+        jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
 
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
@@ -927,14 +955,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
 
         //System.out.println("Coordinates: " + this.getMousePosition());
-        jTabbedPane1.setToolTipText("Current mouse location: X:" + (int) this.getMousePosition().getX() + ", Y: " + (int) this.getMousePosition().getY());
-        jTextFieldMouseX.setText((int) this.getMousePosition().getX() + "");
-        jTextFieldMouseY.setText((int) this.getMousePosition().getY() + "");
+        jTabbedPane1.setToolTipText("The current cursor position is X:" + (int) this.getMousePosition().getX() + ", Y: " + (int) this.getMousePosition().getY());
+        jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
     }//GEN-LAST:event_jTabbedPane1MouseMoved
-
-    private void jTextFieldMouseXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMouseXActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMouseXActionPerformed
 
     private void jButtonRunRandomModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunRandomModellerActionPerformed
         //Generate a random detonation point and then run the modeller
