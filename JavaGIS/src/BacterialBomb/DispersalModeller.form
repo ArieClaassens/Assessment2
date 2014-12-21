@@ -156,7 +156,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/BacterialBomb/shading.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Generate Random Data"/>
+                <Property name="text" type="java.lang.String" value="Generate Random Map"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuEditGenerateRandomDataActionPerformed"/>
@@ -252,6 +252,7 @@
                                   <Component id="jSliderWestProbability" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
                                   <Component id="jSliderTotalProbability" min="-2" pref="143" max="-2" attributes="0"/>
                                   <Component id="jTextFieldTotalProbability" alignment="0" min="-2" pref="44" max="-2" attributes="0"/>
+                                  <Component id="jButtonRunRandomModeller" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -350,8 +351,10 @@
                       <Component id="jTextFieldTotalProbability" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="jButtonRunModeller" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="77" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <Component id="jButtonRunRandomModeller" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="67" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jTabbedPane1" min="-2" pref="351" max="-2" attributes="0"/>
@@ -376,9 +379,10 @@
                           <Component id="jLabelParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldParticleCount" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -675,6 +679,14 @@
         <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="00"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRunRandomModeller">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Run Random Modeller"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRunRandomModellerActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

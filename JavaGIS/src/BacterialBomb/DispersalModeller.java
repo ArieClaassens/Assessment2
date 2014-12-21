@@ -47,7 +47,9 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
-    private String filedir = null;
+    //Log the working directory so that we can use it for the automated map image generation, see 
+    //http://www.javapractices.com/topic/TopicAction.do?Id=260 for more info
+    private String filedir = System.getProperty("user.dir");
 
     //label to hold detonationPoint value
     private String detonationPoint = null;
@@ -174,6 +176,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jLabelMouseY = new javax.swing.JLabel();
         jTextFieldMouseX = new javax.swing.JTextField();
         jTextFieldMouseY = new javax.swing.JTextField();
+        jButtonRunRandomModeller = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuOpenFile = new javax.swing.JMenuItem();
@@ -411,6 +414,13 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldMouseY.setEditable(false);
         jTextFieldMouseY.setText("00");
 
+        jButtonRunRandomModeller.setText("Run Random Modeller");
+        jButtonRunRandomModeller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRunRandomModellerActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -475,7 +485,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jMenuEditGenerateRandomData.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         jMenuEditGenerateRandomData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/shading.png"))); // NOI18N
-        jMenuEditGenerateRandomData.setText("Generate Random Data");
+        jMenuEditGenerateRandomData.setText("Generate Random Map");
         jMenuEditGenerateRandomData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuEditGenerateRandomDataActionPerformed(evt);
@@ -536,7 +546,8 @@ public class DispersalModeller extends javax.swing.JFrame {
                                     .addComponent(jSliderSouthProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jSliderWestProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jSliderTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonRunRandomModeller)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(7, 7, 7)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -610,8 +621,10 @@ public class DispersalModeller extends javax.swing.JFrame {
                         .addComponent(jTextFieldTotalProbability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
                         .addComponent(jButtonRunModeller)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(jButtonRunRandomModeller)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -631,8 +644,9 @@ public class DispersalModeller extends javax.swing.JFrame {
                             .addComponent(jLabelHeightStart)
                             .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelParticleCount)
-                            .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                            .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jTextFieldStartHeight.getAccessibleContext().setAccessibleName("Start height");
@@ -725,6 +739,8 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jMenuRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRunModellerActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuRunModellerActionPerformed");
+        //Run the modeller using the raster data source object.
+        RunModeller(storeDispersal);
     }//GEN-LAST:event_jMenuRunModellerActionPerformed
 
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
@@ -960,6 +976,56 @@ public class DispersalModeller extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMouseXActionPerformed
 
+    private void jButtonRunRandomModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunRandomModellerActionPerformed
+        //Generate a random detonation point and then run the modeller
+        //create a random det point and set the XPos and YPos values
+        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
+        System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
+
+        //Populate the X Position text field
+        jTextFieldXPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf('{') + 1, randomDetonationPoint.indexOf(',')));
+        //Populate the Y Position text field
+        jTextFieldYPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf(',') + 1, randomDetonationPoint.indexOf('}')));
+
+        //Refresh the Total Probability text field
+        jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
+
+        //Run the modeller on the random data storage object
+        RunModeller(storeRandomDispersal);
+        //storeRandomDispersal.setRandomData();
+
+        //Run the modeller with the new values
+        //Generate and display the random dispersal map
+        //Draw the random dispersal map in the tabbed pane
+        Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
+        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
+        //Stitch together filename for detonation map
+        String filenameRandomDisMap = getFiledir() + "Random_Dispersal_map.png";
+        File fileRandomDisMap = new File(filenameRandomDisMap);
+
+        try {
+            ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
+        } catch (IOException ex) {
+            //handle the IOException
+            System.out.println("The dispersal map automated file save did not work");
+        }
+        System.out.println("The Random Dispersal map's name is " + filenameRandomDisMap);
+        //If the tab exists, remove it and the corresponding component. Speficfied using the index
+        if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
+        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+
+        //Activate the Save Random File Menu Item
+        jMenuSaveRandomFile.setEnabled(true);
+        jMenuSaveRandomFile.setToolTipText("Save the random dispersal raster output");
+
+        //Add a help text message to say that output can now be saved
+        jTextPaneMessages.setText("You can now save the Random Dispersal output. Check the File menu or just press Ctl+T");
+
+    }//GEN-LAST:event_jButtonRunRandomModellerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -998,6 +1064,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog aboutDialog;
     public javax.swing.JButton jButtonRunModeller;
+    private javax.swing.JButton jButtonRunRandomModeller;
     private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JFileChooser jFileSaver;
     private javax.swing.JLabel jLabel1;
