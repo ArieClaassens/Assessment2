@@ -116,22 +116,7 @@ public class Storage {
         }
     }
 
-    /*
-     * Mutator method to populate array with random data.
-     * Accepts and returns nothing
-     */
-    public void setRandomData() {
-        //outer loop for rows
-        for (int i = 0; i < data.length; i++) {
-            //inner loop for columns
-            for (int j = 0; j < data[i].length; j++) {
-                //generate random integer values.
-                //Stoage object in this app uses double, but we're working with INT values and can reduce output
-                //from 1.64MB to 606KB by casting to INT
-                data[i][j] = (int) (Math.random() * 1000);
-            }
-        }
-    }
+  
     
     //Convert the source object values from double to integer data type
     public int[][] castDoubleToInt(double srcArray[][]) {

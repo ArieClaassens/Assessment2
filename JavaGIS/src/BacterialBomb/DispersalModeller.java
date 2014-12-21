@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
  *
  * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  * Icons sourced from http://www.famfamfam.com/lab/icons/silk/
+ * App icon example code sourced from http://java-demos.blogspot.in/2013/11/animate-icon-image-in-jframe.html
  */
 public class DispersalModeller extends javax.swing.JFrame {
 
@@ -50,6 +51,9 @@ public class DispersalModeller extends javax.swing.JFrame {
     //to provide the relative coordinate values in reference to the dispersal maps displayed in the tabbed pane.
     int mouseOffsetX = 20;
     int mouseOffsetY = 120;
+
+    //Label to define whether output should be converted from double to integer type when saving output
+    Boolean outputToInt = true;
 
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
@@ -149,6 +153,76 @@ public class DispersalModeller extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    
+    public void showRandomDispersalMap() {
+        //Draw the random dispersal map in the tabbed pane
+        Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage();
+        //Create the buffered image from the random dispersal map image
+        BufferedImage bufferedImageRandomDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
+        
+        //Construct the full filename for the dispersal map
+        String filenameRandomDisMap = getFiledir() + "Random_Dispersal_map.png";
+        File fileRandomDisMap = new File(filenameRandomDisMap);
+
+        try {
+            //Generate the PNG image file of the random dispersal map
+            ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageRandomDispersalMap);
+            //Notify the user that the process completed successfully
+            jTextPaneMessages.setText("Notice: The random dispersal map automated file save worked flawlessly");
+        } catch (IOException ex) {
+            //handle the IOException
+            //Warn the user of the issue
+            jTextPaneMessages.setText("Warning: The random dispersal map automated file save did not work");
+        }
+
+        //If the tab exists, remove it and the corresponding component speficfied using the index
+        if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
+
+        //Activate the Save Random File Menu Item
+        jMenuSaveRandomFile.setEnabled(true);
+        jMenuSaveRandomFile.setToolTipText("Save the random dispersal raster output");
+
+        //Add a help text message to say that output can now be saved
+        jTextPaneMessages.setText("You can now save the Random Dispersal output. Use the File menu or just press Ctl+T");
+    }
+    
+    public void showDispersalMap(){
+        //Generate and display the random dispersal map
+        //Draw the random dispersal map in the tabbed pane
+        Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
+        //Create a buffered image from the dispersal map image 
+        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
+
+        //Construct the full filename for the dispersal map
+        String filenameDisMap = getFiledir() + "Dispersal_map.png";
+        File fileDisMap = new File(filenameDisMap);
+
+        try {
+            ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
+        } catch (IOException ex) {
+            //handle the IOException
+            System.out.println("The dispersal map automated file save did not work");
+        }
+        //System.out.println("The Dispersal map's name is " + filenameDisMap);
+        //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
+        //the previously generated map
+        if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
+        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+
+        //Activate the Save File Menu Item since we now have output data that can be saved
+        jMenuSaveFileAs.setEnabled(true);
+        jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
+
+        //Display a text message to say that the output can now be saved
+        jTextPaneMessages.setText("You can now save the Dispersal output. Check the File menu or just press Ctl+S");
+    }
 
     /**
      * Creates new form DispersalModeller
@@ -209,6 +283,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biological Agent Detonation Dispersal Modeller");
+        setIconImage(new ImageIcon(getClass().getResource("bomb.png")).getImage());
         setLocationByPlatform(true);
         setName("frameMain"); // NOI18N
 
@@ -622,7 +697,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    //Besig hierso
+    
     private void jMenuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenFileActionPerformed
 
         FileDialog fd = new FileDialog(this, "Open Raster File", FileDialog.LOAD);
@@ -637,6 +712,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         fd.setMultipleMode(false);
         fd.setVisible(true);
         File f = null;
+
         if ((fd.getDirectory() != null) || (fd.getFile() != null)) {
             //Labels to use in saving the detonation map
             setFiledir(fd.getDirectory());
@@ -644,11 +720,10 @@ public class DispersalModeller extends javax.swing.JFrame {
 
             f = new File(fd.getDirectory() + fd.getFile());
             storeDetonation.setData(io.readData(f));
-            //repaint();
 
             //Find the detonation point
             setDetonationPoint(storeDetonation.locateDetonationPoint(storeDetonation.data));
-            System.out.println("detpoint is: " + getDetonationPoint() + " and this is a string, BTW!!!");
+            //System.out.println("detpoint is: " + getDetonationPoint() + " and this is a string, BTW!!!");
 
             //Populate the X Position text field
             jTextFieldXPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf('{') + 1, getDetonationPoint().indexOf(',')));
@@ -661,22 +736,26 @@ public class DispersalModeller extends javax.swing.JFrame {
             //Draw the detonation map in the tabbed pane
             Image imageDetonationMap = storeDetonation.getDataAsImage();
             BufferedImage bufferedImageDetonationMap = ImageUtils.convertToBufferedImage(imageDetonationMap);
-            //Stitch together filename for detonation map
+
+            //Construct the full filename for the detonation map
             String filenameDetMap = getFiledir() + "Detonation_map.png";
             File fileDetMap = new File(filenameDetMap);
 
             try {
+                //Write the detonation map out as a PNG image file
                 ImageUtils.writeImageToPNG(fileDetMap, bufferedImageDetonationMap);
             } catch (IOException ex) {
                 //handle the IOException
-                System.out.println("The detonation map automated file save did not work");
+                jTextPaneMessages.setText("Warning: the detonation map automated image file save did not work");
             }
-            System.out.println("The file name is " + filenameDetMap);
+            //System.out.println("The file name is " + filenameDetMap);
 
-            //If the tab exists, remove it and the corresponding component. Speficfied using the index
+            //If the tab exists, remove it and the corresponding component speficfied, using the index
             if (jTabbedPane1.indexOfTab("Detonation Map") >= 0) {
                 jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Detonation Map"));
             }
+
+            //Load the image in a new tab in the tabbed panel
             jTabbedPane1.addTab("Detonation Map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
         }
     }//GEN-LAST:event_jMenuOpenFileActionPerformed
@@ -697,13 +776,17 @@ public class DispersalModeller extends javax.swing.JFrame {
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
 
-            //Convert the object from double data type to integer data type
-            int[][] intDispersalArray = storeDispersal.castDoubleToInt(storeDispersal.data);
-
             //Save the dispersal map generated from the source data set
-            //io.writeData(storeDispersal.data, f2);
-            io.writeIntData(intDispersalArray, f2);
-            System.out.println("File save completed");
+            if (outputToInt == true) {
+                //Convert the object data from data type double to integer
+                int[][] intDispersalArray = storeDispersal.castDoubleToInt(storeDispersal.data);
+                io.writeIntData(intDispersalArray, f2);
+            } else {
+                io.writeData(storeDispersal.data, f2);
+            }
+
+            //Inform the user that the process completed without issue
+            jTextPaneMessages.setText("File save completed");
         }
     }//GEN-LAST:event_jMenuSaveFileAsActionPerformed
 
@@ -711,39 +794,9 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //Run the modeller using the raster data source object.
         RunModeller(storeDispersal);
-
-        //Generate and display the random dispersal map
-        //Draw the random dispersal map in the tabbed pane
-        Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
-        //Create a buffered image from the dispersal map image 
-        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
-
-        //Construct the full filename for the dispersal map
-        String filenameDisMap = getFiledir() + "Dispersal_map.png";
-        File fileDisMap = new File(filenameDisMap);
-
-        try {
-            ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
-        } catch (IOException ex) {
-            //handle the IOException
-            System.out.println("The dispersal map automated file save did not work");
-        }
-        //System.out.println("The Dispersal map's name is " + filenameDisMap);
-        //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
-        //the previously generated map
-        if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
-            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
-        }
-        jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
-        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
-
-        //Activate the Save File Menu Item since we now have output data that can be saved
-        jMenuSaveFileAs.setEnabled(true);
-        jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
-
-        //Display a text message to say that the output can now be saved
-        jTextPaneMessages.setText("You can now save the Dispersal output. Check the File menu or just press Ctl+S");
-        //End Modeller Menu Item processes
+        
+        //Display the new dispersal map
+        showDispersalMap();
 
     }//GEN-LAST:event_jMenuRunModellerActionPerformed
 
@@ -762,19 +815,17 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
 
-        //System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
         //Load an HTML file to display the application help
-        //Use a parameter to select the file to load, with a switch in the HTMLHelp class
-        new HTMLHelp();
+        //Improvement: Use a parameter to select the file to load, with a switch in the HTMLHelp class
+        HTMLHelp help = new HTMLHelp();
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
+
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
 
-        //System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
         //Generate a random detonation point and then run the modeller
-        //create a random det point and set the XPos and YPos values
+        //create a random detonation point and set the X and Y Position values
         String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
-        //System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
 
         //Populate the X Position text field
         jTextFieldXPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf('{') + 1, randomDetonationPoint.indexOf(',')));
@@ -786,47 +837,18 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //Run the modeller on the random data storage object
         RunModeller(storeRandomDispersal);
-        //storeRandomDispersal.setRandomData();
 
-        //Run the modeller with the new values
-        //Generate and display the random dispersal map
-        //Draw the random dispersal map in the tabbed pane
-        Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
-        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
-        //Stitch together filename for detonation map
-        String filenameRandomDisMap = getFiledir() + "Random_Dispersal_map.png";
-        File fileRandomDisMap = new File(filenameRandomDisMap);
-
-        try {
-            ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
-        } catch (IOException ex) {
-            //handle the IOException
-            jTextPaneMessages.setText("Warning: the dispersal map automated file save did not work");
-        }
-
-        //System.out.println("The Random Dispersal map's name is " + filenameRandomDisMap);
-        //If the tab exists, remove it and the corresponding component. Speficfied using the index
-        if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
-            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
-        }
-        jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
-        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
-
-        //Activate the Save Random File Menu Item
-        jMenuSaveRandomFile.setEnabled(true);
-        jMenuSaveRandomFile.setToolTipText("Save the random dispersal raster output");
-
-        //Add a help text message to say that output can now be saved
-        jTextPaneMessages.setText("You can now save the Random Dispersal output. Use the File menu or just press Ctl+T");
-
+        //Display the dispersal map
+        showRandomDispersalMap();
 
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
 
     private void jMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExitActionPerformed
-        //Close app and exit without any errors
+        //Close app and exit without any error status
         System.exit(0);
     }//GEN-LAST:event_jMenuExitActionPerformed
 
+    //CHECK THIS FOR ISSUES!!!
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
 
         //System.out.println("TRIGGERED -----> jTabbedPane1MouseClicked");
@@ -841,44 +863,15 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
-
+    //Besig hierso
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
 
         //System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
         //Run the modeller on the non-random data set object
         RunModeller(storeDispersal);
 
-        //Generate and display the random dispersal map
-        //Draw the random dispersal map in the tabbed pane
-        Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
-        //Create a buffered image from the dispersal map image 
-        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
-
-        //Construct the full filename for the dispersal map
-        String filenameDisMap = getFiledir() + "Dispersal_map.png";
-        File fileDisMap = new File(filenameDisMap);
-
-        try {
-            ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
-        } catch (IOException ex) {
-            //handle the IOException
-            System.out.println("The dispersal map automated file save did not work");
-        }
-        //System.out.println("The Dispersal map's name is " + filenameDisMap);
-        //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
-        //the previously generated map
-        if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
-            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
-        }
-        jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
-        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
-
-        //Activate the Save File Menu Item since we now have output data that can be saved
-        jMenuSaveFileAs.setEnabled(true);
-        jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
-
-        //Display a text message to say that the output can now be saved
-        jTextPaneMessages.setText("You can now save the Dispersal output. Check the File menu or just press Ctl+S");
+        //Display the new dispersal map
+        showDispersalMap();
         //End Modeller Button processes
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
 
@@ -930,12 +923,18 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
-            //Convert the object from double data type to integer data type
-            int[][] intRandomDispersalArray = storeRandomDispersal.castDoubleToInt(storeRandomDispersal.data);
 
-            //io.writeData(storeRandomDispersal.data, f2);
-            io.writeIntData(intRandomDispersalArray, f2);
-            System.out.println("File save completed");
+            //Save the dispersal map generated from the source data set
+            if (outputToInt == true) {
+                //Convert the object data from data type double to integer
+                int[][] intRandomDispersalArray = storeRandomDispersal.castDoubleToInt(storeRandomDispersal.data);
+                io.writeIntData(intRandomDispersalArray, f2);
+            } else {
+                io.writeData(storeRandomDispersal.data, f2);
+            }
+            
+            //Notify the user that the file save process completed without issue
+            jTextPaneMessages.setText("File save completed");
         }
     }//GEN-LAST:event_jMenuSaveRandomFileActionPerformed
 
@@ -976,37 +975,9 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //Run the modeller on the random data storage object
         RunModeller(storeRandomDispersal);
-        //storeRandomDispersal.setRandomData();
-
-        //Run the modeller with the new values
-        //Generate and display the random dispersal map
-        //Draw the random dispersal map in the tabbed pane
-        Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
-        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
-        //Stitch together filename for detonation map
-        String filenameRandomDisMap = getFiledir() + "Random_Dispersal_map.png";
-        File fileRandomDisMap = new File(filenameRandomDisMap);
-
-        try {
-            ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageDispersalMap);
-        } catch (IOException ex) {
-            //handle the IOException
-            System.out.println("The dispersal map automated file save did not work");
-        }
-        System.out.println("The Random Dispersal map's name is " + filenameRandomDisMap);
-        //If the tab exists, remove it and the corresponding component. Speficfied using the index
-        if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
-            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
-        }
-        jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
-        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
-
-        //Activate the Save Random File Menu Item
-        jMenuSaveRandomFile.setEnabled(true);
-        jMenuSaveRandomFile.setToolTipText("Save the random dispersal raster output");
-
-        //Add a help text message to say that output can now be saved
-        jTextPaneMessages.setText("You can now save the Random Dispersal output. Check the File menu or just press Ctl+T");
+        
+        //Display the dispersal map
+        showRandomDispersalMap();
 
     }//GEN-LAST:event_jButtonRunRandomModellerActionPerformed
 
