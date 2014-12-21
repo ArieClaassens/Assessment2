@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
+ * Icons sourced from http://www.famfamfam.com/lab/icons/silk/
  */
 public class DispersalModeller extends javax.swing.JFrame {
 
@@ -44,7 +45,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Instantiate new IO object
     IO io = new IO();
 
-
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
     private String filedir = null;
@@ -55,8 +55,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Method to centralise actions for buttons and menuitems
     //From http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
     //Generate Random Data first
-    
-    
     /**
      * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with an
      * error message to display when total probability does not equal 100% and an info message to display when the total
@@ -77,6 +75,56 @@ public class DispersalModeller extends javax.swing.JFrame {
             jTextFieldTotalProbability.setForeground(Color.black);
             jTextPaneMessages.setText("The total probability equals 100%. No problem there anymore");
         }
+    }
+
+    //Run the Modeller on the supplied data set
+    public void RunModeller(Storage srcArray) {
+        //Check whether we have the data and parameters required for the job and that they contain sensible values
+        //We need:
+        //Number of agent particles to use in the model. Must be more than zero, or else the model serves no purpose
+        //try & catch?
+        int bacteriaCount = Integer.parseInt(jTextFieldParticleCount.getText());
+
+        //The detonation point X and Y values to determine where to start the calculations
+        //The coordinates cannot fall outside the target area, so check for that too, assuming we're using a square image
+        int xPos = Integer.parseInt(jTextFieldXPos.getText());
+        int yPos = Integer.parseInt(jTextFieldYPos.getText());
+
+        //Detonation height, equal to or higher than 0m above the surface. We're not working with subterranean
+        //detonations in this model.
+        int detonationHeight = Integer.parseInt(jTextFieldStartHeight.getText());
+
+        //Wind-speed based direction change probabilities, totalling 100%. 
+        //Sanity test only needs to check if total probaility = 100%; using less variables and getting value directly
+        //from component, saving time and resources.
+        int changeNorthProbability = jSliderNorthProbability.getValue();
+        int changeEastProbability = jSliderEastProbability.getValue();
+        int changeSouthProbability = jSliderSouthProbability.getValue();
+        int changeWestProbability = jSliderWestProbability.getValue();
+
+        //Data source to work from is optional. User may choose to work directly from a user-selected start point, without
+        //having to open a source file first every time.        
+        //Use shorthand to ensure that code cathes the error as soon as a non-compliant parameter is detected
+        if ((bacteriaCount > 0) && (xPos > 0) && (xPos < srcArray.data.length) && (yPos > 0)
+                && (yPos < srcArray.data.length) && (detonationHeight >= 0)
+                && (jSliderTotalProbability.getValue() == 100)) {
+            System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
+            jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue()
+                    + ": North: " + changeNorthProbability + ", East: " + changeEastProbability
+                    + ", South: " + changeSouthProbability + ", West: " + changeWestProbability);
+            //Run the Modeller
+            double[][] dispersalArray = srcArray.calculateDispersal(bacteriaCount, srcArray.data.length,
+                    srcArray.data.length, xPos, yPos, changeNorthProbability, changeEastProbability, changeSouthProbability, changeWestProbability);
+
+            //Save the data to the store.data object
+            srcArray.data = dispersalArray;
+            //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
+
+        } else {
+            System.out.println("FAILED -----> Model will not run; incorrect parameters");
+            jTextPaneMessages.setText("Hey buddy! Check your parameter values!!! This ain't gonna work...");
+        }
+
     }
 
     /**
@@ -368,7 +416,6 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenuOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/folder.png"))); // NOI18N
         jMenuOpenFile.setText("Open File");
-        jMenuOpenFile.setNextFocusableComponent(jMenuSaveFileAs);
         jMenuOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuOpenFileActionPerformed(evt);
@@ -597,7 +644,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenFileActionPerformed
-        
 
         FileDialog fd = new FileDialog(this, "Open Raster File", FileDialog.LOAD);
         //Implement filtering for all platforms but Windows
@@ -683,32 +729,48 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuRunModellerActionPerformed
 
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
-         //Display an application-modal Dialog window to the user, using the default dialog type icon
+        //Display an application-modal Dialog window to the user, using the default dialog type icon
         //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
         JOptionPane.showMessageDialog(this,
-            "Bacterial Agent Detonation Dispersal Modeller v1.0.\n\n\r" + 
-            "Built in December 2015 by \n\rStudent 200825599 (gy13awc@leeds.ac.uk)\n\r" +
-            "University of Leeds, Leeds, West Yorkshire, UK.\n\n\r" +
-            "Built in Java using NetBeans IDE 8.0.2, \n\r" +
-            "GitHub, MantisBT and www.agilezen.com.", 
-            "About BADdm",
-            JOptionPane.INFORMATION_MESSAGE);
+                "Bacterial Agent Detonation Dispersal Modeller v1.0.\n\n\r"
+                + "Built in December 2015 by \n\rStudent 200825599 (gy13awc@leeds.ac.uk)\n\r"
+                + "University of Leeds, Leeds, West Yorkshire, UK.\n\n\r"
+                + "Built in Java using NetBeans IDE 8.0.2, \n\r"
+                + "GitHub, MantisBT and www.agilezen.com.",
+                "About BADdm",
+                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
         //Load an HTML file to display app help
+        //Use a parameter to select the file to load, with a switch in the HTMLHelp class
         new HTMLHelp();
 
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
-        // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
-        storeRandomDispersal.setRandomData();
-        //Generate and display the random dispersal map
+        //Generate a random detonation point and then run the modeller
+        //create a random det point and set the XPos and YPos values
+        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data);
+        System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
 
+        //Populate the X Position text field
+        jTextFieldXPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf('{') + 1, randomDetonationPoint.indexOf(',')));
+        //Populate the Y Position text field
+        jTextFieldYPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf(',') + 1, randomDetonationPoint.indexOf('}')));
+
+        //Refresh the Total Probability text field
+        jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
+
+        //Run the modeller on the random data storage object
+        RunModeller(storeRandomDispersal);
+        //storeRandomDispersal.setRandomData();
+
+        //Run the modeller with the new values
+        //Generate and display the random dispersal map
         //Draw the random dispersal map in the tabbed pane
         Image imageRandomDispersalMap = storeRandomDispersal.getDataAsImage(); // or equivalent
         BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
@@ -774,76 +836,32 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
+        //Run the modeller on the non-random data set object
+        RunModeller(storeDispersal);
 
-        //Check whether we have the data and parameters required for the job and that they contain sensible values
-        //We need:
-        //Number of agent particles to use in the model. Must be more than zero, or else the model serves no purpose
-        //try & catch?
-        int bacteriaCount = Integer.parseInt(jTextFieldParticleCount.getText());
+        //Generate and display the random dispersal map
+        //Draw the random dispersal map in the tabbed pane
+        Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
+        //g.drawImage(image, getInsets().left, getInsets().top, this);
+        //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
+        BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
+        //Stitch together filename for detonation map
+        String filenameDisMap = getFiledir() + "Dispersal_map.png";
+        File fileDisMap = new File(filenameDisMap);
 
-        //The detonation point X and Y values to determine where to start the calculations
-        //The coordinates cannot fall outside the target area, so check for that too, assuming we're using a square image
-        int xPos = Integer.parseInt(jTextFieldXPos.getText());
-        int yPos = Integer.parseInt(jTextFieldYPos.getText());
-
-        //Detonation height, equal to or higher than 0m above the surface. We're not working with subterranean
-        //detonations in this model.
-        int detonationHeight = Integer.parseInt(jTextFieldStartHeight.getText());
-
-        //Wind-speed based direction change probabilities, totalling 100%. 
-        //Sanity test only needs to check if total probaility = 100%; using less variables and getting value directly
-        //from component, saving time and resources.
-        int changeNorthProbability = jSliderNorthProbability.getValue();
-        int changeEastProbability = jSliderEastProbability.getValue();
-        int changeSouthProbability = jSliderSouthProbability.getValue();
-        int changeWestProbability = jSliderWestProbability.getValue();
-
-        //Data source to work from is optional. User may choose to work directly from a user-selected start point, without
-        //having to open a source file first every time.        
-        //Use shorthand to ensure that code cathes the error as soon as a non-compliant parameter is detected
-        if ((bacteriaCount > 0) && (xPos > 0) && (xPos < storeDispersal.data.length) && (yPos > 0)
-                && (yPos < storeDispersal.data.length) && (detonationHeight >= 0)
-                && (jSliderTotalProbability.getValue() == 100)) {
-            System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
-            jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue()
-                    + ": North: " + changeNorthProbability + ", East: " + changeEastProbability
-                    + ", South: " + changeSouthProbability + ", West: " + changeWestProbability);
-            //Run the Modeller
-            double[][] dispersalArray = storeDispersal.calculateDispersal(bacteriaCount, storeDispersal.data.length,
-                    storeDispersal.data.length, xPos, yPos, changeNorthProbability, changeEastProbability, changeSouthProbability, changeWestProbability);
-
-            //Save the data to the store.data object
-            storeDispersal.data = dispersalArray;
-            //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
-
-            //Generate and display the random dispersal map
-            //Draw the random dispersal map in the tabbed pane
-            Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
-            //g.drawImage(image, getInsets().left, getInsets().top, this);
-            //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
-            BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
-            //Stitch together filename for detonation map
-            String filenameDisMap = getFiledir() + "Dispersal_map.png";
-            File fileDisMap = new File(filenameDisMap);
-
-            try {
-                ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
-            } catch (IOException ex) {
-                //handle the IOException
-                System.out.println("The dispersal map automated file save did not work");
-            }
-            System.out.println("The Dispersal map's name is " + filenameDisMap);
-            //If the tab exists, remove it and the corresponding component. Speficfied using the index
-            if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
-                jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
-            }
-            jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
-            System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
-
-        } else {
-            System.out.println("FAILED -----> Model will not run; incorrect parameters");
-            jTextPaneMessages.setText("Hey buddy! Check your parameter values!!! This ain't gonna work...");
+        try {
+            ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
+        } catch (IOException ex) {
+            //handle the IOException
+            System.out.println("The dispersal map automated file save did not work");
         }
+        System.out.println("The Dispersal map's name is " + filenameDisMap);
+        //If the tab exists, remove it and the corresponding component. Speficfied using the index
+        if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
+            jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
+        }
+        jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
+        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
 
         //Activate the Save File Menu Item
         jMenuSaveFileAs.setEnabled(true);

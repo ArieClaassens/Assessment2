@@ -329,6 +329,33 @@ public class Storage {
         return detonationPoint;
     }
 
+    //Create a random detonation point anywhere within the area of the source array
+    //Determine the size of the source array to ensure that we stay within its bounds
+    //subtract 1.5 x height of the detonation to keep the dispersal within the boundaries   
+    public String setRandomDetonationPoint(double srcArray[][]) {
+        //label for our detonation point 
+        String detonationPoint = null;
+
+        //outer loop for rows
+        for (int i = 0; i <= srcArray.length - 1; i++) {
+            //inner loop for columns
+            for (int j = 0; j <= srcArray[0].length - 1; j++) {
+                //print the columnar data on one line
+                //System.out.print(srcArray[i][j] + " ");
+                if (srcArray[i][j] == 255) {
+                    detonationPoint = "{" + i + "," + j + "}";
+                    System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " + j + " . Stop the clock!");
+                    //Stop processing here!!!!! No need to continue, unless we have more than 1 detonation point?
+                    //break;
+                }
+
+            }
+            //System.out.println(" ");
+        }
+        detonationPoint = "{99,99}";
+        return detonationPoint;
+    }
+    
     //Calculate the dispersal of the supplied number of bacteria
     //Pass in the number of rows and columns in the source array so that we have dimensions
     public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,

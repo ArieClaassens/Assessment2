@@ -67,9 +67,6 @@
                   <Image iconType="3" name="/BacterialBomb/folder.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Open File"/>
-                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jMenuSaveFileAs"/>
-                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuOpenFileActionPerformed"/>
