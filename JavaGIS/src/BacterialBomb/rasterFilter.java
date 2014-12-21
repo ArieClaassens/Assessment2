@@ -29,7 +29,7 @@ import java.io.FilenameFilter;
     //Method to limit file extensions to .raster on all platforms except Windows
     //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
     public class rasterFilter implements FilenameFilter {
-
+        
         public boolean accept(File dir, String name) {
             return (name.endsWith(".raster"));
         }

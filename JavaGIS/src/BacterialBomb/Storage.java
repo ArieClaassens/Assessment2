@@ -132,6 +132,24 @@ public class Storage {
             }
         }
     }
+    
+    //Convert the source object values from double to integer data type
+    public int[][] castDoubleToInt(double srcArray[][]) {
+        
+        //Create a label with scope restricted to this method, where we can store the integer values temporarily
+        int[][] intArray = new int[srcArray.length][srcArray[0].length];
+
+        //outer loop for rows
+        for (int i = 0; i < srcArray.length; i++) {
+            //inner loop for columns
+            for (int j = 0; j < srcArray[i].length; j++) {
+                //Convert from double to integer data type by casting (explicit conversion)
+                intArray[i][j] = (int)srcArray[i][j];
+                //System.out.println("We're on i: " + i + "  j: " +  j);
+            }
+        }
+        return intArray;
+    }
 
     /*
      * Method to print out the object (array) contents
@@ -346,6 +364,15 @@ public class Storage {
         //Multiply the double by the maximum X and Y value and cast to integer
         int randomX = (int)(Math.random() * maxX);
         int randomY = (int)(Math.random() * maxY);
+        
+        //Check if the point coordinates are buffer distance away from the originating borders (top and left)
+        //If not, add the buffer distance to the randomX and/or randomY values to enforce the buffer zone
+        if (randomX < detonationHeight) {
+            randomX = randomX + detonationHeight;
+        }
+        if (randomY < detonationHeight) {
+            randomY = randomY + detonationHeight;
+        }
         
         //Build the detonation point array and return it to the caller
         String detonationPoint = "{" + randomX + "," + randomY + "}";

@@ -37,8 +37,6 @@ public class IO {
 
     public double[][] readData(File f) {
         // Our reading code will go here.
-        //File f = new File("in.txt");
-        //File f = new File("C:\\Git\\GEOG5561M\\src\\unpackaged\\framework6\\in.txt");
 
         // Set up a FileReader (must be in a try-catch block).
         FileReader fr = null;
@@ -102,11 +100,6 @@ public class IO {
             }
         } // Close try-catch block.
 
-        //TEST by printing the file array
-        //System.out.println("file length: " + file.length);
-        //for (int i = 0; i < file.length; i++) {
-        //    System.out.println(file[i]);
-        //}
         // Run through the array and use a StringTokenizer 
         // to parse the data into a double[][] array.
         double[][] data = new double[lines][];
@@ -122,14 +115,6 @@ public class IO {
             }
         }
 
-        //TEST Print out 2D array
-        //for (int i = 0; i < data.length; i++) {
-        //    for (int j = 0; j < data[i].length; j++) {
-        //        System.out.print(data[i][j] + ", ");
-        //        data[i][j]++;
-        //    }
-        //    System.out.println("");
-        //}
         // return the full double[][] array rather than an empty one.
         return data;
     }
@@ -139,7 +124,6 @@ public class IO {
         BufferedWriter bw = null;
 
         try {
-            //bw = new BufferedWriter(new FileWriter(new File("C:\\Git\\GEOG5561M\\src\\unpackaged\\framework6\\out.txt")));
             bw = new BufferedWriter(new FileWriter(f));
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,6 +162,41 @@ public class IO {
         // End loops
         // Close Buffer (and thus the FileWriter as well)
         // Close try block.
+    }
+    
+    public void writeIntData(int[][] dataIn, File f) {
+        // Our writing code will go here.
+        BufferedWriter bw = null;
+
+        try {
+            bw = new BufferedWriter(new FileWriter(f));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String tempStr = "";
+
+        try {
+            for (int i = 0; i < dataIn.length; i++) {
+                for (int j = 0; j < dataIn[i].length; j++) {
+                    tempStr = String.valueOf(dataIn[i][j]);
+                    //System.out.print(tempStr + ", ");
+                    bw.write(tempStr + ", ");
+
+                }
+                //System.out.println("");
+                bw.newLine();
+            }
+            bw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e2) {
+                e2.printStackTrace();
+            }
+        }
     }
 }
 

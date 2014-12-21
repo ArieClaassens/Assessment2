@@ -54,9 +54,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     //label to hold detonationPoint value
     private String detonationPoint = null;
 
-    //Method to centralise actions for buttons and menuitems
-    //From http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
-    //Generate Random Data first
     /**
      * Method to set the values of jSliderTotalProbability,jTextFieldTotalProbability and jTextPaneMessages with an
      * error message to display when total probability does not equal 100% and an info message to display when the total
@@ -66,16 +63,16 @@ public class DispersalModeller extends javax.swing.JFrame {
     public void setSliderValues() {
         jSliderTotalProbability.setValue(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue());
         jTextFieldTotalProbability.setText(jSliderEastProbability.getValue() + jSliderNorthProbability.getValue() + jSliderWestProbability.getValue() + jSliderSouthProbability.getValue() + "%");
-        System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
+        //System.out.println("jSliderTotalProbability value is now: " + jSliderTotalProbability.getValue());
         //Notify the user if the probability parameters are invalid
         if (jSliderTotalProbability.getValue() != 100) {
             jSliderTotalProbability.setForeground(Color.red);
             jTextFieldTotalProbability.setForeground(Color.red);
-            jTextPaneMessages.setText("The total probability does not equal 100%.");
+            jTextPaneMessages.setText("The total probability is not 100%.");
         } else if (jSliderTotalProbability.getValue() == 100) {
             jSliderTotalProbability.setForeground(Color.black);
             jTextFieldTotalProbability.setForeground(Color.black);
-            jTextPaneMessages.setText("The total probability equals 100%. No problem there anymore");
+            jTextPaneMessages.setText("The total probability is 100%. No problem here anymore");
         }
     }
 
@@ -105,25 +102,30 @@ public class DispersalModeller extends javax.swing.JFrame {
         int changeWestProbability = jSliderWestProbability.getValue();
 
         //Data source to work from is optional. User may choose to work directly from a user-selected start point, without
-        //having to open a source file first every time.        
-        //Use shorthand to ensure that code cathes the error as soon as a non-compliant parameter is detected
+        //having to open a source file first every time.       
+        
+        //Use shorthand to ensure that code stops as soon as a non-compliant parameter is detected
         if ((bacteriaCount > 0) && (xPos > 0) && (xPos < srcArray.data.length) && (yPos > 0)
                 && (yPos < srcArray.data.length) && (detonationHeight >= 0)
                 && (jSliderTotalProbability.getValue() == 100)) {
-            System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
+            //System.out.println("SUCCESS -----> Model will run; parameters all present and valid");
             jTextPaneMessages.setText("Thar she blows! With total probability at " + jSliderTotalProbability.getValue()
                     + ": North: " + changeNorthProbability + ", East: " + changeEastProbability
                     + ", South: " + changeSouthProbability + ", West: " + changeWestProbability);
-            //Run the Modeller
+            
+            //Run the Modeller using the supplied parameters after passing the paramter validity tests
             double[][] dispersalArray = srcArray.calculateDispersal(bacteriaCount, srcArray.data.length,
-                    srcArray.data.length, xPos, yPos, changeNorthProbability, changeEastProbability, changeSouthProbability, changeWestProbability);
+                    srcArray.data.length, xPos, yPos, changeNorthProbability, changeEastProbability,
+                    changeSouthProbability, changeWestProbability);
 
-            //Save the data to the store.data object
+            //Save the data to the source data object
             srcArray.data = dispersalArray;
             //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
 
         } else {
-            System.out.println("FAILED -----> Model will not run; incorrect parameters");
+            //Display an error message to the user. Maybe utilise a popup window to make it more obvious?
+            
+            //System.out.println("FAILED -----> Model will not run; incorrect parameters");
             jTextPaneMessages.setText("Hey buddy! Check your parameter values!!! This ain't gonna work...");
         }
 
@@ -144,10 +146,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        aboutDialog = new javax.swing.JDialog();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jFileChooser = new javax.swing.JFileChooser();
-        jFileSaver = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jLabelXPos = new javax.swing.JLabel();
         jTextFieldXPos = new javax.swing.JTextField();
@@ -189,39 +187,6 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuHelpModeller = new javax.swing.JMenuItem();
         jMenuHelpAbout = new javax.swing.JMenuItem();
-
-        aboutDialog.setTitle("About");
-        aboutDialog.setAlwaysOnTop(true);
-        aboutDialog.setModal(true);
-
-        javax.swing.GroupLayout aboutDialogLayout = new javax.swing.GroupLayout(aboutDialog.getContentPane());
-        aboutDialog.getContentPane().setLayout(aboutDialogLayout);
-        aboutDialogLayout.setHorizontalGroup(
-            aboutDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        aboutDialogLayout.setVerticalGroup(
-            aboutDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        jMenuItem5.setText("jMenuItem5");
-
-        jFileChooser.setApproveButtonText("Open Input");
-        jFileChooser.setApproveButtonToolTipText("");
-        jFileChooser.setCurrentDirectory(new java.io.File("C:\\Git\\Assessment2\\JavaGIS\\src\\BacterialBomb"));
-        jFileChooser.setDialogTitle("Choose a file to load for processing");
-
-        jFileSaver.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        jFileSaver.setApproveButtonText("Save output");
-        jFileSaver.setApproveButtonToolTipText("");
-        jFileSaver.setCurrentDirectory(new java.io.File("C:\\Git\\Assessment2\\JavaGIS\\src\\BacterialBomb"));
-        jFileSaver.setDialogTitle("Save modeller output");
-        jFileSaver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileSaverActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biological Agent Detonation Dispersal Modeller");
@@ -373,11 +338,6 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldStartHeight.setText("75");
         jTextFieldStartHeight.setToolTipText("The height in metres at which the detonation takes place");
         jTextFieldStartHeight.setMaximumSize(new java.awt.Dimension(20, 20));
-        jTextFieldStartHeight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldStartHeightActionPerformed(evt);
-            }
-        });
 
         jSliderTotalProbability.setMajorTickSpacing(20);
         jSliderTotalProbability.setMaximum(120);
@@ -426,6 +386,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenuOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/folder.png"))); // NOI18N
         jMenuOpenFile.setText("Open File");
+        jMenuOpenFile.setToolTipText("Open the raster data source file");
         jMenuOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuOpenFileActionPerformed(evt);
@@ -730,8 +691,13 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
+            
+            //Convert the object from double data type to integer data type
+            int[][] intDispersalArray = storeDispersal.castDoubleToInt(storeDispersal.data);
+            
             //Save the dispersal map generated from the source data set
-            io.writeData(storeDispersal.data, f2);
+            //io.writeData(storeDispersal.data, f2);
+            io.writeIntData(intDispersalArray, f2);
             System.out.println("File save completed");
         }
     }//GEN-LAST:event_jMenuSaveFileAsActionPerformed
@@ -846,6 +812,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         System.out.println("TRIGGERED -----> jTextFieldYPosActionPerformed");
     }//GEN-LAST:event_jTextFieldYPosActionPerformed
 
+
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
         // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
@@ -855,10 +822,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Generate and display the random dispersal map
         //Draw the random dispersal map in the tabbed pane
         Image imageDispersalMap = storeDispersal.getDataAsImage(); // or equivalent
-        //g.drawImage(image, getInsets().left, getInsets().top, this);
-        //jTabbedPane1.addTab("Detonation map", new JLabel(new ImageIcon(DispersalModeller.class.getResource("Bacteria-icon.png"))));
+        //Create a buffered image from the dispersal map image 
         BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
-        //Stitch together filename for detonation map
+
+        //Construct the full filename for the dispersal map
         String filenameDisMap = getFiledir() + "Dispersal_map.png";
         File fileDisMap = new File(filenameDisMap);
 
@@ -868,32 +835,23 @@ public class DispersalModeller extends javax.swing.JFrame {
             //handle the IOException
             System.out.println("The dispersal map automated file save did not work");
         }
-        System.out.println("The Dispersal map's name is " + filenameDisMap);
-        //If the tab exists, remove it and the corresponding component. Speficfied using the index
+        //System.out.println("The Dispersal map's name is " + filenameDisMap);
+        //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
+        //the previously generated map
         if (jTabbedPane1.indexOfTab("Dispersal Map") >= 0) {
             jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
         }
         jTabbedPane1.addTab("Dispersal Map", new JLabel(new ImageIcon(filenameDisMap)));
-        System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
+        //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
 
-        //Activate the Save File Menu Item
+        //Activate the Save File Menu Item since we now have output data that can be saved
         jMenuSaveFileAs.setEnabled(true);
         jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
 
-        //Add a help text message to say that output can now be saved
+        //Display a text message to say that the output can now be saved
         jTextPaneMessages.setText("You can now save the Dispersal output. Check the File menu or just press Ctl+S");
-        //End Modeller Button
+        //End Modeller Button processes
     }//GEN-LAST:event_jButtonRunModellerActionPerformed
-
-    private void jFileSaverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileSaverActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jFileSaverActionPerformed");
-    }//GEN-LAST:event_jFileSaverActionPerformed
-
-    private void jTextFieldStartHeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStartHeightActionPerformed
-        // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jTextFieldStartHeightActionPerformed");
-    }//GEN-LAST:event_jTextFieldStartHeightActionPerformed
 
     private void jSliderEastProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderEastProbabilityMouseReleased
         setSliderValues();
@@ -943,9 +901,11 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
-            //Need to check the content of the dispersal map first!!!
-            //Need to check which map we're trying to save - processed one or the random dispersal one
-            io.writeData(storeRandomDispersal.data, f2);
+            //Convert the object from double data type to integer data type
+            int[][] intRandomDispersalArray = storeRandomDispersal.castDoubleToInt(storeRandomDispersal.data);
+            
+            //io.writeData(storeRandomDispersal.data, f2);
+            io.writeIntData(intRandomDispersalArray, f2);
             System.out.println("File save completed");
         }
     }//GEN-LAST:event_jMenuSaveRandomFileActionPerformed
@@ -963,10 +923,10 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     private void jTabbedPane1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseMoved
         // TODO add your handling code here:
-        System.out.println("TRIGGERED -----> jTabbedPane1MouseMoved");
+        //System.out.println("TRIGGERED -----> jTabbedPane1MouseMoved");
         //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
 
-        System.out.println("Coordinates: " + this.getMousePosition());
+        //System.out.println("Coordinates: " + this.getMousePosition());
         jTabbedPane1.setToolTipText("Current mouse location: X:" + (int) this.getMousePosition().getX() + ", Y: " + (int) this.getMousePosition().getY());
         jTextFieldMouseX.setText((int) this.getMousePosition().getX() + "");
         jTextFieldMouseY.setText((int) this.getMousePosition().getY() + "");
@@ -1062,11 +1022,8 @@ public class DispersalModeller extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDialog aboutDialog;
     public javax.swing.JButton jButtonRunModeller;
     private javax.swing.JButton jButtonRunRandomModeller;
-    private javax.swing.JFileChooser jFileChooser;
-    private javax.swing.JFileChooser jFileSaver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEastProbability;
     private javax.swing.JLabel jLabelHeightStart;
@@ -1087,7 +1044,6 @@ public class DispersalModeller extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuExit;
     private javax.swing.JMenuItem jMenuHelpAbout;
     private javax.swing.JMenuItem jMenuHelpModeller;
-    private javax.swing.JMenuItem jMenuItem5;
     public javax.swing.JMenuItem jMenuOpenFile;
     private javax.swing.JMenuItem jMenuRunModeller;
     private javax.swing.JMenuItem jMenuSaveFileAs;
