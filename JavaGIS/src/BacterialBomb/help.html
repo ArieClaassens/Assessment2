@@ -86,7 +86,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             .header {
                 height: 50px;
                 font: 14px Verdana, sans-serif;
-                background: #848DAB;
             }
 
             /* Middle
@@ -109,7 +108,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="wrapper">
 
             <div class="header">
-                <strong>Bacterial Agent Detonation Dispersal Modeller (BADdm) Help File</strong> 
+                <br>
+                <b>Bacterial Agent Detonation Dispersal Modeller (BADdm)</b> 
             </div><!-- .header-->
 
             <div class="content">
@@ -133,60 +133,114 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     calculated dispersal pattern in a new raster output file. The steps are covered in greater detail below.</p>
                 <p>&nbsp;</p>
                 <h3>1. Load the raster data file</h3>
-                <p>Click on the menu bar, select the File menu item and then click on the Open File menu sub-item. Select 
-                    your raster data source file using the file dialog window that is now open. Click on the Open button 
-                    to load the data source file into the BADdm application. To return to the main application window 
-                    without selecting a file, click on the Cancel button.</p>
+                <p>Click on the menu bar, select the File menu item and then click on the Open File menu sub-item, or 
+                    alternatively use the Ctrl+O keyboard combination. Select your raster data source file using the 
+                    file dialog window that is now open. Click on the Open button to load the data source file into the 
+                    BADdm application. To return to the main application window without selecting a file, click on the Cancel button.</p>
                 <p>&nbsp;</p>
                 <p>You will notice that the application disables the Save Raster File and Save Random Raster File menu sub-items 
-                until the application has generated the output raster data files.</p>
+                    until the application has generated the output raster data files.</p>
                 <p>&nbsp;</p>
                 <h3>2. Process the raster data file</h3>
                 <p>BADdm loads a set of default parameters for the model execution, i.e. the directional change probabilities, 
-                detonation height, detonation point and number of particles. You may change these parameters using the 
-                Direction change probabilities sliders on the right-hand side of the application interface, the 
-                detonation point coordinate value text fields at the bottom of the application interface and the detonation 
-                height (Start height), along with the number of bacterial particles to include in your calculation.</p>
+                    detonation height, detonation point and number of particles. You may change these parameters using the 
+                    Direction change probabilities sliders on the right-hand side of the application interface, the 
+                    detonation point coordinate value text fields at the bottom of the application interface and the detonation 
+                    height (Start height), along with the number of bacterial particles to include in your calculation.</p>
                 <p>&nbsp;</p>
                 <p>The direction change probabilities sliders can be moved by mouse or keyboard and must provide a cumulative 
-                total of 100%, as shown in the bottom slider titled TOTAL %, before the application will allow the model 
-                to be run.</p>
+                    total of 100%, as shown in the bottom slider titled TOTAL %, before the application will allow the model 
+                    to be run.</p>
                 <p>&nbsp;</p>
                 <p>The detonation point coodinates, start height and particle count values can be set by typing the 
                     required values directly into the respective text field, or in the case of the X Position and Y 
-                Position fields, by clicking on the required location in the window pane directly above these text fields. 
-                As the mouse moves around in the window pane, the cursor changes to a cross-hair, while the Mouse X Pos 
-                and Y Pos values update in real-time to indicate the relative position of the mouse cursor, in order to 
-                provide greater accuracy in selecting the new detonation point.</p>
+                    Position fields, by clicking on the required location in the window pane directly above these text fields. 
+                    As the mouse moves around in the window pane, the cursor changes to a cross-hair, while the Mouse X Pos 
+                    and Y Pos values update in real-time to indicate the relative position of the mouse cursor, in order to 
+                    provide greater accuracy in selecting the new detonation point.</p>
                 <p>&nbsp;</p>
                 <p>Once you are happy with the values of the parameters, click on the Run modeller button located underneath 
-                the Direction change probabilities sliders. If the application detects incorrect parameters, it will 
-                display a warning message in the message box located underneath of the Run Modeller button. Correct the 
-                error and then click the Run Modeller button again to launch the model execution. The File menu contains 
-                a Run Modeller menu item, which can also be used to launch the modeller execution, either by clicking on 
-                the File menu and then clicking on the Run Modeller sub-menu item, or by using the keyboard shortcut Ctl+R.</p>
+                    the Direction change probabilities sliders. If the application detects incorrect parameters, it will 
+                    display a warning message in the message box located underneath of the Run Modeller button. Correct the 
+                    error and then click the Run Modeller button again to launch the model execution. The File menu contains 
+                    a Run Modeller menu item, which can also be used to launch the modeller execution, either by clicking on 
+                    the File menu and then clicking on the Run Modeller sub-menu item, or by using the keyboard shortcut Ctl+R.</p>
                 <p>&nbsp;</p>
                 <h3>3. Save the results raster data file</h3>
-                <p>Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                    Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.</p>
+                <p>Click on the File menu and then click on the Save Raster File menu sub-item, or alternatively use the 
+                    Ctrl+S keyboard combination. In the File Save dialog window that has opened, type in a name for the 
+                    output raster data set, or click on an existing file in the file listing window to overwrite an existing file. 
+                    Click on the Save button to save the new file or overwrite the existing raster file. To return to the 
+                    main application window without saving the raster output to a file, click on the Cancel button.</p>
                 <p>&nbsp;</p>
 
                 <h2>Generating random data</h2>
-                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+                <p>The random data generation component sets a random detonation point that falls within the boundaries of 
+                    the dispersal analysis area. This is accomplished by deducting the detonation height from the width and 
+                    height of the analysis area in order to keep the dispersal area inside the analysis area by assuming a 
+                    worst case scenario of 100% probability of continued dispersal in a single direction, e.g. all particles 
+                    are dispersed in an Eastern direction at the maximum rate of descent. This would have the particles all 
+                    land in one spot, the distance of the detonation height away from the detonation point, i.e. 75m East of 
+                    the detonation point for a detonation height of 75m. The steps required to generate a random dispersal 
+                    raster data set are as follows:</p>
                 <p>&nbsp;</p>
                 <h3>1. Generate the random dispersal data</h3>
-                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+                Click on the Edit menu and then click on the Generate Random Data menu sub-item, or alternatively, use 
+                the Ctrl+D keyboard combination.
                 <p>&nbsp;</p>
                 <h3>2. Save the random results raster data file</h3>
-                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
+                <p>Click on the File menu and then click on the Save Random Raster File menu sub-item, or alternatively use the 
+                    Ctrl+T keyboard combination. In the File Save dialog window that has opened, type in a name for the 
+                    output raster data set, or click on an existing file in the file listing window to overwrite an existing file. 
+                    Click on the Save button to save the new file or overwrite the existing raster file. To return to the 
+                    main application window without saving the random raster output to a file, click on the Cancel button.</p>
+                <p>You will notice that the application disables the Save Raster File and Save Random Raster File menu sub-items 
+                    until the application has generated the output raster data files.</p>
                 <p>&nbsp;</p>
                 <h2>Changing Model parameters</h2>
-                Cras neque justo, ultrices at, rhoncus a, facilisis eget, nisl. Quisque vitae pede. Nam et augue. 
-                Sed a elit. Ut vel massa. Suspendisse nibh pede, ultrices vitae, ultrices nec, mollis non, nibh.
-
+                <p>The BADdm application allows you to the change the parameters used in the model. Changes may be made to 
+                the direction change probabilities to influence the directional changes particles undergo, the detonation 
+                point may be changed to find the detonation point required to cover a specific area, while the detonation 
+                point height may be adjusted to study the affect of detonation at various heights above ground level. The 
+                final parameter change available is the number of particles that are included in the model, providing a 
+                way to determine the change in dispersal patterns for varying sizes of bacterial or viral delivery devices.</p>
+                <p>&nbsp;</p>
+                <h3>1. Changing the Direction change probabilities</h3>
+                <p>The direction change probabilities sliders can be moved by mouse or keyboard and must provide a 
+                    cumulative total of 100%, as shown in the bottom slider titled TOTAL %, before the application will 
+                    allow the model to be run. To change the change probability for a specific direction, click on its 
+                corresponding slider and drag the slider button to the left or right in order to adjust the probability 
+                value. Alternatively, after you have clicked on the slider button, use the left and right arrows on your 
+                keyboard to adjust the slider button. With every change to the direction change probability sliders, the 
+                application calculates the total direction change probability, which must provide a total of 100%. If 
+                the combined values of the four direction change probability sliders do not equal to 100%, the last 
+                slider, which represents the total direction change probability, changes its text color to red in order to 
+                provide a visual clue to the discrepancy. For your convenience, we also provided a text field below the 
+                total direction change probability slider, which displays the precise total direction change probability. 
+                This will allow you to gauge the required change to implement to one or more of the direction change 
+                probability sliders in order to bring the total probability back to a value of 100%.</p>
+                <p>&nbsp;</p>
+                <h3>2. Changing the Detonation point</h3>
+                <p>The detonation point coordinates can be set by clicking on the dispersal map pane or entering the X 
+                    and Y positions in the respective X Position and Y Position text fields. The Mouse X Pos and Mouse 
+                    Y Pos text fields display the relative position of the cursor in the dispersal map pane, irrespective 
+                    of the presence of any maps, and should be used to aid in identifying the general location of potential 
+                    detonation points. Once you have decided on a suitable detonation point, click the mouse button to select 
+                    the current mouse cursor position as the new detonation point. You may then use the X Position and Y 
+                    Position text fields to make adjustments to the X and Y positions, or skip the mouse cursor-based 
+                    selection process and supply the required coordinate values directly to these text fields.</p>
+                <p>&nbsp;</p>
+                <h3>3. Changing the Detonation (Start) height</h3>
+                <p>Click in the text field to the right of the Start height (m) label at the bottom letf of the application. 
+                    Type in the detonation height, in number of meters, to use in the modelling process, e.g. 10 or 50 
+                    or 200. Do not use any number formatting such as commas, plus or minus symbols, or partial values 
+                    such as 50.2, or text values such as "fifty".</p>
+                <p>&nbsp;</p>
+                <h3>4. Changing the Particle Count</h3>
+                <p>Click in the text field to the right of the Particle count label at the bottom of the application. 
+                    Type in the number of whole particles to use in the modelling process, e.g. 100 or 5000 or 10000. 
+                    Do not use any number formatting such as commas, plus or minus symbols, or partial values such as 500.2, 
+                    or text values such as "one hundred".</p>
                 <p>&nbsp;</p>
             </div><!-- .content-->
 

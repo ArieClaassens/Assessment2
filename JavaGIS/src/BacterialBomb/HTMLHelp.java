@@ -63,13 +63,6 @@ public class HTMLHelp {
                 // add an html editor kit
                 HTMLEditorKit kit = new HTMLEditorKit();
                 jEditorPane.setEditorKit(kit);
-
-                // add some styles to the html
-                //StyleSheet styleSheet = kit.getStyleSheet();
-                //styleSheet.addRule("body {color:#000; font-family:times; margin: 4px; }");
-                //styleSheet.addRule("h1 {color: blue;}");
-                //styleSheet.addRule("h2 {color: #ff0000;}");
-                //styleSheet.addRule("pre {font : 10px monaco; color : black; background-color : #fafafa; }");
                 
                 //From http://www.avajava.com/tutorials/lessons/how-do-i-convert-a-web-page-to-a-string.html and
                 //http://www.java2s.com/Code/JavaAPI/java.lang/ClassgetResourceStringnamerelativetotheclasslocation.htm
@@ -109,13 +102,12 @@ public class HTMLHelp {
                 j.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
                 // make it easy to close the application
-                //Disable this action to prevent the Kit from killing the whole application NB!!!!!!
+                //Disable this action to prevent the Kit from closing the whole application
                 //j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
                 // display the frame
                 j.setSize(new Dimension(600, 400));
 
-                // pack it, if you prefer
-                //j.pack();
                 // center the jframe, then make it visible
                 j.setLocationRelativeTo(null);
                 j.setVisible(true);

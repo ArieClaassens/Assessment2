@@ -331,28 +331,24 @@ public class Storage {
 
     //Create a random detonation point anywhere within the area of the source array
     //Determine the size of the source array to ensure that we stay within its bounds
-    //subtract 1.5 x height of the detonation to keep the dispersal within the boundaries   
-    public String setRandomDetonationPoint(double srcArray[][]) {
-        //label for our detonation point 
-        String detonationPoint = null;
-
-        //outer loop for rows
-        for (int i = 0; i <= srcArray.length - 1; i++) {
-            //inner loop for columns
-            for (int j = 0; j <= srcArray[0].length - 1; j++) {
-                //print the columnar data on one line
-                //System.out.print(srcArray[i][j] + " ");
-                if (srcArray[i][j] == 255) {
-                    detonationPoint = "{" + i + "," + j + "}";
-                    System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " + j + " . Stop the clock!");
-                    //Stop processing here!!!!! No need to continue, unless we have more than 1 detonation point?
-                    //break;
-                }
-
-            }
-            //System.out.println(" ");
-        }
-        detonationPoint = "{99,99}";
+    //subtract height of the detonation to keep the dispersal within the boundaries if oarticles fall at constant rate
+    //of 1m/s, where 1 iteration of the direction and height change process equals 1 second
+    public String setRandomDetonationPoint(double srcArray[][], int detonationHeight) {
+        
+        //Calculate the boundary buffer size as an integer value
+        //int boundaryBuffer = (int)(detonationHeight * 1.5);
+        
+        //Find the data set boundaries by obtaining the maximum width and height and deducting the buffer area size
+        int maxX = srcArray.length - detonationHeight;
+        int maxY = srcArray[0].length - detonationHeight;
+        
+        //Use the Math.random() function to generate a pseudorandom double value between 0 and 1.0
+        //Multiply the double by the maximum X and Y value and cast to integer
+        int randomX = (int)(Math.random() * maxX);
+        int randomY = (int)(Math.random() * maxY);
+        
+        //Build the detonation point array and return it to the caller
+        String detonationPoint = "{" + randomX + "," + randomY + "}";
         return detonationPoint;
     }
     

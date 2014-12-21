@@ -716,8 +716,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
-            //Need to check the content of the dispersal map first!!!
-            //Need to check which map we're trying to save - processed one or the random dispersal one
+            //Save the dispersal map generated from the source data set
             io.writeData(storeDispersal.data, f2);
             System.out.println("File save completed");
         }
@@ -742,19 +741,17 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
 
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
-        // TODO add your handling code here:
         System.out.println("TRIGGERED -----> jMenuHelpModellerActionPerformed");
-        //Load an HTML file to display app help
+        //Load an HTML file to display the application help
         //Use a parameter to select the file to load, with a switch in the HTMLHelp class
         new HTMLHelp();
-
     }//GEN-LAST:event_jMenuHelpModellerActionPerformed
 
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
         System.out.println("TRIGGERED -----> jMenuEditGenerateRandomDataActionPerformed");
         //Generate a random detonation point and then run the modeller
         //create a random det point and set the XPos and YPos values
-        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data);
+        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
         System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
 
         //Populate the X Position text field
