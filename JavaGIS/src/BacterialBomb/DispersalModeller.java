@@ -183,8 +183,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         //If the tab exists, remove it and the corresponding component speficfied using the index
         if (jTabbedPane1.indexOfTab("Random Dispersal Map") >= 0) {
             jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Random Dispersal Map"));
+            System.out.println("REMOVE TAB at index " + jTabbedPane1.indexOfTab("Random Dispersal Map"));
         }
         jTabbedPane1.addTab("Random Dispersal Map", new JLabel(new ImageIcon(filenameRandomDisMap)));
+        System.out.println("ADD TAB");
 
         //Activate the Save Random File Menu Item
         jMenuSaveRandomFile.setEnabled(true);
@@ -291,6 +293,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setName("frameMain"); // NOI18N
 
+        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         jTabbedPane1.setToolTipText("Tabbed pane where the maps are displayed");
@@ -862,10 +865,27 @@ public class DispersalModeller extends javax.swing.JFrame {
         //WAIT - WE'RE APPENDING TEXT TO TURN INTEGER VALUES INTO STRINGS!!! FIX IT FIX IT FIX IT
         //Only updates on the first click
         //System.out.println("Coordinates: " + this.getMousePosition());
-        jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
-        jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
-        jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
-        jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        
+        //Keep the random detonation point coordinates inside the map area.
+        //Stops the app from failing on the sanity tests when running the modellers.
+        //HIERSO
+        if (((int) this.getMousePosition().getX() - mouseOffsetX) >= 0) {
+            jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+            jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        } else {
+            jTextFieldXPos.setText("0");
+            jTextFieldMouseX.setText("0");
+        }
+        
+        if (((int) this.getMousePosition().getY() - mouseOffsetY) >= 0) {
+            jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+            jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        } else {
+            jTextFieldYPos.setText("0");
+        jTextFieldMouseY.setText("0");
+        }
+        
+        
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     //Besig hierso
@@ -948,8 +968,24 @@ public class DispersalModeller extends javax.swing.JFrame {
         //System.out.println("TRIGGERED -----> jTabbedPane1MousePressed");
         //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
         //System.out.println("Coordinates: " + this.getMousePosition());
-        jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
-        jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        //Keep the random detonation point coordinates inside the map area.
+        //Stops the app from failing on the sanity tests when running the modellers.
+        //HIERSO
+        if (((int) this.getMousePosition().getX() - mouseOffsetX) >= 0) {
+            jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+            jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        } else {
+            jTextFieldXPos.setText("0");
+            jTextFieldMouseX.setText("0");
+        }
+        
+        if (((int) this.getMousePosition().getY() - mouseOffsetY) >= 0) {
+            jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+            jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        } else {
+            jTextFieldYPos.setText("0");
+        jTextFieldMouseY.setText("0");
+        }
 
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
@@ -959,9 +995,25 @@ public class DispersalModeller extends javax.swing.JFrame {
         //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
 
         //System.out.println("Coordinates: " + this.getMousePosition());
-        jTabbedPane1.setToolTipText("The current cursor position is X:" + (int) this.getMousePosition().getX() + ", Y: " + (int) this.getMousePosition().getY());
-        jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
-        jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        
+        //Keep the random detonation point coordinates inside the map area.
+        //Stops the app from failing on the sanity tests when running the modellers.
+        //HIERSO
+        if (((int) this.getMousePosition().getX() - mouseOffsetX) >= 0) {
+            jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+            jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
+        } else {
+            jTextFieldXPos.setText("0");
+            jTextFieldMouseX.setText("0");
+        }
+        
+        if (((int) this.getMousePosition().getY() - mouseOffsetY) >= 0) {
+            jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+            jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
+        } else {
+            jTextFieldYPos.setText("0");
+        jTextFieldMouseY.setText("0");
+        }
     }//GEN-LAST:event_jTabbedPane1MouseMoved
 
     private void jButtonRunRandomModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunRandomModellerActionPerformed
