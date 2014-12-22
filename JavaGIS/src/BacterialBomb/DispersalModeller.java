@@ -60,6 +60,10 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Log the working directory so that we can use it for the automated map image generation, see 
     //http://www.javapractices.com/topic/TopicAction.do?Id=260 for more info
     private String filedir = System.getProperty("user.dir");
+    
+    //Use the OS-independent user temp directory to store images
+    //See http://stackoverflow.com/questions/16352326/when-does-system-getpropertyjava-io-tmpdir-return-c-temp
+    private String imgfiledir = System.getProperty("java.io.tmpdir");   
 
     //label to hold detonationPoint value
     private String detonationPoint = null;
@@ -161,8 +165,8 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Create the buffered image from the random dispersal map image
         BufferedImage bufferedImageRandomDispersalMap = ImageUtils.convertToBufferedImage(imageRandomDispersalMap);
         
-        //Construct the full filename for the dispersal map
-        String filenameRandomDisMap = getFiledir() + "Random_Dispersal_map.png";
+        //Construct the full filename for the temporary random dispersal map image
+        String filenameRandomDisMap = imgfiledir + "Random_Dispersal_map.png";
         File fileRandomDisMap = new File(filenameRandomDisMap);
 
         try {
@@ -197,8 +201,8 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Create a buffered image from the dispersal map image 
         BufferedImage bufferedImageDispersalMap = ImageUtils.convertToBufferedImage(imageDispersalMap);
 
-        //Construct the full filename for the dispersal map
-        String filenameDisMap = getFiledir() + "Dispersal_map.png";
+        //Construct the full filename for the temporary dispersal map image
+        String filenameDisMap = imgfiledir + "Dispersal_map.png";
         File fileDisMap = new File(filenameDisMap);
 
         try {
@@ -737,8 +741,8 @@ public class DispersalModeller extends javax.swing.JFrame {
             Image imageDetonationMap = storeDetonation.getDataAsImage();
             BufferedImage bufferedImageDetonationMap = ImageUtils.convertToBufferedImage(imageDetonationMap);
 
-            //Construct the full filename for the detonation map
-            String filenameDetMap = getFiledir() + "Detonation_map.png";
+            //Construct the full filename for the temporary detonation map image
+            String filenameDetMap = imgfiledir + "Detonation_map.png";
             File fileDetMap = new File(filenameDetMap);
 
             try {
@@ -746,6 +750,7 @@ public class DispersalModeller extends javax.swing.JFrame {
                 ImageUtils.writeImageToPNG(fileDetMap, bufferedImageDetonationMap);
             } catch (IOException ex) {
                 //handle the IOException
+                //Notify the user of the issue
                 jTextPaneMessages.setText("Warning: the detonation map automated image file save did not work");
             }
             //System.out.println("The file name is " + filenameDetMap);

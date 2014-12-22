@@ -116,7 +116,6 @@ public class Storage {
         }
     }
 
-  
     
     //Convert the source object values from double to integer data type
     public int[][] castDoubleToInt(double srcArray[][]) {
@@ -321,9 +320,9 @@ public class Storage {
                 //System.out.print(srcArray[i][j] + " ");
                 if (srcArray[i][j] == 255) {
                     detonationPoint = "{" + i + "," + j + "}";
-                    System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " + j + " . Stop the clock!");
-                    //Stop processing here!!!!! No need to continue, unless we have more than 1 detonation point?
-                    //break;
+                    //System.out.println("Found the detonation point marked. " + detonationPoint + " at position i: " + i + ", j: " + j + " . Stop the clock!");
+                    //Stop processing here. No need to continue, unless we have more than 1 detonation point?
+                    break;
                 }
 
             }
@@ -383,8 +382,8 @@ public class Storage {
 
         //Instantiate method variable to store particle count
         //int bacteriaCount = Integer.parseInt(strBacteriaCount);
-        System.out.println("startbacteriumPosRow: " + startbacteriumPosRow);
-        System.out.println("startbacteriumPosCol: " + startbacteriumPosCol);
+        //System.out.println("startbacteriumPosRow: " + startbacteriumPosRow);
+        //System.out.println("startbacteriumPosCol: " + startbacteriumPosCol);
         //Stop the bus here for now
         //System.exit(0);
 
