@@ -60,7 +60,12 @@ public class Storage {
      }
      */
     //from practical notes - > http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part5/2.html
-    public void setData(double[][] dataIn) {
+
+    /**
+     *
+     * @param dataIn
+     */
+        public void setData(double[][] dataIn) {
         data = dataIn;
     }
 
@@ -91,7 +96,12 @@ public class Storage {
      }
      */
     //From Practical -> http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part5/2.html
-    public double[][] getData() {
+
+    /**
+     *
+     * @return
+     */
+        public double[][] getData() {
         return data;
     }
 
@@ -103,6 +113,15 @@ public class Storage {
      * @param endRow    integer specifying the end row for the method
      * @param endCol    integer specifying the end column for the method
      */
+
+    /**
+     *
+     * @param startRow
+     * @param startCol
+     * @param endRow
+     * @param endCol
+     */
+    
     public void printData(int startRow, int startCol, int endRow, int endCol) {
         //print out array (to verify cell contents)
         //outer loop for rows
@@ -118,7 +137,13 @@ public class Storage {
 
     
     //Convert the source object values from double to integer data type
-    public int[][] castDoubleToInt(double srcArray[][]) {
+
+    /**
+     *
+     * @param srcArray
+     * @return
+     */
+        public int[][] castDoubleToInt(double srcArray[][]) {
         
         //Create a label with scope restricted to this method, where we can store the integer values temporarily
         int[][] intArray = new int[srcArray.length][srcArray[0].length];
@@ -139,6 +164,11 @@ public class Storage {
      * Method to print out the object (array) contents
      * Accepts and returns nothing
      */
+
+    /**
+     *
+     */
+    
     public void printArray() {
         //outer loop for rows
         for (int i = 0; i < data.length; i++) {
@@ -155,6 +185,12 @@ public class Storage {
      * Method to calculate and return the maximum value contained in the array
      * @return A double containing the maximum value found in the array
      */
+
+    /**
+     *
+     * @return
+     */
+    
     public double getMaximum() {
         //calculate the maximum value contained by the array
         //Set the maximum to a negative value in order to ensure that it does 
@@ -176,6 +212,10 @@ public class Storage {
      * @return A double containing the minimum value found in the array
      */
 
+    /**
+     *
+     * @return
+     */
     public double getMinimum() {
         //calculate the minimum value contained by the array
         //Set the minimum to use the first cell in the array as the initial value. 
@@ -206,7 +246,14 @@ public class Storage {
     // numbers across a given range, that is, the minimum value matches a new minimum, 
     // the maximum a new maximum, and the rest of the data is spread between them, 
     // proportional to the values in the original dataset. 
-    public double[][] getRerangedData(double newMinimum, double newMaximum) {
+
+    /**
+     *
+     * @param newMinimum
+     * @param newMaximum
+     * @return
+     */
+        public double[][] getRerangedData(double newMinimum, double newMaximum) {
         // Set up double variables containing currentMaximum and currentMinimum
         double currentMinimum = this.getMinimum();
         double currentMaximum = this.getMaximum();
@@ -244,6 +291,12 @@ public class Storage {
      * @param 2D array of type double
      * @return 1D array of type double
      */
+
+    /**
+     *
+     * @return
+     */
+    
     public double[] get1DArray() {
         //create a reranged array
         double[][] reranged = getRerangedData(0.0, 255.0);
@@ -271,6 +324,10 @@ public class Storage {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Image getDataAsImage() {
         // Our Storage code this practical will go here.
 
@@ -308,6 +365,11 @@ public class Storage {
         return image;
     }
 
+    /**
+     *
+     * @param srcArray
+     * @return
+     */
     public String locateDetonationPoint(double srcArray[][]) {
         //label for our detonation point 
         String detonationPoint = null;
@@ -335,7 +397,14 @@ public class Storage {
     //Determine the size of the source array to ensure that we stay within its bounds
     //subtract height of the detonation to keep the dispersal within the boundaries if oarticles fall at constant rate
     //of 1m/s, where 1 iteration of the direction and height change process equals 1 second
-    public String setRandomDetonationPoint(double srcArray[][], int detonationHeight) {
+
+    /**
+     *
+     * @param srcArray
+     * @param detonationHeight
+     * @return
+     */
+        public String setRandomDetonationPoint(double srcArray[][], int detonationHeight) {
         
         //Calculate the boundary buffer size as an integer value
         //int boundaryBuffer = (int)(detonationHeight * 1.5);
@@ -365,7 +434,21 @@ public class Storage {
     
     //Calculate the dispersal of the supplied number of bacteria
     //Pass in the number of rows and columns in the source array so that we have dimensions
-    public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
+
+    /**
+     *
+     * @param bacteriaCount
+     * @param srcArrayRows
+     * @param srcArrayCols
+     * @param xPos
+     * @param yPos
+     * @param changeNorthProbability
+     * @param changeEastProbability
+     * @param changeSouthProbability
+     * @param changeWestProbability
+     * @return
+     */
+        public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
             int changeNorthProbability, int changeEastProbability, int changeSouthProbability, int changeWestProbability) {
 
         //instantiate label for dispersal array, with size of the source array; initialised with all cell values at 0.0

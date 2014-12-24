@@ -35,6 +35,11 @@ import java.util.StringTokenizer;
  */
 public class IO {
 
+    /**
+     *
+     * @param f
+     * @return
+     */
     public double[][] readData(File f) {
         // Our reading code will go here.
 
@@ -119,6 +124,11 @@ public class IO {
         return data;
     }
 
+    /**
+     *
+     * @param dataIn
+     * @param f
+     */
     public void writeData(double[][] dataIn, File f) {
         // Our writing code will go here.
         BufferedWriter bw = null;
@@ -164,6 +174,11 @@ public class IO {
         // Close try block.
     }
     
+    /**
+     *
+     * @param dataIn
+     * @param f
+     */
     public void writeIntData(int[][] dataIn, File f) {
         // Our writing code will go here.
         BufferedWriter bw = null;

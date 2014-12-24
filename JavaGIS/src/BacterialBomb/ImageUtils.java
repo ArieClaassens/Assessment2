@@ -34,6 +34,11 @@ import javax.imageio.ImageIO;
  */
 public class ImageUtils {
 
+    /**
+     *
+     * @param im
+     * @return
+     */
     public static BufferedImage imageToBufferedImage(Image im) {
         BufferedImage bi = new BufferedImage(im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_INT_RGB);
         Graphics bg = bi.getGraphics();
@@ -42,16 +47,34 @@ public class ImageUtils {
         return bi;
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static BufferedImage readImageFromFile(File file)
             throws IOException {
         return ImageIO.read(file);
     }
 
+    /**
+     *
+     * @param file
+     * @param bufferedImage
+     * @throws IOException
+     */
     public static void writeImageToPNG(File file, BufferedImage bufferedImage)
             throws IOException {
         ImageIO.write(bufferedImage, "png", file);
     }
 
+    /**
+     *
+     * @param file
+     * @param bufferedImage
+     * @throws IOException
+     */
     public static void writeImageToJPG(File file, BufferedImage bufferedImage)
             throws IOException {
         ImageIO.write(bufferedImage, "jpg", file);
@@ -59,7 +82,13 @@ public class ImageUtils {
 
     //Method to create buffered image from Toolkit image
     //http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage
-    public static BufferedImage convertToBufferedImage(Image image) {
+
+    /**
+     *
+     * @param image
+     * @return
+     */
+        public static BufferedImage convertToBufferedImage(Image image) {
         BufferedImage newImage = new BufferedImage(
                 image.getWidth(null), image.getHeight(null),
                 BufferedImage.TYPE_INT_ARGB);

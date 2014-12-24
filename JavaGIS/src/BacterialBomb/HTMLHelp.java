@@ -48,6 +48,11 @@ public class HTMLHelp {
      new HtmlEditorKitTest();
      }
      */
+
+    /**
+     *
+     */
+    
     public HTMLHelp() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
