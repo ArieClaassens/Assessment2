@@ -990,29 +990,20 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
     private void jTabbedPane1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseMoved
-        // TODO add your handling code here:
-        //System.out.println("TRIGGERED -----> jTabbedPane1MouseMoved");
-        //System.out.println("Coordinates: " + this.getMousePosition() + " and adjusted: " + jTabbedPane1.getMousePosition(true) + " and inside the image: " + jTabbedPane1.getMousePosition(true) + " and currently selected component: " + jTabbedPane1.getSelectedComponent());
-
-        //System.out.println("Coordinates: " + this.getMousePosition());
-        
+        //Display the mouse cursor position as we move across the tabbed pane area       
         //Keep the random detonation point coordinates inside the map area.
         //Stops the app from failing on the sanity tests when running the modellers.
         //HIERSO
         if (((int) this.getMousePosition().getX() - mouseOffsetX) >= 0) {
-            jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
             jTextFieldMouseX.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
         } else {
-            jTextFieldXPos.setText("0");
             jTextFieldMouseX.setText("0");
         }
         
         if (((int) this.getMousePosition().getY() - mouseOffsetY) >= 0) {
-            jTextFieldYPos.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
             jTextFieldMouseY.setText((int) this.getMousePosition().getY() - mouseOffsetY + "");
         } else {
-            jTextFieldYPos.setText("0");
-        jTextFieldMouseY.setText("0");
+            jTextFieldMouseY.setText("0");
         }
     }//GEN-LAST:event_jTabbedPane1MouseMoved
 
