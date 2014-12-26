@@ -64,6 +64,10 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Label to define whether output should be converted from double to integer type when saving output
     Boolean outputToInt = true;
 
+    //Label to determine if the raster source data has been loaded. Disable the Run Modeller Menu Item and button
+    //until the raster data source has been loaded
+    Boolean sourceDataLoaded = false;
+
     //Label to store last used directory, to keep saved files in same place as source files
     //Not smooth, need to get a better option, like a temp directory to use, if possible
     //Log the working directory so that we can use it for the automated map image generation, see 
@@ -81,7 +85,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Only set by RunModeller to true after succesfully constructing the map image
     private boolean showDispersalMap = false;
     private boolean showRandomMap = false;
-    
+
     public final String lineseparator = System.getProperty("line.separator");
 
     //method to remove all the tabs from the tabbed pane
@@ -96,6 +100,18 @@ public class DispersalModeller extends javax.swing.JFrame {
         //while (jTabbedPane1.getTabCount() > 0) {
         //    jTabbedPane1.remove(0);
         //}
+    }
+
+    //method to enable the Run Modeller Menu Item and Button
+    public void enableRunModeller() {
+        jMenuRunModeller.setEnabled(true);
+        jButtonRunModeller.setEnabled(true);
+    }
+
+    //method to disable the Run Modeller Menu Item and Button
+    public void disableRunModeller() {
+        jMenuRunModeller.setEnabled(false);
+        jButtonRunModeller.setEnabled(false);
     }
 
     /**
@@ -125,12 +141,12 @@ public class DispersalModeller extends javax.swing.JFrame {
      *
      * @param srcArray
      */
-    public void RunModeller(Storage srcArray, String srcArrayname) {
+    public void RunModeller(Storage srcArray, String srcArrayName) {
         //Check whether we have the data and parameters required for the job and that they contain sensible values
         //We need:
         //Start height AKA detonation height, parsed as an integer.
         int startHeight = Integer.parseInt(jTextFieldStartHeight.getText());
-        
+
         //Number of agent particles to use in the model. Must be more than zero, or else the model serves no purpose
         //try & catch?
         int bacteriaCount = Integer.parseInt(jTextFieldParticleCount.getText());
@@ -138,7 +154,15 @@ public class DispersalModeller extends javax.swing.JFrame {
         //The detonation point X and Y values to determine where to start the calculations
         //The coordinates cannot fall outside the target area, so check for that too, assuming we're using a square image
         int xPos = Integer.parseInt(jTextFieldXPos.getText());
+        if ((xPos < 0) || (xPos > 300)) {
+            //Change text to red
+            jTextFieldXPos.setForeground(Color.red);
+        }
         int yPos = Integer.parseInt(jTextFieldYPos.getText());
+        if ((yPos < 0) || (yPos > 300)) {
+            //Change text to red
+            jTextFieldYPos.setForeground(Color.red);
+        }
 
         //Detonation height, equal to or higher than 0m above the surface. We're not working with subterranean
         //detonations in this model.
@@ -155,7 +179,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Data source to process is optional. User may choose to work directly from a user-selected start point, without
         //having to open a source file first every time.       
         //Use shorthand to ensure that code stops as soon as a non-compliant parameter is detected
-        if ((bacteriaCount > 0) && (xPos > 0) && (xPos < srcArray.data.length) && (yPos > 0)
+        if ((bacteriaCount > 0) && (xPos >= 0) && (xPos < srcArray.data.length) && (yPos >= 0)
                 && (yPos < srcArray.data.length) && (detonationHeight >= 0)
                 && (jSliderTotalProbability.getValue() == 100)) {
 
@@ -171,13 +195,11 @@ public class DispersalModeller extends javax.swing.JFrame {
 
             //Save the data to the source data object
             srcArray.data = dispersalArray;
-            
-            
-            //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
 
+            //Draw a density map of where all the bacteria end up as an image and displays it on the screen.
             //Enable map image display for the relevant image after successfully generating the map image
             //if (srcArray.equals("storeDispersal")) {
-            if (srcArrayname.equals("storeDispersal")) {
+            if (srcArrayName.equals("storeDispersal")) {
                 //Set the showDispersalMap boolean to True
                 showDispersalMap = true;
             } else {
@@ -244,18 +266,17 @@ public class DispersalModeller extends javax.swing.JFrame {
             //Clean up any existing tabs to display only the random dispersal map
             cleanupTabbedPane("Random Dispersal Map");
             //jTabbedPane1.removeAll();
-            
-            
+
             //Create a new image icon using the random dispersal map filename
             ImageIcon randomDispersalMapImageIcon = new ImageIcon(filenameRandomDisMap);
 
             //Add a new tab and load the random dispersal map in it
             jTabbedPane1.addTab("Random Dispersal Map", new JLabel(randomDispersalMapImageIcon));
-            
+
             //Select the last tab
             //From http://examples.javacodegeeks.com/desktop-java/swing/jtabbedpane/get-set-selected-tab-in-jtabbedpane/
-            jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
-            
+            jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 1);
+
             //Flush the image to ensure that it is not cached on subsequent loads, i.e. on reruns of the modeller
             //From http://stackoverflow.com/questions/15885696/imageicon-do-not-update-for-a-new-image-with-the-same-url
             randomDispersalMapImageIcon.getImage().flush();
@@ -303,21 +324,20 @@ public class DispersalModeller extends javax.swing.JFrame {
             //    jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Dispersal Map"));
             //}
             cleanupTabbedPane("Dispersal Map");
-            
+
             //Create a new image icon using the dispersal map filename
             ImageIcon dispersalMapImageIcon = new ImageIcon(filenameDisMap);
             //Add a new tab and populate it with the new imageicon
             jTabbedPane1.addTab("Dispersal Map", new JLabel(dispersalMapImageIcon));
             //Select the last tab
             //From http://examples.javacodegeeks.com/desktop-java/swing/jtabbedpane/get-set-selected-tab-in-jtabbedpane/
-            jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
-            
+            jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 1);
+
             //Flush the image to ensure that it is not cached on subsequent loads, i.e. on reruns of the modeller
             //From http://stackoverflow.com/questions/15885696/imageicon-do-not-update-for-a-new-image-with-the-same-url
             dispersalMapImageIcon.getImage().flush();
-            
+
             //System.out.println("Current Selected Index is: " + jTabbedPane1.getSelectedIndex());
-            
             //Activate the Save File Menu Item since we now have output data that can be saved
             jMenuSaveFileAs.setEnabled(true);
             jMenuSaveFileAs.setToolTipText("Save the dispersal raster output");
@@ -508,8 +528,9 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         jButtonRunModeller.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRunModeller.setText("Run Modeller");
-        jButtonRunModeller.setToolTipText("Click this button to run the modeller after setting all your parameters");
+        jButtonRunModeller.setToolTipText("Click this button to run the modeller after loading the data source file and setting all your parameters");
         jButtonRunModeller.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonRunModeller.setEnabled(false);
         jButtonRunModeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRunModellerActionPerformed(evt);
@@ -609,6 +630,8 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenuRunModeller.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuRunModeller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/bomb.png"))); // NOI18N
         jMenuRunModeller.setText("Run Modeller");
+        jMenuRunModeller.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/error.png"))); // NOI18N
+        jMenuRunModeller.setEnabled(false);
         jMenuRunModeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuRunModellerActionPerformed(evt);
@@ -809,7 +832,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //Clear up everything and start over
         jTabbedPane1.removeAll();
-        
+
         FileDialog fd = new FileDialog(this, "Open Raster File", FileDialog.LOAD);
         //Implement filtering for all platforms but Windows
         rasterFilter filter = new rasterFilter();
@@ -823,6 +846,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         fd.setVisible(true);
         File f = null;
 
+        //generate the detonation map and display it in the tabbed pane
         if ((fd.getDirectory() != null) || (fd.getFile() != null)) {
             //Labels to use in saving the detonation map
             setFiledir(fd.getDirectory());
@@ -869,6 +893,9 @@ public class DispersalModeller extends javax.swing.JFrame {
             //Load the image in a new tab in the tabbed panel
             jTabbedPane1.addTab("Detonation Map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
         }
+        
+        //Activate the Run Modeller Menu Item and Button since the raster data source has been loaded
+        enableRunModeller();
     }//GEN-LAST:event_jMenuOpenFileActionPerformed
 
     private void jMenuSaveFileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveFileAsActionPerformed
@@ -904,7 +931,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jMenuRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRunModellerActionPerformed
 
         //Run the modeller using the raster data source object and name of the map display check to activate
-        RunModeller(storeDispersal,"storeDispersal");
+        RunModeller(storeDispersal, "storeDispersal");
 
         //Display the new dispersal map
         showDispersalMap();
@@ -953,7 +980,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
 
         //Run the modeller on the random data storage object and activate the specified image display check
-        RunModeller(storeRandomDispersal,"storeRandomDispersal");
+        RunModeller(storeRandomDispersal, "storeRandomDispersal");
 
         //Display the dispersal map
         showRandomDispersalMap();
@@ -1001,7 +1028,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //System.out.println("TRIGGERED -----> jButtonRunModellerActionPerformed");
         //Run the modeller using the raster data source object and name of the map display check to activate
-        RunModeller(storeDispersal,"storeDispersal");
+        RunModeller(storeDispersal, "storeDispersal");
 
         //Display the new dispersal map
         showDispersalMap();
@@ -1130,8 +1157,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
 
         //Run the modeller on the random data storage object and activate the specified image display check
-        RunModeller(storeRandomDispersal,"storeRandomDispersal");
-
+        RunModeller(storeRandomDispersal, "storeRandomDispersal");
 
         //Display the dispersal map
         showRandomDispersalMap();

@@ -60,12 +60,11 @@ public class Storage {
      }
      */
     //from practical notes - > http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part5/2.html
-
     /**
      *
      * @param dataIn
      */
-        public void setData(double[][] dataIn) {
+    public void setData(double[][] dataIn) {
         data = dataIn;
     }
 
@@ -96,12 +95,11 @@ public class Storage {
      }
      */
     //From Practical -> http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part5/2.html
-
     /**
      *
      * @return
      */
-        public double[][] getData() {
+    public double[][] getData() {
         return data;
     }
 
@@ -113,7 +111,6 @@ public class Storage {
      * @param endRow    integer specifying the end row for the method
      * @param endCol    integer specifying the end column for the method
      */
-
     /**
      *
      * @param startRow
@@ -121,7 +118,6 @@ public class Storage {
      * @param endRow
      * @param endCol
      */
-    
     public void printData(int startRow, int startCol, int endRow, int endCol) {
         //print out array (to verify cell contents)
         //outer loop for rows
@@ -135,16 +131,14 @@ public class Storage {
         }
     }
 
-    
     //Convert the source object values from double to integer data type
-
     /**
      *
      * @param srcArray
      * @return
      */
-        public int[][] castDoubleToInt(double srcArray[][]) {
-        
+    public int[][] castDoubleToInt(double srcArray[][]) {
+
         //Create a label with scope restricted to this method, where we can store the integer values temporarily
         int[][] intArray = new int[srcArray.length][srcArray[0].length];
 
@@ -153,7 +147,7 @@ public class Storage {
             //inner loop for columns
             for (int j = 0; j < srcArray[i].length; j++) {
                 //Convert from double to integer data type by casting (explicit conversion)
-                intArray[i][j] = (int)srcArray[i][j];
+                intArray[i][j] = (int) srcArray[i][j];
                 //System.out.println("We're on i: " + i + "  j: " +  j);
             }
         }
@@ -164,11 +158,9 @@ public class Storage {
      * Method to print out the object (array) contents
      * Accepts and returns nothing
      */
-
     /**
      *
      */
-    
     public void printArray() {
         //outer loop for rows
         for (int i = 0; i < data.length; i++) {
@@ -185,12 +177,10 @@ public class Storage {
      * Method to calculate and return the maximum value contained in the array
      * @return A double containing the maximum value found in the array
      */
-
     /**
      *
      * @return
      */
-    
     public double getMaximum() {
         //calculate the maximum value contained by the array
         //Set the maximum to a negative value in order to ensure that it does 
@@ -246,14 +236,13 @@ public class Storage {
     // numbers across a given range, that is, the minimum value matches a new minimum, 
     // the maximum a new maximum, and the rest of the data is spread between them, 
     // proportional to the values in the original dataset. 
-
     /**
      *
      * @param newMinimum
      * @param newMaximum
      * @return
      */
-        public double[][] getRerangedData(double newMinimum, double newMaximum) {
+    public double[][] getRerangedData(double newMinimum, double newMaximum) {
         // Set up double variables containing currentMaximum and currentMinimum
         double currentMinimum = this.getMinimum();
         double currentMaximum = this.getMaximum();
@@ -291,12 +280,10 @@ public class Storage {
      * @param 2D array of type double
      * @return 1D array of type double
      */
-
     /**
      *
      * @return
      */
-    
     public double[] get1DArray() {
         //create a reranged array
         double[][] reranged = getRerangedData(0.0, 255.0);
@@ -397,27 +384,24 @@ public class Storage {
     //Determine the size of the source array to ensure that we stay within its bounds
     //subtract height of the detonation to keep the dispersal within the boundaries if oarticles fall at constant rate
     //of 1m/s, where 1 iteration of the direction and height change process equals 1 second
-
     /**
      *
      * @param srcArray
      * @param detonationHeight
      * @return
      */
-        public String setRandomDetonationPoint(double srcArray[][], int detonationHeight) {
-        
-        //Calculate the boundary buffer size as an integer value
-        //int boundaryBuffer = (int)(detonationHeight * 1.5);
-        
+    public String setRandomDetonationPoint(double srcArray[][], int detonationHeight) {
+
+        //Calculate the boundary buffer size as an integer value at 10% of width and height of data source.
         //Find the data set boundaries by obtaining the maximum width and height and deducting the buffer area size
-        int maxX = srcArray.length - detonationHeight;
-        int maxY = srcArray[0].length - detonationHeight;
-        
+        int maxX = (int)(srcArray.length * 0.9);
+        int maxY = (int)(srcArray[0].length * 0.9);
+
         //Use the Math.random() function to generate a pseudorandom double value between 0 and 1.0
         //Multiply the double by the maximum X and Y value and cast to integer
-        int randomX = (int)(Math.random() * maxX);
-        int randomY = (int)(Math.random() * maxY);
-        
+        int randomX = (int) (Math.random() * maxX);
+        int randomY = (int) (Math.random() * maxY);
+
         //Check if the point coordinates are buffer distance away from the originating borders (top and left)
         //If not, add the buffer distance to the randomX and/or randomY values to enforce the buffer zone
         if (randomX < detonationHeight) {
@@ -426,15 +410,14 @@ public class Storage {
         if (randomY < detonationHeight) {
             randomY = randomY + detonationHeight;
         }
-        
+
         //Build the detonation point array and return it to the caller
         String detonationPoint = "{" + randomX + "," + randomY + "}";
         return detonationPoint;
     }
-    
+
     //Calculate the dispersal of the supplied number of bacteria
     //Pass in the number of rows and columns in the source array so that we have dimensions
-
     /**
      *
      * @param bacteriaCount
@@ -448,7 +431,7 @@ public class Storage {
      * @param changeWestProbability
      * @return
      */
-        public double[][] calculateDispersal(int startHeight, int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
+    public double[][] calculateDispersal(int startHeight, int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
             int changeNorthProbability, int changeEastProbability, int changeSouthProbability, int changeWestProbability) {
 
         //instantiate label for dispersal array, with size of the source array; initialised with all cell values at 0.0
@@ -469,7 +452,6 @@ public class Storage {
         //System.out.println("startbacteriumPosCol: " + startbacteriumPosCol);
         //Stop the bus here for now
         //System.exit(0);
-
         //instantiate the final label for the starting height for each bacterium
         //The building is 75m tall and the device detonates on top of the building, setting it higher than the building
         //final int startheight = 76;
@@ -541,7 +523,7 @@ public class Storage {
                 //use nextDouble for a more random distribution???
                 //double directionChange = rd2.nextDouble();
                 //Multiply by 100 and cast to integer in order to fall in same order of magnitude and primitive type as probability values
-                int directionChange = (int)(rd2.nextDouble()*100);
+                int directionChange = (int) (rd2.nextDouble() * 100);
                 //int directionChange = (int)(Math.random()*100);
                 //System.out.println("Dir change is: " + directionChange);
 
@@ -590,14 +572,22 @@ public class Storage {
                 //System.out.println("POSITION is now bacteriumPosRow -> " + bacteriumPosRow + ", bacteriumPosCol -> " + bacteriumPosCol);
                 //Height is now 0.0
             }
+            
             //Assign position to density map, with constraints to keep inside source array surface area. CHECK NOTES!!
-            //System.out.println("LOOP: " + b + " OLD POSITION is (Row,Col) -> (" + bacteriumPosRow + "," + bacteriumPosCol + ") + height " + height);
+            //If it exceeds the upper boundary, assign it the value of the upper boundary. If it exceeds the lower boundary, 
+            //assign it the value of the lower boundary.
             if (bacteriumPosRow > maxRows) {
                 bacteriumPosRow = maxRows;
+            } else if (bacteriumPosRow < 0) {
+                bacteriumPosRow = 0;
             }
+
             if (bacteriumPosCol >= maxColums) {
                 bacteriumPosCol = maxColums;
+            } else if (bacteriumPosCol < 0) {
+                bacteriumPosCol = 0;
             }
+
             //System.out.println("LOOP: " + b + " NEW POSITION is (Row,Col) -> (" + bacteriumPosRow + "," + bacteriumPosCol + ") + height " + height);
             dispersalArray[bacteriumPosRow][bacteriumPosCol] = dispersalArray[bacteriumPosRow][bacteriumPosCol] + 1;
 
