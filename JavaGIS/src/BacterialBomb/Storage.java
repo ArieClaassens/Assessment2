@@ -564,10 +564,7 @@ public class Storage {
                     //System.out.println("Matched: probability of going WEST");
                     //location i-1 one column left
                     bacteriumPosCol--;
-                } else {
-                    System.out.println("This is messed up, we couln't find a real direction to change to. Fix it, Felix!");
-
-                }
+                } 
 
                 //System.out.println("POSITION is now bacteriumPosRow -> " + bacteriumPosRow + ", bacteriumPosCol -> " + bacteriumPosCol);
                 //Height is now 0.0

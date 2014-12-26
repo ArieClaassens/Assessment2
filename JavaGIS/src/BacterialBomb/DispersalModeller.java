@@ -86,6 +86,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     private boolean showDispersalMap = false;
     private boolean showRandomMap = false;
 
+    //Label to hold the OS-specific line separator
     public final String lineseparator = System.getProperty("line.separator");
 
     //method to remove all the tabs from the tabbed pane
@@ -93,7 +94,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     public void cleanupTabbedPane(String paneName) {
         if (jTabbedPane1.indexOfTab(paneName) >= 0) {
             jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab(paneName));
-            System.out.println("REMOVED " + paneName + " TAB at index " + jTabbedPane1.indexOfTab(paneName));
+            //System.out.println("REMOVED " + paneName + " TAB at index " + jTabbedPane1.indexOfTab(paneName));
         }
 
         //loop through all the tabs and delete them
@@ -154,13 +155,15 @@ public class DispersalModeller extends javax.swing.JFrame {
         //The detonation point X and Y values to determine where to start the calculations
         //The coordinates cannot fall outside the target area, so check for that too, assuming we're using a square image
         int xPos = Integer.parseInt(jTextFieldXPos.getText());
+        
+        //Change to dynamic values via variables
         if ((xPos < 0) || (xPos > 300)) {
-            //Change text to red
+            //Change text to red to highlight issue
             jTextFieldXPos.setForeground(Color.red);
         }
         int yPos = Integer.parseInt(jTextFieldYPos.getText());
         if ((yPos < 0) || (yPos > 300)) {
-            //Change text to red
+            //Change text to red to highlight issue
             jTextFieldYPos.setForeground(Color.red);
         }
 
@@ -221,6 +224,7 @@ public class DispersalModeller extends javax.swing.JFrame {
                     + lineseparator
                     + "If you are not running the Random Dispersal function," + lineseparator
                     + "you must load a raster data source file first." + lineseparator + lineseparator
+                    + "Check that the detonation point falls inside the map area." + lineseparator
                     + "Check that the directional change probability equals 100%." + lineseparator
                     + "Check that you have a valid detonation point." + lineseparator
                     + "Check that you have a valid detonation height." + lineseparator
@@ -315,7 +319,8 @@ public class DispersalModeller extends javax.swing.JFrame {
                 ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
             } catch (IOException ex) {
                 //handle the IOException
-                System.out.println("The dispersal map automated file save did not work");
+                //System.out.println("The dispersal map automated file save did not work");
+                jTextPaneMessages.setText("The dispersal map automated file save did not work");
             }
 
             //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
@@ -725,34 +730,32 @@ public class DispersalModeller extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelXPos)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelMouseX)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldMouseX, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelYPos)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelMouseY)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldMouseY, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelHeightStart)
                                 .addGap(2, 2, 2)
-                                .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldStartHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabelParticleCount)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelXPos)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldXPos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelMouseX)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldMouseX, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelYPos)
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jLabelMouseY)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldMouseY, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jTextFieldYPos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldParticleCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))))
@@ -1146,7 +1149,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         //Generate a random detonation point and then run the modeller
         //create a random det point and set the XPos and YPos values
         String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
-        System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
+        //System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
 
         //Populate the X Position text field
         jTextFieldXPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf('{') + 1, randomDetonationPoint.indexOf(',')));
