@@ -448,7 +448,7 @@ public class Storage {
      * @param changeWestProbability
      * @return
      */
-        public double[][] calculateDispersal(int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
+        public double[][] calculateDispersal(int startHeight, int bacteriaCount, int srcArrayRows, int srcArrayCols, int xPos, int yPos,
             int changeNorthProbability, int changeEastProbability, int changeSouthProbability, int changeWestProbability) {
 
         //instantiate label for dispersal array, with size of the source array; initialised with all cell values at 0.0
@@ -472,7 +472,7 @@ public class Storage {
 
         //instantiate the final label for the starting height for each bacterium
         //The building is 75m tall and the device detonates on top of the building, setting it higher than the building
-        final int startheight = 76;
+        //final int startheight = 76;
         //limit the extent of the looping
         final int maxRows = srcArrayRows - 1;
         final int maxColums = srcArrayCols - 1;
@@ -495,7 +495,7 @@ public class Storage {
         for (int b = 1; b <= bacteriaCount; b++) {
             //for (int b = 1; b <= 15; b++) {
             //Local variables to use for processing. Reinitialise on each run, otherwise we drift off the map!!!
-            int height = startheight; //initial height of bacterium
+            int height = startHeight; //initial height of bacterium
             //int[][] endPosition = startPosition;
             int bacteriumPosRow = startbacteriumPosRow;
             int bacteriumPosCol = startbacteriumPosCol;

@@ -128,6 +128,9 @@ public class DispersalModeller extends javax.swing.JFrame {
     public void RunModeller(Storage srcArray, String srcArrayname) {
         //Check whether we have the data and parameters required for the job and that they contain sensible values
         //We need:
+        //Start height AKA detonation height, parsed as an integer.
+        int startHeight = Integer.parseInt(jTextFieldStartHeight.getText());
+        
         //Number of agent particles to use in the model. Must be more than zero, or else the model serves no purpose
         //try & catch?
         int bacteriaCount = Integer.parseInt(jTextFieldParticleCount.getText());
@@ -162,7 +165,7 @@ public class DispersalModeller extends javax.swing.JFrame {
                     + ", South: " + changeSouthProbability + ", West: " + changeWestProbability);
 
             //Run the Modeller using the supplied parameters after passing the paramter validity tests
-            double[][] dispersalArray = srcArray.calculateDispersal(bacteriaCount, srcArray.data.length,
+            double[][] dispersalArray = srcArray.calculateDispersal(startHeight, bacteriaCount, srcArray.data.length,
                     srcArray.data.length, xPos, yPos, changeNorthProbability, changeEastProbability,
                     changeSouthProbability, changeWestProbability);
 
@@ -523,7 +526,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jLabelHeightStart.setText("Start height (m):");
         jLabelHeightStart.setToolTipText("");
 
-        jTextFieldStartHeight.setText("75");
+        jTextFieldStartHeight.setText("76");
         jTextFieldStartHeight.setToolTipText("The height in metres at which the detonation takes place");
         jTextFieldStartHeight.setMaximumSize(new java.awt.Dimension(20, 20));
 
@@ -832,10 +835,10 @@ public class DispersalModeller extends javax.swing.JFrame {
             setDetonationPoint(storeDetonation.locateDetonationPoint(storeDetonation.data));
             //System.out.println("detpoint is: " + getDetonationPoint() + " and this is a string, BTW!!!");
 
-            //Populate the X Position text field
-            jTextFieldXPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf('{') + 1, getDetonationPoint().indexOf(',')));
             //Populate the Y Position text field
-            jTextFieldYPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf(',') + 1, getDetonationPoint().indexOf('}')));
+            jTextFieldYPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf('{') + 1, getDetonationPoint().indexOf(',')));
+            //Populate the X Position text field
+            jTextFieldXPos.setText(getDetonationPoint().substring(getDetonationPoint().indexOf(',') + 1, getDetonationPoint().indexOf('}')));
 
             //Populate the Total Probability text field
             jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
