@@ -659,7 +659,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jMenu2.setText("Edit");
 
         jMenuEditGenerateRandomData.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuEditGenerateRandomData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/shading.png"))); // NOI18N
+        jMenuEditGenerateRandomData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/map.png"))); // NOI18N
         jMenuEditGenerateRandomData.setText("Generate Random Map");
         jMenuEditGenerateRandomData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
