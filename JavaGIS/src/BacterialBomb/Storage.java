@@ -471,8 +471,8 @@ public class Storage {
         //System.exit(0);
 
         //instantiate the final label for the starting height for each bacterium
-        //Update this to allow setting the height via the GUI
-        final int startheight = 75;
+        //The building is 75m tall and the device detonates on top of the building, setting it higher than the building
+        final int startheight = 76;
         //limit the extent of the looping
         final int maxRows = srcArrayRows - 1;
         final int maxColums = srcArrayCols - 1;
@@ -509,7 +509,7 @@ public class Storage {
 
                 //if bacterium is higher than 75m, it loses 1m in height
                 if (height < 75) {
-                    //System.out.println("Matched: Under 75m, decreasing by 1m");
+                    //System.out.println("Matched: Under 75m, falling by 1m");
                     height--;
                 } else {
                     //under or equal to 75m height, random chance to stay in place, move up or down

@@ -81,6 +81,8 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Only set by RunModeller to true after succesfully constructing the map image
     private boolean showDispersalMap = false;
     private boolean showRandomMap = false;
+    
+    public final String lineseparator = System.getProperty("line.separator");
 
     //method to remove all the tabs from the tabbed pane
     //Sourced from http://stackoverflow.com/questions/1013479/after-calling-jtabbedpane-removeall-the-jtabbedpane-still-has-x-number-of-tab
@@ -190,13 +192,14 @@ public class DispersalModeller extends javax.swing.JFrame {
             //Display an application-modal Dialog window to the user, using the default dialog type icon
             //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
             JOptionPane.showMessageDialog(this,
-                    "Please check your model parameters!\n\n\r"
-                    + "If you are not running the Random Dispersal function,\n\r"
-                    + "you must load a raster data source file first.\n\n\r"
-                    + "Check that the directional change probability equals 100%.\n\r"
-                    + "Check that you have a valid detonation point.\n\r"
-                    + "Check that you have a valid detonation height.\n\r"
-                    + "Check that you have a valid particle count.\n\n\r"
+                    "Please check your model parameters!" + lineseparator
+                    + lineseparator
+                    + "If you are not running the Random Dispersal function," + lineseparator
+                    + "you must load a raster data source file first." + lineseparator + lineseparator
+                    + "Check that the directional change probability equals 100%." + lineseparator
+                    + "Check that you have a valid detonation point." + lineseparator
+                    + "Check that you have a valid detonation height." + lineseparator
+                    + "Check that you have a valid particle count." + lineseparator + lineseparator
                     + "To access the help file, close this window and press F1.",
                     "Invalid Parameters",
                     JOptionPane.ERROR_MESSAGE);
@@ -907,13 +910,19 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
         //Display an application-modal Dialog window to the user, using the default dialog type icon
-        //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+        //From https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html and
+        //http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#getProperties--
         JOptionPane.showMessageDialog(this,
-                "Bacterial Agent Detonation Dispersal Modeller v1.0.\n\n\r"
-                + "Built in December 2015 by \n\rStudent 200825599 (gy13awc@leeds.ac.uk)\n\r"
-                + "University of Leeds, Leeds, West Yorkshire, UK.\n\n\r"
-                + "Built in Java using NetBeans IDE 8.0.2, \n\r"
-                + "GitHub, MantisBT and www.agilezen.com.",
+                "Bacterial Agent Detonation Dispersal Modeller v1.0." + lineseparator
+                + lineseparator
+                + "Built in December 2015 by " + lineseparator
+                + "Student 200825599 (gy13awc@leeds.ac.uk)" + lineseparator
+                + "University of Leeds, Leeds, West Yorkshire, UK." + lineseparator
+                + lineseparator
+                + "Built in Java using NetBeans IDE 8.0.2, " + lineseparator
+                + "GitHub, MantisBT and www.agilezen.com." + lineseparator + lineseparator
+                + "Java Version: " + System.getProperty("java.version") + lineseparator
+                + "OS: " + System.getProperty("os.name"),
                 "About BADdm",
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuHelpAboutActionPerformed
