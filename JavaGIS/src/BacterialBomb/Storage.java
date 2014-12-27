@@ -48,17 +48,6 @@ public class Storage {
      * Returns nothing because we are modifying the object and not a reference to it.
      * @param newData   The placeholder variable used to modify the data[][] array
      */
-    /*
-     public void setData(double[][] newData) {
-     //outer loop for rows
-     for (int i = 0; i < newData.length; i++) {
-     //inner loop for columns
-     for (int j = 0; j < newData[i].length; j++) {
-     data[i][j] = newData[i][j];
-     }
-     }
-     }
-     */
     //from practical notes - > http://www.geog.leeds.ac.uk/courses/other/programming/practicals/raster-framework/part5/2.html
     /**
      *
