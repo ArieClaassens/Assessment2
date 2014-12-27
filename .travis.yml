@@ -18,6 +18,7 @@ addons:
       name: "ArieClaassens/Assessment2"
       description: "GEOG5561M Assessment2 build submitted via Travis CI"
     notification_email: arieclaassens@gmail.com
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn -DskipTests=true compile"
+    #build_command_prepend: "mvn clean"
+    #build_command:   "mvn -DskipTests=true compile"
+	build_command: "ant -Dnb.internal.action.name=run run"
     branch_pattern: master
