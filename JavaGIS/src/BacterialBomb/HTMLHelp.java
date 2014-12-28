@@ -38,7 +38,8 @@ import javax.swing.text.html.HTMLEditorKit;
  * <b>Version:</b> 1.0 - Dec 2014<br>
  * <b>Date:</b> 27 December 2014<br>
  * <b>Overview:</b> The HTMLhelp class provides a complete Java class that creates an HTML viewer 
- * with styles, using the JEditorPane,HTMLEditorKit, StyleSheet, and JFrame. Based on code from 
+ * with styles, using the JEditorPane, HTMLEditorKit, StyleSheet, and JFrame. Removed the styles section in favor of using 
+ * inline CSS styles inside the HTML file. Based on code from 
  * <a href="http://alvinalexander.com/blog/post/jfc-swing/how-create-simple-swing-html-viewer-browser-java" target="_blank">
  * http://alvinalexander.com/</a>
  *
@@ -48,79 +49,81 @@ import javax.swing.text.html.HTMLEditorKit;
  */
 public class HTMLHelp {
 
-    /*
-     public static void main(String[] args)
-     {
-     new HtmlEditorKitTest();
-     }
-     */
-
     /**
-     *
+     * Method to construct a read-only jEditorPane inside a jFrame and embed HTML content in the jEditorPane. Provides a
+     * pop-up window displaying the help file contents; as a single purpose class, it requires no parameters. The relative 
+     * location of the help file is hardwired into the class code.
      */
-    
     public HTMLHelp() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                // create jeditorpane
+                //Create a jEditorPane
                 JEditorPane jEditorPane = new JEditorPane();
 
-                // make it read-only
+                //Make it read-only
                 jEditorPane.setEditable(false);
 
-                // create a scrollpane; modify its attributes as desired
+                //Create a jScrollPane; modify its attributes as desired
                 JScrollPane scrollPane = new JScrollPane(jEditorPane);
 
-                // add an html editor kit
+                //Add an HTML Editor Kit
                 HTMLEditorKit kit = new HTMLEditorKit();
                 jEditorPane.setEditorKit(kit);
                 
                 //From http://www.avajava.com/tutorials/lessons/how-do-i-convert-a-web-page-to-a-string.html and
                 //http://www.java2s.com/Code/JavaAPI/java.lang/ClassgetResourceStringnamerelativetotheclasslocation.htm
+                //Set up the label that will hold our HTML content
                 String htmlString = "";
                 
                 try {
+                        //Set up the URL to the help file
 			URL url = DispersalModeller.class.getResource("/bacterialbomb/help.html");
+                        //Open the URL connection to the help file
 			URLConnection urlConnection = url.openConnection();
+                        //Create the InputStream and InputStreamReader and ingest the help file contents
 			InputStream is = urlConnection.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 
+                        //Parse the InputStreamReader contents and push it into the StringBuffer
 			int numCharsRead;
 			char[] charArray = new char[1024];
 			StringBuffer sb = new StringBuffer();
 			while ((numCharsRead = isr.read(charArray)) > 0) {
 				sb.append(charArray, 0, numCharsRead);
 			}
+                        //Convert the StringBuffer into a String and pass its contents to the htmlString label
 			String result = sb.toString();
                         htmlString = result;
 
-			//System.out.println("*** BEGIN ***");
-			//System.out.println(result);
-			//System.out.println("*** END ***");
+                //Catch errors related to URL construction
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
+                //Catch I/O errors when attempting to read the help file contents
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-                // create a document, set it on the jeditorpane, then add the html
+                // Create a document, set it on the jEditorPane, then add the HTML content
                 Document doc = kit.createDefaultDocument();
                 jEditorPane.setDocument(doc);
                 jEditorPane.setText(htmlString);
 
-                // now add it all to a frame
+                //Add it all to a jFrame
                 JFrame j = new JFrame("BADdm Help File");
                 j.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-                // make it easy to close the application
                 //Disable this action to prevent the Kit from closing the whole application
+                //Make it easy to close the application
                 //j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                // display the frame
+                //Display the Frame
+                //Set the Frame dimensions
                 j.setSize(new Dimension(600, 400));
-
-                // center the jframe, then make it visible
+                
+                //Center the jFrame
                 j.setLocationRelativeTo(null);
+                
+                //Make the Frame visible
                 j.setVisible(true);
             }
         });
