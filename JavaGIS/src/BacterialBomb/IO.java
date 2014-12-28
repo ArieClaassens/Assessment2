@@ -31,40 +31,41 @@ import java.util.StringTokenizer;
  * <b>Class:</b> IO<br>
  * <b>Version:</b> 1.8 - Dec 2014<br>
  * <b>Date:</b> 27 December 2014<br>
- * <b>Overview:</b> The IO class provides the data I/O (Input/Output) methods required by the Dispersal Modeller
+ * <b>Overview:</b> The IO class provides the data I/O (Input/Output) methods required by the Dispersal Modeller, based
+ * on code from <a href="http://alvinalexander.com/java/edu/qanda/pjqa00009.shtml" target="_blank">alvinalexander.com</a>
  * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  * @version 1.8 - 27 Dec 2014
  */
 public class IO {
 
     /**
-     *
-     * @param f
-     * @return
+     * Method to read data in from the supplied file
+     * @param f File to parse
+     * @return data Data parsed from the input file
      */
     public double[][] readData(File f) {
-        // Our reading code will go here.
 
-        // Set up a FileReader (must be in a try-catch block).
+        // Set up a FileReader
         FileReader fr = null;
         try {
             fr = new FileReader(f);
+        //Catch any File not found exceptions
         } catch (FileNotFoundException fnfe) {
+            //Print the stack trace for the exception
             fnfe.printStackTrace();
         }
 
-        // Wrap this in a BufferedReader
+        //Wrap this in a BufferedReader
         BufferedReader br = new BufferedReader(fr);
-        // Remember fr is a FileReader not a File.
 
-        // Declare any variables needed below, including the two arrays.
+        // Declare labels to hold a line counter, text to read in and the file name.
         int lines = -1;
         String textIn = " ";
         String[] file = null;
 
-        // Open a try block
-        try {  //try to read the file
-            // Read though counting the lines in the file.
+        // Open a try block to read the file
+        try {  
+            // Read through, counting the lines in the file.
             while (textIn != null) {
                 textIn = br.readLine();
                 lines++;
@@ -127,36 +128,41 @@ public class IO {
     }
 
     /**
-     *
-     * @param dataIn
-     * @param f
+     * Method to write a double data type object to a file
+     * @param dataIn Data object containing <b>double</b> values, which will be written to file
+     * @param f File to which the data will be written. If the file exists, its contents will be discarded 
      */
     public void writeData(double[][] dataIn, File f) {
-        // Our writing code will go here.
+        //Instantiate a BufferedWriter 
         BufferedWriter bw = null;
 
+        //try creating the BufferedWriter using a FileWriter on the supplied file, catching any exceptions that may occur
         try {
             bw = new BufferedWriter(new FileWriter(f));
         } catch (IOException e) {
+            //Print the stack trace in case of an exception
             e.printStackTrace();
         }
 
         String tempStr = "";
 
+        //Try looping through the data object to build up the BufferedWriter contents
         try {
             for (int i = 0; i < dataIn.length; i++) {
                 for (int j = 0; j < dataIn[i].length; j++) {
                     tempStr = String.valueOf(dataIn[i][j]);
-                    //System.out.print(tempStr + ", ");
                     bw.write(tempStr + ", ");
 
                 }
-                //System.out.println("");
+                //Add a new line
                 bw.newLine();
             }
+            //Flush the BufferedWriter contents
             bw.flush();
+        //Catch the IO exception and print the stack trace
         } catch (IOException e) {
             e.printStackTrace();
+        //At the end, try closing the file; catch IO exceptions and print the stack trace for the exception
         } finally {
             try {
                 bw.close();
@@ -164,49 +170,44 @@ public class IO {
                 e2.printStackTrace();
             }
         }
-
-        // Code to make a FileWriter (again, in a try-catch block).
-        // Code to wrap it in a BufferedWriter.
-        // Open a try block.
-        // Start of loops.
-        // Code to change the double to a String.
-        // Write the String to the file.
-        // End loops
-        // Close Buffer (and thus the FileWriter as well)
-        // Close try block.
     }
     
     /**
-     *
-     * @param dataIn
-     * @param f
+     * Method to write an integer data object to a file
+     * @param dataIn Data object containing <b>integer</b> values, which will be written to file
+     * @param f File to which the data will be written. If the file exists, its contents will be discarded 
      */
     public void writeIntData(int[][] dataIn, File f) {
-        // Our writing code will go here.
+        //Instantiate a BufferedWriter 
         BufferedWriter bw = null;
 
+        //try creating the BufferedWriter using a FileWriter on the supplied file, catching any exceptions that may occur
         try {
             bw = new BufferedWriter(new FileWriter(f));
         } catch (IOException e) {
+            //Print the stack trace in case of an exception
             e.printStackTrace();
         }
 
         String tempStr = "";
 
+        //Try looping through the data object to build up the BufferedWriter contents
         try {
             for (int i = 0; i < dataIn.length; i++) {
                 for (int j = 0; j < dataIn[i].length; j++) {
                     tempStr = String.valueOf(dataIn[i][j]);
-                    //System.out.print(tempStr + ", ");
                     bw.write(tempStr + ", ");
 
                 }
-                //System.out.println("");
+                //Add a new line
                 bw.newLine();
             }
+            //Flush the BufferedWriter contents
             bw.flush();
+        //Catch the IO exception and print the stack trace
         } catch (IOException e) {
             e.printStackTrace();
+        //At the end, try closing the file; catch IO exceptions and print the stack trace for the exception
         } finally {
             try {
                 bw.close();
@@ -215,10 +216,6 @@ public class IO {
             }
         }
     }
-    
-    //Method to limit file extensions to .raster on all platforms except Windows
-    //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
-   
 }
 
 

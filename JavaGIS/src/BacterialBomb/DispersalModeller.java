@@ -77,6 +77,9 @@ public class DispersalModeller extends javax.swing.JFrame {
     //See http://stackoverflow.com/questions/16352326/when-does-system-getpropertyjava-io-tmpdir-return-c-temp
     private String imgfiledir = System.getProperty("java.io.tmpdir");
     
+    
+    //Method to limit file extensions to .raster on all platforms except Windows
+    //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
      public class rasterFilter implements FilenameFilter {
         
         public boolean accept(File dir, String name) {
