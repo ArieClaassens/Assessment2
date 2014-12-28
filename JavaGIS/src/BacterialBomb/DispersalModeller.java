@@ -16,8 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+//Define this class to be part of the BacterialBomb package
 package BacterialBomb;
 
+//Import the required standard Java classes. 
+//NetBeans automatically converts wildcard imports to select only the required classes.
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Image;
