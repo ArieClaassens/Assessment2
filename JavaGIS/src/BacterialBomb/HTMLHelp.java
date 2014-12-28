@@ -34,7 +34,7 @@ import javax.swing.text.Document;
 import javax.swing.text.html.HTMLEditorKit;
 
 /**
- * <b>Class:</b> HTMLhelp<br>
+ * <b>Class:</b> HTMLHelp<br>
  * <b>Version:</b> 1.0 - Dec 2014<br>
  * <b>Date:</b> 27 December 2014<br>
  * <b>Overview:</b> The HTMLhelp class provides a complete Java class that creates an HTML viewer 
