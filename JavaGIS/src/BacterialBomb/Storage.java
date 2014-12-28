@@ -29,13 +29,13 @@ import java.awt.image.MemoryImageSource;
 import java.util.Random;
 
 /**
- * Class: Storage.java<br>
- * Version: 1.9 - Dec 2014<br>
- * Overview: The Storage class provides the storage object and its methods that are required for a basic GIS application
- * utilized in the GEOG5561M course
+ * <b>Class:</b> Storage<br>
+ * <b>Version:</b> 1.9 - Dec 2014<br>
+ * <b>Date:</b> 27 December 2014<br>
+ * <b>Overview:</b> The Storage class provides the storage object and methods required for the Dispersal Modeller
  *
  * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
- * @version 1.8 - 30 Nov 2014
+ * @version 1.9 - 27 Dec 2014
  */
 public class Storage {
 

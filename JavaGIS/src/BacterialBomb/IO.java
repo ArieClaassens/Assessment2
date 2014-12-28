@@ -28,10 +28,12 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 /**
- *
- * @author Student 200825599:
- * <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
- * @version 1.7 - 24 Nov 2014
+ * <b>Class:</b> IO<br>
+ * <b>Version:</b> 1.8 - Dec 2014<br>
+ * <b>Date:</b> 27 December 2014<br>
+ * <b>Overview:</b> The IO class provides the data I/O (Input/Output) methods required by the Dispersal Modeller
+ * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
+ * @version 1.8 - 27 Dec 2014
  */
 public class IO {
 

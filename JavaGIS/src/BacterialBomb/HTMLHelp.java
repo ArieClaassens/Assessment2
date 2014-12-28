@@ -34,11 +34,17 @@ import javax.swing.text.Document;
 import javax.swing.text.html.HTMLEditorKit;
 
 /**
- * A complete Java class that demonstrates how to create an HTML viewer with styles, using the JEditorPane,
- * HTMLEditorKit, StyleSheet, and JFrame.
+ * <b>Class:</b> HTMLhelp<br>
+ * <b>Version:</b> 1.0 - Dec 2014<br>
+ * <b>Date:</b> 27 December 2014<br>
+ * <b>Overview:</b> The HTMLhelp class provides a complete Java class that creates an HTML viewer 
+ * with styles, using the JEditorPane,HTMLEditorKit, StyleSheet, and JFrame. Based on code from 
+ * <a href="http://alvinalexander.com/blog/post/jfc-swing/how-create-simple-swing-html-viewer-browser-java" target="_blank">
+ * http://alvinalexander.com/</a>
  *
  * @author alvin alexander, devdaily.com.
- * http://alvinalexander.com/blog/post/jfc-swing/how-create-simple-swing-html-viewer-browser-java
+ * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
+ * @version 1.1 - 27 Dec 2014
  */
 public class HTMLHelp {
 

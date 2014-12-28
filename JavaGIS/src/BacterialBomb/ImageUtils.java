@@ -27,14 +27,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Class: ImageUtils.java<br>
- * Version: 1.0 - Dec 2014<br>
- * Date: 27 December 2014<br>
- * Overview: The ImageUtils class provides the Image operation methods to convert an Image into a Buffered Image, read a
+ * <b>Class:</b> ImageUtils<br>
+ * <b>Version:</b> 1.0 - Dec 2014<br>
+ * <b>Date:</b> 27 December 2014<br>
+ * <b>Overview:</b> The ImageUtils class provides the Image operation methods to convert an Image into a Buffered Image, read a
  * file into a Buffered Image and write a Buffered Image to a file in PNG or JPEG format. Based on code from
- * <a href="http://www.rgagnon.com/javadetails/java-0601.html" target="_blank">http://www.rgagnon.com/javadetails/java-0601.html</a>.
- *
- * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
+ * <a href="http://www.rgagnon.com/javadetails/java-0601.html" target="_blank">http://www.rgagnon.com/</a>.
+ * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  * @version 1.0 - Dec 2014
  */
 public class ImageUtils {
