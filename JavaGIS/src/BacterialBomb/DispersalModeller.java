@@ -23,6 +23,7 @@ import java.awt.FileDialog;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -77,6 +78,13 @@ public class DispersalModeller extends javax.swing.JFrame {
     //Use the OS-independent user temp directory to store images
     //See http://stackoverflow.com/questions/16352326/when-does-system-getpropertyjava-io-tmpdir-return-c-temp
     private String imgfiledir = System.getProperty("java.io.tmpdir");
+    
+     public class rasterFilter implements FilenameFilter {
+        
+        public boolean accept(File dir, String name) {
+            return (name.endsWith(".raster"));
+        }
+    }
 
     //label to hold detonationPoint value
     private String detonationPoint = null;
@@ -253,7 +261,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
             try {
                 //Generate the PNG image file of the random dispersal map
-                ImageUtils.writeImageToPNG(fileRandomDisMap, bufferedImageRandomDispersalMap);
+                ImageUtils.writeImageToFile(fileRandomDisMap, "png", bufferedImageRandomDispersalMap);
                 //Notify the user that the process completed successfully
                 jTextPaneMessages.setText("Notice: The random dispersal map automated file save worked flawlessly");
             } catch (IOException ex) {
@@ -316,11 +324,11 @@ public class DispersalModeller extends javax.swing.JFrame {
             File fileDisMap = new File(filenameDisMap);
 
             try {
-                ImageUtils.writeImageToPNG(fileDisMap, bufferedImageDispersalMap);
+                ImageUtils.writeImageToFile(fileDisMap, "png", bufferedImageDispersalMap);
             } catch (IOException ex) {
                 //handle the IOException
                 //System.out.println("The dispersal map automated file save did not work");
-                jTextPaneMessages.setText("The dispersal map automated file save did not work");
+                jTextPaneMessages.setText("The automated dispersal map file save did not work.");
             }
 
             //If the tab exists, remove it and the corresponding component speficfied using the index, so that we replace
@@ -880,7 +888,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
             try {
                 //Write the detonation map out as a PNG image file
-                ImageUtils.writeImageToPNG(fileDetMap, bufferedImageDetonationMap);
+                ImageUtils.writeImageToFile(fileDetMap, "png", bufferedImageDetonationMap);
             } catch (IOException ex) {
                 //handle the IOException
                 //Notify the user of the issue

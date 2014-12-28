@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -217,12 +216,7 @@ public class IO {
     
     //Method to limit file extensions to .raster on all platforms except Windows
     //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
-    public class rasterFilter implements FilenameFilter {
-        
-        public boolean accept(File dir, String name) {
-            return (name.endsWith(".raster"));
-        }
-    }
+   
 }
 
 

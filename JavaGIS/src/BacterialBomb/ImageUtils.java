@@ -27,17 +27,22 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
+ * Class: ImageUtils.java<br>
+ * Version: 1.0 - Dec 2014<br>
+ * Date: 27 December 2014<br>
+ * Overview: The ImageUtils class provides the Image operation methods to convert an Image into a Buffered Image, read a
+ * file into a Buffered Image and write a Buffered Image to a file in PNG or JPEG format. Based on code from
+ * <a href="http://www.rgagnon.com/javadetails/java-0601.html" target="_blank">http://www.rgagnon.com/javadetails/java-0601.html</a>.
  *
  * @author Student 200825599: <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
- *
- * Sourced from http://www.rgagnon.com/javadetails/java-0601.html in December 2014
+ * @version 1.0 - Dec 2014
  */
 public class ImageUtils {
 
     /**
-     *
-     * @param im
-     * @return
+     * Method to convert an Image into a Buffered Image
+     * @param im Image to convert into buffered image
+     * @return bi Buffered Image created from supplied Image
      */
     public static BufferedImage imageToBufferedImage(Image im) {
         BufferedImage bi = new BufferedImage(im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_INT_RGB);
@@ -48,10 +53,10 @@ public class ImageUtils {
     }
 
     /**
-     *
-     * @param file
-     * @return
-     * @throws IOException
+     * Method to create a Buffered Image from a file.
+     * @param file File to parse as source for a Buffered Image
+     * @return Buffered Image created from the source file
+     * @throws IOException I/O errors that may be encountered in accessing the file
      */
     public static BufferedImage readImageFromFile(File file)
             throws IOException {
@@ -59,36 +64,28 @@ public class ImageUtils {
     }
 
     /**
-     *
-     * @param file
-     * @param bufferedImage
-     * @throws IOException
+     * Method to create or overwrite image files in the specified format, using an arbitrary ImageWriter that supports 
+     * the supplied format.
+     * @param file File to create or overwrite with the supplied Buffered Image
+     * @param format Format of the image data to write, e.g. "jpeg","tiff","gif", etc.
+     * @param bufferedImage Buffered Image that will be written to the output file.
+     * @throws IOException I/O errors that may be encountered in creating or overwriting the destination file
      */
-    public static void writeImageToPNG(File file, BufferedImage bufferedImage)
-            throws IOException {
-        ImageIO.write(bufferedImage, "png", file);
+    public static void writeImageToFile(File file, String format, BufferedImage bufferedImage)            
+        throws IOException {
+        ImageIO.write(bufferedImage, format, file);
     }
 
+    
+    //
     /**
-     *
-     * @param file
-     * @param bufferedImage
-     * @throws IOException
+     * Method to create buffered image from Toolkit image. Code obtained from 
+     * <a href="http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage" target="_blank">
+     * http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage</a>
+     * @param image Image to convert into a Buffered Image
+     * @return A Buffered Image created from the source Image
      */
-    public static void writeImageToJPG(File file, BufferedImage bufferedImage)
-            throws IOException {
-        ImageIO.write(bufferedImage, "jpg", file);
-    }
-
-    //Method to create buffered image from Toolkit image
-    //http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage
-
-    /**
-     *
-     * @param image
-     * @return
-     */
-        public static BufferedImage convertToBufferedImage(Image image) {
+    public static BufferedImage convertToBufferedImage(Image image) {
         BufferedImage newImage = new BufferedImage(
                 image.getWidth(null), image.getHeight(null),
                 BufferedImage.TYPE_INT_ARGB);
