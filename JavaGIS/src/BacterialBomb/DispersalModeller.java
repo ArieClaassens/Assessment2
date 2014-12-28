@@ -981,7 +981,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
         //Generate a random detonation point and then run the modeller
         //create a random detonation point and set the X and Y Position values
-        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
+        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data);
 
         //Populate the X Position text field
         jTextFieldXPos.setText(randomDetonationPoint.substring(randomDetonationPoint.indexOf('{') + 1, randomDetonationPoint.indexOf(',')));
@@ -1157,7 +1157,7 @@ public class DispersalModeller extends javax.swing.JFrame {
     private void jButtonRunRandomModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunRandomModellerActionPerformed
         //Generate a random detonation point and then run the modeller
         //create a random det point and set the XPos and YPos values
-        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data, Integer.parseInt(jTextFieldStartHeight.getText()));
+        String randomDetonationPoint = storeRandomDispersal.setRandomDetonationPoint(storeRandomDispersal.data);
         //System.out.println("randomDetonationPoint -----> " + randomDetonationPoint);
 
         //Populate the X Position text field
