@@ -967,6 +967,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to trigger the methods required to open the Hel- -> About message dialog.
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jMenuHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpAboutActionPerformed
@@ -990,6 +991,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to display the application Help file using an HTML file
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jMenuHelpModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHelpModellerActionPerformed
@@ -1001,6 +1003,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to trigger the Random Modeller action via a Menu Item.
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jMenuEditGenerateRandomDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEditGenerateRandomDataActionPerformed
@@ -1025,8 +1028,9 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuEditGenerateRandomDataActionPerformed
 
-     /**
+    /**
      * Method to implement the application Exit action
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExitActionPerformed
@@ -1036,8 +1040,9 @@ public class DispersalModeller extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuExitActionPerformed
 
-     /**
+    /**
      * Method to handle mouse clicks inside the jTabbedPane
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
@@ -1065,6 +1070,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to trigger Run Modeller method from a jButton
+     *
      * @param evt jButton event trigger that fires off the action.
      */
     private void jButtonRunModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunModellerActionPerformed
@@ -1077,6 +1083,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the mouse button is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderEastProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderEastProbabilityMouseReleased
@@ -1085,6 +1092,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the mouse button is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderSouthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderSouthProbabilityMouseReleased
@@ -1093,6 +1101,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the mouse button is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderWestProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderWestProbabilityMouseReleased
@@ -1101,6 +1110,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the mouse button is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderNorthProbabilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSliderNorthProbabilityMouseReleased
@@ -1109,6 +1119,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the key is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderNorthProbabilityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSliderNorthProbabilityKeyReleased
@@ -1117,6 +1128,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the key is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderEastProbabilityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSliderEastProbabilityKeyReleased
@@ -1125,6 +1137,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the key is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderSouthProbabilityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSliderSouthProbabilityKeyReleased
@@ -1133,6 +1146,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to call the setSliderValues() method when the slider value is changed and the key is released
+     *
      * @param evt jSlider event trigger that fires off the action.
      */
     private void jSliderWestProbabilityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSliderWestProbabilityKeyReleased
@@ -1141,6 +1155,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to save then Random dispersal map output via a Menu Item
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jMenuSaveRandomFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveRandomFileActionPerformed
@@ -1175,6 +1190,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Method to handle mouse pressed events inside the jTabbedPane
+     *
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
@@ -1200,8 +1216,9 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
     /**
-     * Method to track and display the mouse cursor's relative position inside the jTabbedPane, deducting the X and Y 
+     * Method to track and display the mouse cursor's relative position inside the jTabbedPane, deducting the X and Y
      * offset required to exclude the tab bar section from the coordinate system.
+     *
      * @param evt The jTabbedPane mouse event triggering this method
      */
     private void jTabbedPane1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseMoved
@@ -1222,8 +1239,9 @@ public class DispersalModeller extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MouseMoved
 
     /**
-     * Method to trigger the Random Dispersal Map method via a jButton action. Generates a random detonation point and 
+     * Method to trigger the Random Dispersal Map method via a jButton action. Generates a random detonation point and
      * then runs the Modeller.
+     *
      * @param evt The jButton event that triggers this method
      */
     private void jButtonRunRandomModellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunRandomModellerActionPerformed
@@ -1248,6 +1266,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Main method that sets the Nimbus look and feel and creates and displays the form
+     *
      * @param args The command line arguments passed to the application
      */
     public static void main(String args[]) {
@@ -1273,6 +1292,15 @@ public class DispersalModeller extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DispersalModeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
+        //Mac OS X Tester from O'Reilly Java Cookbook 3rd Ed:
+        boolean isMacOS = System.getProperty("mrj.version") != null;
+        if (isMacOS) {
+            // check that the File Edit View menu appears atop the desktop not the window
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            // OS X Tester: check that this string appears in the Application Menu.
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "DispersalModeller");
+        }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1329,6 +1357,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Accessor method to get the detonation point
+     *
      * @return The detonationPoint
      */
     public String getDetonationPoint() {
@@ -1337,6 +1366,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Mutator method to set the detonation point coordinates
+     *
      * @param detonationPoint the detonationPoint to set
      */
     public void setDetonationPoint(String detonationPoint) {
@@ -1345,7 +1375,8 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Accessor method to obtain the file directory value
-     * @return filedir  The file directory
+     *
+     * @return filedir The file directory
      */
     public String getFiledir() {
         return filedir;
@@ -1353,6 +1384,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     /**
      * Mutator method to set the file directory value.
+     *
      * @param filedir the file directory to set
      */
     public void setFiledir(String filedir) {
