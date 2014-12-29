@@ -1030,6 +1030,8 @@ public class DispersalModeller extends javax.swing.JFrame {
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExitActionPerformed
+        //Perform garbage collection before exiting
+        System.gc();
         //Close app and exit without any error status
         System.exit(0);
     }//GEN-LAST:event_jMenuExitActionPerformed
