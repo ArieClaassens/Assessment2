@@ -15,3 +15,17 @@ env:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "Cs1IyGaJQ6fV9WZGaBZy2Zus3pEpP6JUMl4AJG9b2MB6ESFA8vOuNUdHHcs+XDNs6uuseactkUSik9P8U653B3Kzna+NlrJcR+qYgPIM45o2oq3KQujPUW4M3XqMbIWAfjPWfW6DAErub1K5Aff0T5SnG4hGNdAqFnAn3qC/h84="
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "q5K5e8FfSh9nHSwEDsV1zxiKM+CSkTeUBz2YWx2FvTJvJe5opNCiIAQ70JIg+45Otm+a2zp06NkiOX/hp9HGnS+B+uYrtNOU7ZERfDo7ALlMOEcC8btKBDKJZuFIq+XZCe87jKkWGYyswLukcRoHCmjuDXF/ajAa1a9P4rr+jBg="
+
+addons:
+  coverity_scan:
+    project:
+      name: "ArieClaassens/Assessment2"
+      description: "Build submitted via Travis CI"
+    notification_email: arieclaassens@gmail.com
+    build_command:  "ant -f ./Assessment2/JavaGIS -Dnb.internal.action.name=run run" 
+    branch_pattern: master
