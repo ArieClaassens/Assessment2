@@ -6,7 +6,11 @@ jdk:
   - openjdk7
   - openjdk6
   
-  env:
+branches:
+  only:
+    - master
+	
+env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
@@ -19,6 +23,5 @@ addons:
       description: "GEOG5561M Assessment2 build submitted via Travis CI"
     notification_email: arieclaassens@gmail.com
     #build_command_prepend: "mvn clean"
-    #build_command:   "mvn -DskipTests=true compile"
-	build_command: "ant -Dnb.internal.action.name=run run"
+    build_command:  "ant -f \\Assessment2\\JavaGIS -Dnb.internal.action.name=run run" 
     branch_pattern: master
