@@ -22,6 +22,5 @@ addons:
       name: "ArieClaassens/Assessment2"
       description: "GEOG5561M Assessment2 build submitted via Travis CI"
     notification_email: arieclaassens@gmail.com
-    #build_command_prepend: "mvn clean"
     build_command:  "ant -f \\Assessment2\\JavaGIS -Dnb.internal.action.name=run run" 
     branch_pattern: master
