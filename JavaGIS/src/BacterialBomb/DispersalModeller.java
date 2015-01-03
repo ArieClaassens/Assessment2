@@ -315,6 +315,49 @@ public class DispersalModeller extends javax.swing.JFrame {
     }
 
     /**
+     * Method to display the generated Detonation Map in a customized tab in the jTabbedPane
+     */
+    public void showDetonationMap() {
+
+            //Generate and display the detonation map
+        //Draw the detonation map in the tabbed pane
+        Image imageDetonationMap = storeDetonation.getDataAsImage();
+        //Create a buffered image from the dispersal map image 
+        BufferedImage bufferedImageDetonationMap = ImageUtils.convertToBufferedImage(imageDetonationMap);
+
+        //Construct the full filename for the temporary detonation map image
+        String filenameDetMap = imgfiledir + "Detonation_map.png";
+        File fileDetMap = new File(filenameDetMap);
+
+        try {
+            //Write the detonation map out as a PNG image file
+            ImageUtils.writeImageToFile(fileDetMap, "png", bufferedImageDetonationMap);
+        } catch (IOException ex) {
+                //handle the IOException
+            //Notify the user of the issue
+            jTextPaneMessages.setText("Warning: the detonation map automated image file save did not work");
+        }
+
+        //If the detonation map tab already exists, remove it and display the latest detonation map tab
+        cleanupTabbedPane("Detonation Map");
+
+        //Create a new image icon using the detonation map filename
+        ImageIcon detonationMapImageIcon = new ImageIcon(filenameDetMap);
+        //Add a new tab and populate it with the new imageicon
+        jTabbedPane1.addTab("Detonation Map", new JLabel(detonationMapImageIcon));
+            //Select the new (last) tab
+        //From http://examples.javacodegeeks.com/desktop-java/swing/jtabbedpane/get-set-selected-tab-in-jtabbedpane/
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 1);
+
+            //Flush the image to ensure that it is not cached on subsequent loads, i.e. on reruns of the modeller
+        //From http://stackoverflow.com/questions/15885696/imageicon-do-not-update-for-a-new-image-with-the-same-url
+        detonationMapImageIcon.getImage().flush();
+
+        //Display a text message to say that the Modeller can now be executed
+        jTextPaneMessages.setText("You can now run the Dispersal Modeller. Check the File menu or just press Ctl+R");
+    }
+
+    /**
      * Method to display the generated Dispersal Map in a customized tab in the jTabbedPane
      */
     public void showDispersalMap() {
@@ -877,30 +920,7 @@ public class DispersalModeller extends javax.swing.JFrame {
             jTextFieldTotalProbability.setText(jSliderTotalProbability.getValue() + "%");
 
             //Draw the detonation map in the tabbed pane
-            Image imageDetonationMap = storeDetonation.getDataAsImage();
-            BufferedImage bufferedImageDetonationMap = ImageUtils.convertToBufferedImage(imageDetonationMap);
-
-            //Construct the full filename for the temporary detonation map image
-            String filenameDetMap = imgfiledir + "Detonation_map.png";
-            File fileDetMap = new File(filenameDetMap);
-
-            try {
-                //Write the detonation map out as a PNG image file
-                ImageUtils.writeImageToFile(fileDetMap, "png", bufferedImageDetonationMap);
-            } catch (IOException ex) {
-                //handle the IOException
-                //Notify the user of the issue
-                jTextPaneMessages.setText("Warning: the detonation map automated image file save did not work");
-            }
-            //System.out.println("The file name is " + filenameDetMap);
-
-            //If the tab exists, remove it and the corresponding component speficfied, using the index
-            if (jTabbedPane1.indexOfTab("Detonation Map") >= 0) {
-                jTabbedPane1.removeTabAt(jTabbedPane1.indexOfTab("Detonation Map"));
-            }
-
-            //Load the image in a new tab in the tabbed panel
-            jTabbedPane1.addTab("Detonation Map", new JLabel(new ImageIcon(DispersalModeller.class.getResource(filename + ".png"))));
+            showDetonationMap();
         }
 
         //Activate the Run Modeller Menu Item and Button since the raster data source has been loaded
