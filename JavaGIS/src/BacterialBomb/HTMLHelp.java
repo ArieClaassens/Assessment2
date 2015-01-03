@@ -81,7 +81,7 @@ public class HTMLHelp {
                 
                 try {
                         //Set up the URL to the help file
-			URL url = DispersalModeller.class.getResource("/bacterialbomb/help.html");
+			URL url = DispersalModeller.class.getResource("help.html");
                         //Open the URL connection to the help file
 			URLConnection urlConnection = url.openConnection();
                         //Create the InputStream and InputStreamReader and ingest the help file contents
