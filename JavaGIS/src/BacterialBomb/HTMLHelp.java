@@ -45,7 +45,7 @@ import javax.swing.text.html.HTMLEditorKit;
  * with styles, using the JEditorPane, HTMLEditorKit, StyleSheet, and JFrame. Removed the styles section in favor of using 
  * inline CSS styles inside the HTML file. Based on code from 
  * <a href="http://alvinalexander.com/blog/post/jfc-swing/how-create-simple-swing-html-viewer-browser-java" target="_blank">
- * http://alvinalexander.com/</a>
+ * alvinalexander.com</a>
  *
  * @author alvin alexander, devdaily.com.
  * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>

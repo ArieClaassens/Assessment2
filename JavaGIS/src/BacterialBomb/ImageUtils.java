@@ -36,7 +36,7 @@ import javax.imageio.ImageIO;
  * <b>Date:</b> 27 December 2014<br>
  * <b>Overview:</b> The ImageUtils class provides the Image operation methods to convert an Image into a Buffered Image, read a
  * file into a Buffered Image and write a Buffered Image to a file in PNG or JPEG format. Based on code from
- * <a href="http://www.rgagnon.com/javadetails/java-0601.html" target="_blank">http://www.rgagnon.com/</a>.
+ * <a href="http://www.rgagnon.com/javadetails/java-0601.html" target="_blank">www.rgagnon.com</a>.
  * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  * @version 1.0 - Dec 2014
  */
@@ -84,7 +84,7 @@ public class ImageUtils {
     /**
      * Method to create buffered image from Toolkit image. Code obtained from 
      * <a href="http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage" target="_blank">
-     * http://stackoverflow.com/questions/22426040/error-sun-awt-image-toolkitimage-cannot-be-cast-to-java-awt-image-bufferedimage</a>
+     * stackoverflow.com</a>
      * @param image Image to convert into a Buffered Image
      * @return A Buffered Image created from the source Image
      */
