@@ -45,7 +45,8 @@ import javax.swing.JOptionPane;
  * @author Student 200825599 <a href="mailto:gy13awc@leeds.ac.uk">gy13awc@leeds.ac.uk</a>
  * @version 1.0 - 27 Dec 2014
  */
-public class DispersalModeller extends javax.swing.JFrame {
+ 
+class DispersalModeller extends javax.swing.JFrame {
 
     //Instantiate new storage object to hold the detonation map
     Storage storeDetonation = new Storage();
@@ -79,7 +80,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     //Use the OS-independent user temp directory to store images
     //See http://stackoverflow.com/questions/16352326/when-does-system-getpropertyjava-io-tmpdir-return-c-temp
-    private String imgfiledir = System.getProperty("java.io.tmpdir");
+    private final String imgfiledir = System.getProperty("java.io.tmpdir");
 
     //Label to hold detonationPoint value
     private String detonationPoint = null;
@@ -90,16 +91,16 @@ public class DispersalModeller extends javax.swing.JFrame {
     private Boolean showRandomMap = false;
 
     //Label to hold the OS-specific line separator
-    public final String lineseparator = System.getProperty("line.separator");
+    private final String lineseparator = System.getProperty("line.separator");
 
     //Method to limit file extensions to .raster on all platforms except Windows
     //Obtained from https://www.daniweb.com/software-development/java/threads/282830/file-type-filter-for-filedialog-problem 
     /**
-     * Method to apply filename filtering when opening or saving the raster data files. Limits the display of files to
+     * Inner class method to apply filename filtering when opening or saving the raster data files. Limits the display of files to
      * those with the specified file extension. This does not work completely on Windows, so additional filtering
      * mechanism was added for the Windows platforms in the respective file processing actions.
      */
-    public class rasterFilter implements FilenameFilter {
+    private class rasterFilter implements FilenameFilter {
 
         public boolean accept(File dir, String name) {
             return (name.endsWith(".raster"));
@@ -626,7 +627,7 @@ public class DispersalModeller extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextPaneMessages);
 
         jTextFieldTotalProbability.setEditable(false);
-        jTextFieldTotalProbability.setText("100");
+        jTextFieldTotalProbability.setText("100%");
         jTextFieldTotalProbability.setToolTipText("The total probability value for all the wind-speed change factors");
 
         jLabelMouseX.setText("Mouse X Pos:");
@@ -942,8 +943,10 @@ public class DispersalModeller extends javax.swing.JFrame {
         //http://stackoverflow.com/questions/1241984/need-filedialog-with-a-file-type-filter-in-java
         //http://www.rgagnon.com/javadetails/java-0247.html
         fw.setFile("*.raster");
-
+        
+        //Display the file dialog
         fw.setVisible(true);
+        //Instantiate the label used for the file save action
         File f2 = null;
         if ((fw.getDirectory() != null) || (fw.getFile() != null)) {
             f2 = new File(fw.getDirectory() + fw.getFile());
@@ -1324,7 +1327,7 @@ public class DispersalModeller extends javax.swing.JFrame {
 
     //System-generated code
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton jButtonRunModeller;
+    private javax.swing.JButton jButtonRunModeller;
     private javax.swing.JButton jButtonRunRandomModeller;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEastProbability;
@@ -1346,24 +1349,24 @@ public class DispersalModeller extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuExit;
     private javax.swing.JMenuItem jMenuHelpAbout;
     private javax.swing.JMenuItem jMenuHelpModeller;
-    public javax.swing.JMenuItem jMenuOpenFile;
+    private javax.swing.JMenuItem jMenuOpenFile;
     private javax.swing.JMenuItem jMenuRunModeller;
     private javax.swing.JMenuItem jMenuSaveFileAs;
     private javax.swing.JMenuItem jMenuSaveRandomFile;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JSlider jSliderEastProbability;
-    public javax.swing.JSlider jSliderNorthProbability;
-    public javax.swing.JSlider jSliderSouthProbability;
-    public javax.swing.JSlider jSliderTotalProbability;
-    public javax.swing.JSlider jSliderWestProbability;
+    private javax.swing.JSlider jSliderEastProbability;
+    private javax.swing.JSlider jSliderNorthProbability;
+    private javax.swing.JSlider jSliderSouthProbability;
+    private javax.swing.JSlider jSliderTotalProbability;
+    private javax.swing.JSlider jSliderWestProbability;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldMouseX;
     private javax.swing.JTextField jTextFieldMouseY;
-    public javax.swing.JTextField jTextFieldParticleCount;
-    public javax.swing.JTextField jTextFieldStartHeight;
+    private javax.swing.JTextField jTextFieldParticleCount;
+    private javax.swing.JTextField jTextFieldStartHeight;
     private javax.swing.JTextField jTextFieldTotalProbability;
-    public javax.swing.JTextField jTextFieldXPos;
-    public javax.swing.JTextField jTextFieldYPos;
+    private javax.swing.JTextField jTextFieldXPos;
+    private javax.swing.JTextField jTextFieldYPos;
     private javax.swing.JTextPane jTextPaneMessages;
     // End of variables declaration//GEN-END:variables
 
