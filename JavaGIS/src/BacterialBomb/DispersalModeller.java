@@ -458,9 +458,9 @@ class DispersalModeller extends javax.swing.JFrame {
         jMenuOpenFile = new javax.swing.JMenuItem();
         jMenuSaveFileAs = new javax.swing.JMenuItem();
         jMenuSaveRandomFile = new javax.swing.JMenuItem();
-        jMenuRunModeller = new javax.swing.JMenuItem();
         jMenuExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuRunModeller = new javax.swing.JMenuItem();
         jMenuEditGenerateRandomData = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuHelpModeller = new javax.swing.JMenuItem();
@@ -687,18 +687,6 @@ class DispersalModeller extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuSaveRandomFile);
 
-        jMenuRunModeller.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuRunModeller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/bomb.png"))); // NOI18N
-        jMenuRunModeller.setText("Run Modeller");
-        jMenuRunModeller.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/error.png"))); // NOI18N
-        jMenuRunModeller.setEnabled(false);
-        jMenuRunModeller.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuRunModellerActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuRunModeller);
-
         jMenuExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         jMenuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/door_in.png"))); // NOI18N
         jMenuExit.setText("Exit");
@@ -711,7 +699,19 @@ class DispersalModeller extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Tools");
+
+        jMenuRunModeller.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuRunModeller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/bomb.png"))); // NOI18N
+        jMenuRunModeller.setText("Run Modeller");
+        jMenuRunModeller.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/error.png"))); // NOI18N
+        jMenuRunModeller.setEnabled(false);
+        jMenuRunModeller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuRunModellerActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuRunModeller);
 
         jMenuEditGenerateRandomData.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         jMenuEditGenerateRandomData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BacterialBomb/map.png"))); // NOI18N
@@ -1061,8 +1061,8 @@ class DispersalModeller extends javax.swing.JFrame {
      * @param evt jMenu event trigger that fires off the action.
      */
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        //Capture Mouse position relative to tabbed pane and display in a text box
-        //WE'RE APPENDING TEXT TO TURN INTEGER VALUES INTO STRINGS. FIX IT OR SCHEDULE FOR NEXT DEVELOPMENT ITERATION
+        //Capture Mouse position relative to tabbed pane and display as text in a text box
+        //WE'RE APPENDING TEXT TO TURN INTEGER VALUES INTO STRINGS. Find a better way to do this
         //Keep the random detonation point coordinates inside the map area.
         if (((int) this.getMousePosition().getX() - mouseOffsetX) >= 0) {
             jTextFieldXPos.setText((int) this.getMousePosition().getX() - mouseOffsetX + "");
@@ -1325,7 +1325,7 @@ class DispersalModeller extends javax.swing.JFrame {
         });
     }
 
-    //System-generated code
+    //System-generated code to define the application GUI element variables
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonRunModeller;
     private javax.swing.JButton jButtonRunRandomModeller;
