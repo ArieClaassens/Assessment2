@@ -348,8 +348,8 @@ public class Storage {
         double[][] dispersalArray = new double[srcArrayRows][srcArrayCols];
 
         //Instantiate our local label for the detonation point coordinates, which is also each particles' start position
-        int startbacteriumPosRow = xPos;
-        int startbacteriumPosCol = yPos;
+        int startbacteriumPosRow = yPos;
+        int startbacteriumPosCol = xPos;
         
         //Define the labels to store the maximum row and column count
         final int maxRows = srcArrayRows - 1;
