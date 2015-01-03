@@ -178,12 +178,12 @@ class DispersalModeller extends javax.swing.JFrame {
         //The detonation point X and Y values to determine where to start the calculations
         //The coordinates cannot fall outside the target area, so check for that too, assuming we're using a square image
         int xPos = Integer.parseInt(jTextFieldXPos.getText());
-        //Changed to dynamic values by using parameter values 
+        //Must change to dynamic values by using parameter values 
         if ((xPos < 0) || (xPos > 300)) {
             //Change text to red to highlight issue
             jTextFieldXPos.setForeground(Color.red);
         }
-        //Changed to dynamic values by using parameter values 
+        //Must change to dynamic values by using parameter values 
         int yPos = Integer.parseInt(jTextFieldYPos.getText());
         if ((yPos < 0) || (yPos > 300)) {
             //Change text to red to highlight issue
